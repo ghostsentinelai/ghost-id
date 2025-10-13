@@ -206,6 +206,8 @@ export function useTimelineLayer({
         closeButton: false,
         closeOnClick: false,
         className: "globe-tooltip",
+        anchor: "top-left",
+        offset: [-30, -30], // Offset to align avatar center (padding 12px + avatar 36px/2 = 30px)
       });
     }
 
@@ -273,9 +275,17 @@ export function useTimelineLayer({
             .setLngLat([roundedLon, roundedLat])
             .addTo(map.current);
 
-          // Add hover events for tooltip
+          // Add hover events for tooltip with debouncing
+          let hideTimeoutId: ReturnType<typeof setTimeout> | null = null;
+
           const showTooltip = () => {
             if (!map.current || !popupRef.current) return;
+
+            // Clear any pending hide
+            if (hideTimeoutId) {
+              clearTimeout(hideTimeoutId);
+              hideTimeoutId = null;
+            }
 
             const avatarSVG = generateAvatarSVG(session.user_id, 36);
             const countryCode = session.country?.length === 2 ? session.country : "";
@@ -342,9 +352,12 @@ export function useTimelineLayer({
           };
 
           const hideTooltip = () => {
-            if (popupRef.current) {
-              popupRef.current.remove();
-            }
+            // Delay hiding to prevent flicker
+            hideTimeoutId = setTimeout(() => {
+              if (popupRef.current) {
+                popupRef.current.remove();
+              }
+            }, 100);
           };
 
           avatarContainer.addEventListener("mouseenter", showTooltip);
