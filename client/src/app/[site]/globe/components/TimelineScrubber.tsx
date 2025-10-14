@@ -3,20 +3,26 @@ import { AlertTriangle, Pause, Play } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { TimelineSlider } from "../../../../components/ui/timeline-slider";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../../../components/ui/tooltip";
-import { useTimelineSessions } from "../hooks/useTimelineSessions";
-import { useTimelineStore } from "../timelineStore";
-import { formatTimelineTime, generateTimeWindows, getActiveSessions } from "../timelineUtils";
+import { useTimelineStore, useActiveSessions } from "../timelineStore";
+import { formatTimelineTime, generateTimeWindows, getSessionCountsPerWindow } from "../timelineUtils";
 
 export function TimelineScrubber() {
-  const { currentTime, timeRange, windowSize, setCurrentTime } = useTimelineStore();
-  const { activeSessions, allSessions, isLoading, hasMoreData } = useTimelineSessions();
+  const { currentTime, timeRange, windowSize, setCurrentTime, allSessions, isLoading, hasMoreData } =
+    useTimelineStore();
+  const activeSessions = useActiveSessions();
   const [isPlaying, setIsPlaying] = useState(false);
   const [localSliderIndex, setLocalSliderIndex] = useState(0);
+  const [displayedCounts, setDisplayedCounts] = useState<number[]>([]);
+  const [isCalculating, setIsCalculating] = useState(false);
 
   // Generate time windows for the slider
   const timeWindows = useMemo(() => {
     if (!timeRange) return [];
-    return generateTimeWindows(timeRange.start, timeRange.end, windowSize);
+    const start = performance.now();
+    const timeWindows = generateTimeWindows(timeRange.start, timeRange.end, windowSize);
+    const end = performance.now();
+    console.log(`generateTimeWindows took ${end - start}ms`);
+    return timeWindows;
   }, [timeRange, windowSize]);
 
   // Get current window index from store
@@ -86,20 +92,42 @@ export function TimelineScrubber() {
     return timeWindows[localSliderIndex] || currentTime;
   }, [timeWindows, localSliderIndex, currentTime]);
 
-  // Calculate session counts per time window for histogram
-  const sessionCounts = useMemo(() => {
-    if (timeWindows.length === 0 || allSessions.length === 0) return [];
+  // Debounced function to calculate session counts
+  const debouncedCalculateCounts = useRef(
+    debounce((windows: ReturnType<typeof generateTimeWindows>, sessions: typeof allSessions, size: number) => {
+      if (windows.length === 0 || sessions.length === 0) {
+        setDisplayedCounts([]);
+        setIsCalculating(false);
+        return;
+      }
+      const counts = getSessionCountsPerWindow(sessions, windows, size);
+      setDisplayedCounts(counts);
+      setIsCalculating(false);
+    }, 200)
+  ).current;
 
-    return timeWindows.map(windowStart => {
-      const sessionsInWindow = getActiveSessions(allSessions, windowStart, windowSize);
-      return sessionsInWindow.length;
-    });
-  }, [timeWindows, allSessions, windowSize]);
+  // Cleanup debounce on unmount
+  useEffect(() => {
+    return () => {
+      debouncedCalculateCounts.cancel();
+    };
+  }, [debouncedCalculateCounts]);
+
+  // Trigger calculation when dependencies change
+  useEffect(() => {
+    if (timeWindows.length > 0 && allSessions.length > 0) {
+      setIsCalculating(true);
+      debouncedCalculateCounts(timeWindows, allSessions, windowSize);
+    } else {
+      setDisplayedCounts([]);
+      setIsCalculating(false);
+    }
+  }, [timeWindows, allSessions, windowSize, debouncedCalculateCounts]);
 
   // Get max count for scaling the histogram
   const maxCount = useMemo(() => {
-    return sessionCounts.length > 0 ? Math.max(...sessionCounts, 1) : 1;
-  }, [sessionCounts]);
+    return displayedCounts.length > 0 ? Math.max(...displayedCounts, 1) : 1;
+  }, [displayedCounts]);
 
   if (isLoading) {
     return (
@@ -117,8 +145,13 @@ export function TimelineScrubber() {
   return (
     <div className="w-full flex flex-col">
       {/* Session histogram */}
-      <div className="w-full h-8 flex items-end gap-[1px]">
-        {sessionCounts.map((count, index) => {
+      <div className="w-full h-8 flex items-end gap-[1px] relative">
+        {isCalculating && displayedCounts.length === 0 && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-3 h-3 border-2 border-neutral-600 border-t-accent-500 rounded-full animate-spin" />
+          </div>
+        )}
+        {displayedCounts.map((count, index) => {
           const heightPercentage = (count / maxCount) * 100;
           const isActive = index === localSliderIndex;
 
@@ -130,6 +163,7 @@ export function TimelineScrubber() {
                 height: `${heightPercentage}%`,
                 backgroundColor: isActive ? "hsl(var(--accent-600))" : "rgba(115, 115, 115, 0.4)",
                 minHeight: count > 0 ? "2px" : "0px",
+                opacity: isCalculating ? 0.5 : 1,
               }}
               title={`${count} session${count !== 1 ? "s" : ""}`}
               onClick={() => {

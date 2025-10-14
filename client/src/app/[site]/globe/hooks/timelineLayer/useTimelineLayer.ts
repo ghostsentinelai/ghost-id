@@ -1,8 +1,8 @@
 import mapboxgl from "mapbox-gl";
-import { useEffect, useRef, useState } from "react";
-import { useTimelineSessions } from "../useTimelineSessions";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { throttle } from "lodash";
 import type { GetSessionsResponse } from "../../../../../api/analytics/userSessions";
-import { useTimelineStore } from "../../timelineStore";
+import { useTimelineStore, useActiveSessions } from "../../timelineStore";
 import { initializeClusterSource, setupClusterClickHandler } from "./timelineClusterUtils";
 import {
   SOURCE_ID,
@@ -29,7 +29,7 @@ export function useTimelineLayer({
   mapLoaded: boolean;
   mapView: string;
 }) {
-  const { activeSessions } = useTimelineSessions();
+  const activeSessions = useActiveSessions();
   const { currentTime } = useTimelineStore();
   const popupRef = useRef<mapboxgl.Popup | null>(null);
   const markersMapRef = useRef<Map<string, MarkerData>>(new Map());
@@ -107,13 +107,19 @@ export function useTimelineLayer({
       );
     };
 
+    // Throttle the marker updates to run at most once every 150ms
+    const throttledUpdateMarkers = throttle(updateMarkers, 150, {
+      leading: true,
+      trailing: true,
+    });
+
     // Initial update
     updateMarkers();
 
-    // Update markers on zoom and move
-    mapInstance.on("zoom", updateMarkers);
-    mapInstance.on("move", updateMarkers);
-    mapInstance.on("sourcedata", updateMarkers);
+    // Update markers on zoom and move (throttled)
+    mapInstance.on("zoom", throttledUpdateMarkers);
+    mapInstance.on("move", throttledUpdateMarkers);
+    mapInstance.on("sourcedata", throttledUpdateMarkers);
 
     // Handle map click to close tooltip
     const handleMapClick = () => {
@@ -128,9 +134,10 @@ export function useTimelineLayer({
     // Cleanup function
     return () => {
       clearAllMarkers(markersMap);
-      mapInstance.off("zoom", updateMarkers);
-      mapInstance.off("move", updateMarkers);
-      mapInstance.off("sourcedata", updateMarkers);
+      throttledUpdateMarkers.cancel(); // Cancel any pending throttled calls
+      mapInstance.off("zoom", throttledUpdateMarkers);
+      mapInstance.off("move", throttledUpdateMarkers);
+      mapInstance.off("sourcedata", throttledUpdateMarkers);
       mapInstance.off("click", handleMapClick);
     };
   }, [activeSessions, mapLoaded, map, mapView]);

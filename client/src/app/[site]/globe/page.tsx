@@ -22,13 +22,17 @@ import { useLayerVisibility } from "./hooks/useLayerVisibility";
 import { useMapbox } from "./hooks/useMapbox";
 import { useSubdivisionsLayer } from "./hooks/useSubdivisionsLayer";
 import { useTimelineStore } from "./timelineStore";
+import { useTimelineSessions } from "./hooks/useTimelineSessions";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../components/ui/select";
 import { WINDOW_SIZE_OPTIONS } from "./timelineUtils";
 
 export default function GlobePage() {
   useSetPageTitle("Rybbit · Globe");
   const mapContainer = useRef<HTMLDivElement>(null);
-  const { currentTime, timeRange, windowSize, setCurrentTime, setManualWindowSize } = useTimelineStore();
+  const { windowSize, setManualWindowSize } = useTimelineStore();
+
+  // Fetch timeline sessions and update store
+  useTimelineSessions();
 
   // Handle window size change
   const handleWindowSizeChange = (value: string) => {

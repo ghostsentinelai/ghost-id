@@ -84,6 +84,79 @@ export function getActiveSessions(
 }
 
 /**
+ * Optimized function to count sessions per time window
+ * Uses parsing once + sorting + binary search for significant speedup
+ */
+export function getSessionCountsPerWindow(
+  sessions: GetSessionsResponse,
+  timeWindows: DateTime[],
+  windowSize: number
+): number[] {
+  // Parse all session times once upfront
+  const start = performance.now();
+  const parsedSessions = sessions.map(session => ({
+    start: DateTime.fromSQL(session.session_start, { zone: "utc" }).toLocal(),
+    end: DateTime.fromSQL(session.session_end, { zone: "utc" }).toLocal(),
+  }));
+
+  // Sort sessions by start time for efficient searching
+  parsedSessions.sort((a, b) => a.start.toMillis() - b.start.toMillis());
+
+  const end = performance.now();
+  console.log(`getSessionCountsPerWindow parsing+sorting took ${end - start}ms`);
+
+  const start2 = performance.now();
+
+  // Binary search to find first session that could overlap with a window
+  const findFirstOverlapping = (windowStart: DateTime): number => {
+    let left = 0;
+    let right = parsedSessions.length;
+
+    // Find first session where session.end > windowStart
+    while (left < right) {
+      const mid = Math.floor((left + right) / 2);
+      if (parsedSessions[mid].end <= windowStart) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+    return left;
+  };
+
+  // Count sessions for each window
+  const counts = timeWindows.map(windowStart => {
+    const windowEnd = windowStart.plus({ minutes: windowSize });
+    let count = 0;
+
+    // Start from first potentially overlapping session
+    const startIdx = findFirstOverlapping(windowStart);
+
+    // Count until sessions can no longer overlap
+    for (let i = startIdx; i < parsedSessions.length; i++) {
+      const session = parsedSessions[i];
+
+      // If session starts after window ends, no more sessions can overlap
+      if (session.start >= windowEnd) {
+        break;
+      }
+
+      // Session overlaps if it starts before window ends AND ends after window starts
+      if (session.start < windowEnd && session.end > windowStart) {
+        count++;
+      }
+    }
+
+    return count;
+  });
+
+  const end2 = performance.now();
+  console.log(`getSessionCountsPerWindow counting took ${end2 - start2}ms`);
+
+  return counts;
+}
+
+/**
  * Format time for display in the timeline
  */
 export function formatTimelineTime(time: DateTime, windowSize: number): string {

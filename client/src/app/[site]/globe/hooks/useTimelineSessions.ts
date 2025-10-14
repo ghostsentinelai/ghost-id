@@ -6,11 +6,11 @@ import { APIResponse } from "../../../../api/types";
 import { authedFetch, getQueryParams } from "../../../../api/utils";
 import { getFilteredFilters, SESSION_PAGE_FILTERS, useStore } from "../../../../lib/store";
 import { useTimelineStore } from "../timelineStore";
-import { calculateWindowSize, getActiveSessions } from "../timelineUtils";
+import { calculateWindowSize } from "../timelineUtils";
 
 export function useTimelineSessions() {
   const { time, site } = useStore();
-  const { currentTime, windowSize, manualWindowSize, setTimeRange, setWindowSize } = useTimelineStore();
+  const { manualWindowSize, setTimeRange, setWindowSize, setAllSessions, setLoading, setError } = useTimelineStore();
 
   const filteredFilters = getFilteredFilters(SESSION_PAGE_FILTERS);
 
@@ -64,6 +64,22 @@ export function useTimelineSessions() {
     return data.data;
   }, [data]);
 
+  // Update store with loading/error state
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading, setLoading]);
+
+  useEffect(() => {
+    setError(isError);
+  }, [isError, setError]);
+
+  // Update store with allSessions
+  useEffect(() => {
+    if (allSessions.length > 0) {
+      setAllSessions(allSessions, data?.hasMoreData || false);
+    }
+  }, [allSessions, data?.hasMoreData, setAllSessions]);
+
   // Calculate time range from fetched sessions and initialize timeline
   useEffect(() => {
     if (allSessions.length === 0) return;
@@ -93,18 +109,4 @@ export function useTimelineSessions() {
       setTimeRange(earliest, latest);
     }
   }, [allSessions, setTimeRange, setWindowSize, manualWindowSize, time]);
-
-  // Filter sessions based on current time window
-  const activeSessions = useMemo(() => {
-    if (!currentTime || !allSessions.length) return [];
-    return getActiveSessions(allSessions, currentTime, windowSize);
-  }, [allSessions, currentTime, windowSize]);
-
-  return {
-    allSessions,
-    activeSessions,
-    isLoading,
-    isError,
-    hasMoreData: data?.hasMoreData || false,
-  };
 }
