@@ -78,8 +78,8 @@ export default function GlobePage() {
           ) : (
             <OpenLayersMap key="openlayers-map" mapView={mapView} onSessionSelect={setSelectedSession} />
           )}
-          <div className="absolute bottom-2 left-4 z-99999 right-4 flex flex-col gap-2 pointer-events-none">
-            <div className="flex items-end gap-2 justify-between">
+          <div className="absolute bottom-2 left-2 right-2  md:right-4 md:left-4 z-99999 flex flex-col gap-2 pointer-events-none ">
+            <div className="flex items-end gap-2 justify-between overflow-x-auto">
               <div className="pointer-events-auto">
                 <MapViewSelector />
               </div>
@@ -105,7 +105,7 @@ export default function GlobePage() {
                   </Select>
                 </div>
               ) : (
-                <div className="pointer-events-auto">
+                <div className="pointer-events-auto hidden md:block">
                   <GlobeSessions />
                 </div>
               )}
