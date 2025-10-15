@@ -1,12 +1,11 @@
 "use client";
 
 import "mapbox-gl/dist/mapbox-gl.css";
-import { RefObject, useRef } from "react";
+import { useRef } from "react";
 import "./globe.css";
 
 import { VisuallyHidden } from "radix-ui";
 import { DisabledOverlay } from "../../../components/DisabledOverlay";
-import { NothingFound } from "../../../components/NothingFound";
 import { SessionCard } from "../../../components/Sessions/SessionCard";
 import { Dialog, DialogContent, DialogTitle } from "../../../components/ui/dialog";
 import { useSetPageTitle } from "../../../hooks/useSetPageTitle";
@@ -14,55 +13,19 @@ import { SubHeader } from "../components/SubHeader/SubHeader";
 import { GlobeSessions } from "./components/GlobeSessions";
 import MapViewSelector from "./components/ModeSelector";
 import { TimelineScrubber } from "./components/TimelineScrubber";
-import { OpenLayersMap } from "./components/OpenLayersMap";
+import { OpenLayersMap } from "./2d/components/OpenLayersMap";
+import { MapboxMap } from "./3d/components/MapboxMap";
 import { useGlobeStore } from "./globeStore";
-import { useTimelineLayer } from "./hooks/timelineLayer/useTimelineLayer";
-import { useCoordinatesLayer } from "./hooks/useCoordinatesLayer";
-import { useCountriesLayer } from "./hooks/useCountriesLayer";
-import { useLayerVisibility } from "./hooks/useLayerVisibility";
-import { useMapbox } from "./hooks/useMapbox";
-import { useSubdivisionsLayer } from "./hooks/useSubdivisionsLayer";
+import { useTimelineLayer } from "./3d/hooks/timelineLayer/useTimelineLayer";
+import { useCoordinatesLayer } from "./3d/hooks/useCoordinatesLayer";
+import { useCountriesLayer } from "./3d/hooks/useCountriesLayer";
+import { useLayerVisibility } from "./3d/hooks/useLayerVisibility";
+import { useMapbox } from "./3d/hooks/useMapbox";
+import { useSubdivisionsLayer } from "./3d/hooks/useSubdivisionsLayer";
 import { useTimelineStore } from "./timelineStore";
-import { useTimelineSessions } from "./hooks/timelineLayer/useTimelineSessions";
+import { useTimelineSessions } from "./3d/hooks/timelineLayer/useTimelineSessions";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../components/ui/select";
 import { WINDOW_SIZE_OPTIONS } from "./timelineUtils";
-import { useConfigs } from "../../../lib/configs";
-
-const MapboxMap = ({ mapContainer }: { mapContainer: RefObject<HTMLDivElement | null> }) => {
-  const { configs, isLoading } = useConfigs();
-
-  return (
-    <>
-      {configs?.mapboxToken ? (
-        <div
-          ref={mapContainer}
-          className="w-full h-full [&_.mapboxgl-ctrl-bottom-left]:!hidden [&_.mapboxgl-ctrl-logo]:!hidden"
-        />
-      ) : isLoading ? null : (
-        <div className="w-full h-full flex items-center justify-center">
-          <NothingFound
-            title="Mapbox access token not found"
-            description={
-              <p className="text-sm max-w-[600px] text-center">
-                Please set the <code>MAPBOX_TOKEN</code> environment variable and rebuild all containers. To get a
-                Mapbox token, please visit{" "}
-                <a
-                  href="https://docs.mapbox.com/help/dive-deeper/access-tokens/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 hover:underline"
-                >
-                  Mapbox
-                </a>{" "}
-                and create an account.
-              </p>
-            }
-          />
-        </div>
-      )}
-    </>
-  );
-};
 
 export default function GlobePage() {
   useSetPageTitle("Rybbit · Globe");

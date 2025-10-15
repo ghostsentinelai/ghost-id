@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
-import { useConfigs } from "../../../../lib/configs";
+import { useConfigs } from "../../../../../lib/configs";
 
 export function useMapbox(containerRef: React.RefObject<HTMLDivElement | null>, enabled: boolean = true) {
   const map = useRef<mapboxgl.Map | null>(null);

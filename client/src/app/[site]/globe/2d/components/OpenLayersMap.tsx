@@ -5,8 +5,8 @@ import Map from "ol/Map";
 import View from "ol/View";
 import { fromLonLat } from "ol/proj";
 import "ol/ol.css";
-import { useOpenLayersCountriesLayer } from "../hooks/openLayers/useOpenLayersCountriesLayer";
-import { useOpenLayersSubdivisionsLayer } from "../hooks/openLayers/useOpenLayersSubdivisionsLayer";
+import { useOpenLayersCountriesLayer } from "../hooks/useOpenLayersCountriesLayer";
+import { useOpenLayersSubdivisionsLayer } from "../hooks/useOpenLayersSubdivisionsLayer";
 
 interface OpenLayersMapProps {
   mapView: "countries" | "subdivisions" | "coordinates" | "timeline";
