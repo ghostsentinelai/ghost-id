@@ -70,7 +70,7 @@ import { getSessionFromReq, mapHeaders } from "./lib/auth-utils.js";
 import { auth } from "./lib/auth.js";
 import { IS_CLOUD } from "./lib/const.js";
 import { siteConfig } from "./lib/siteConfig.js";
-import { registerTurnstileMiddleware } from "./middleware/turnstile.js";
+import { createTurnstileAuthWrapper } from "./middleware/turnstile.js";
 import { trackEvent } from "./services/tracker/trackEvent.js";
 // need to import telemetry service here to start it
 import { telemetryService } from "./services/telemetryService.js";
@@ -164,10 +164,10 @@ server.register(fastifyStatic, {
 server.register(
   async (fastify, options) => {
     await fastify.register(async fastify => {
-      const authHandler = toNodeHandler(options.auth);
+      const baseAuthHandler = toNodeHandler(options.auth);
 
-      // Register Turnstile verification middleware
-      await registerTurnstileMiddleware(fastify, IS_CLOUD, server.log);
+      // Wrap the auth handler with Turnstile verification
+      const authHandler = createTurnstileAuthWrapper(baseAuthHandler, IS_CLOUD, server.log);
 
       fastify.all("/api/auth/*", async (request, reply: any) => {
         reply.raw.setHeaders(mapHeaders(reply.getHeaders()));
