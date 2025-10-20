@@ -70,7 +70,7 @@ import { getSessionFromReq, mapHeaders } from "./lib/auth-utils.js";
 import { auth } from "./lib/auth.js";
 import { IS_CLOUD } from "./lib/const.js";
 import { siteConfig } from "./lib/siteConfig.js";
-import { verifyTurnstileToken } from "./lib/turnstile.js";
+import { registerTurnstileMiddleware } from "./middleware/turnstile.js";
 import { trackEvent } from "./services/tracker/trackEvent.js";
 // need to import telemetry service here to start it
 import { telemetryService } from "./services/telemetryService.js";
@@ -163,54 +163,11 @@ server.register(fastifyStatic, {
 
 server.register(
   async (fastify, options) => {
-    await fastify.register(fastify => {
+    await fastify.register(async fastify => {
       const authHandler = toNodeHandler(options.auth);
 
-      fastify.addContentTypeParser(
-        "application/json",
-        /* c8 ignore next 3 */
-        (_request, _payload, done) => {
-          done(null, null);
-        }
-      );
-
-      // Turnstile verification middleware for email signup (cloud only)
-      fastify.addHook("preHandler", async (request, reply) => {
-        // Only verify Turnstile for email signup in cloud mode
-        if (IS_CLOUD && request.url === "/api/auth/sign-up/email" && request.method === "POST") {
-          try {
-            // Parse the request body to get the Turnstile token
-            const body = request.body as any;
-            const turnstileToken = body?.turnstileToken;
-
-            if (!turnstileToken) {
-              return reply.status(400).send({
-                error: "Captcha verification required",
-                message: "Please complete the captcha verification",
-              });
-            }
-
-            // Verify the Turnstile token
-            const remoteIp = request.ip;
-            const isValid = await verifyTurnstileToken(turnstileToken, remoteIp);
-
-            if (!isValid) {
-              return reply.status(400).send({
-                error: "Captcha verification failed",
-                message: "Invalid captcha. Please try again.",
-              });
-            }
-
-            // Token is valid, continue to auth handler
-          } catch (error) {
-            server.log.error("Error in Turnstile verification:", error);
-            return reply.status(500).send({
-              error: "Verification error",
-              message: "An error occurred during captcha verification",
-            });
-          }
-        }
-      });
+      // Register Turnstile verification middleware
+      await registerTurnstileMiddleware(fastify, IS_CLOUD, server.log);
 
       fastify.all("/api/auth/*", async (request, reply: any) => {
         reply.raw.setHeaders(mapHeaders(reply.getHeaders()));
