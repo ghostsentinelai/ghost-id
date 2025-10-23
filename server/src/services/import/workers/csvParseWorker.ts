@@ -88,25 +88,46 @@ export async function registerCsvParseWorker() {
   await jobQueue.work<CsvParseJob>(CSV_PARSE_QUEUE, { batchSize: 1, pollingIntervalSeconds: 10 }, async ([job]) => {
     const { site, importId, source, storageLocation, isR2Storage, organization, startDate, endDate } = job.data;
 
+    let stream: any = null;
+    let processingTimeout: NodeJS.Timeout | null = null;
+
     try {
       const quotaTracker = await ImportLimiter.createQuotaTracker(organization);
 
       const chunkSize = 5000;
+      const MAX_ROWS = 10_000_000; // 10 million rows max
+      const PROCESSING_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes max
+
       let chunk: UmamiEvent[] = [];
       let totalAccepted = 0;
       let totalSkippedQuota = 0;
       let totalSkippedDate = 0;
+      let totalRowsProcessed = 0;
       let chunksSent = 0;
 
-      const stream = isR2Storage
+      stream = isR2Storage
         ? await createR2FileStream(storageLocation, source)
         : await createLocalFileStream(storageLocation, source);
 
       await ImportStatusManager.updateStatus(importId, "processing");
 
+      // Set timeout to prevent indefinite processing
+      processingTimeout = setTimeout(() => {
+        if (stream) {
+          stream.destroy(new Error("Import processing timeout exceeded"));
+        }
+      }, PROCESSING_TIMEOUT_MS);
+
       const isDateInRange = createDateRangeFilter(startDate, endDate);
 
       for await (const data of stream) {
+        totalRowsProcessed++;
+
+        // Enforce row count limit to prevent memory exhaustion
+        if (totalRowsProcessed > MAX_ROWS) {
+          throw new Error(`Import exceeds maximum row limit of ${MAX_ROWS.toLocaleString()}`);
+        }
+
         // Skip rows with missing or invalid dates
         if (!data.created_at) {
           continue;
@@ -185,14 +206,32 @@ export async function registerCsvParseWorker() {
         allChunksSent: true,
       });
     } catch (error) {
-      console.error("Error in CSV parse worker:", error);
-      await ImportStatusManager.updateStatus(
-        importId,
-        "failed",
-        error instanceof Error ? error.message : "Unknown error occurred"
-      );
-      throw error;
+      console.error(`[Import ${importId}] Error in CSV parse worker:`, error);
+
+      // Sanitize error message to avoid exposing internal details
+      const safeMessage = error instanceof Error
+        ? error.message.replace(/\/[^\s]+/g, '[path]').substring(0, 500)
+        : "An unexpected error occurred during import processing";
+
+      await ImportStatusManager.updateStatus(importId, "failed", safeMessage);
+
+      // Don't re-throw - worker should continue processing other jobs
+      console.error(`[Import ${importId}] Import failed, worker continuing`);
     } finally {
+      // Clean up timeout
+      if (processingTimeout) {
+        clearTimeout(processingTimeout);
+      }
+
+      // Ensure stream is destroyed to prevent memory leaks
+      if (stream && typeof stream.destroy === "function") {
+        try {
+          stream.destroy();
+        } catch (streamError) {
+          console.warn(`[Import ${importId}] Failed to destroy stream:`, streamError);
+        }
+      }
+
       // Clean up file - don't throw on failure to prevent worker crashes
       const deleteResult = await deleteImportFile(storageLocation, isR2Storage);
       if (!deleteResult.success) {

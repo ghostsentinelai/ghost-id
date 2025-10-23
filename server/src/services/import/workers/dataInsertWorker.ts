@@ -27,8 +27,14 @@ export async function registerDataInsertWorker() {
         return;
       } catch (error) {
         console.error(`[Import ${importId}] Failed to mark as completed:`, error);
-        await ImportStatusManager.updateStatus(importId, "failed", "Failed to complete import");
-        throw error;
+        // Try to update to failed status, but don't crash worker
+        try {
+          await ImportStatusManager.updateStatus(importId, "failed", "Failed to complete import");
+        } catch (updateError) {
+          console.error(`[Import ${importId}] Could not update status to failed:`, updateError);
+        }
+        // Don't re-throw - worker should continue
+        return;
       }
     }
 
@@ -58,12 +64,20 @@ export async function registerDataInsertWorker() {
       console.log(`[Import ${importId}] Chunk ${chunkNumber ?? "?"} processed: ${transformedRecords.length} events`);
     } catch (error) {
       console.error(`[Import ${importId}] ClickHouse insert failed:`, error);
-      await ImportStatusManager.updateStatus(
-        importId,
-        "failed",
-        `Data insertion failed: ${error instanceof Error ? error.message : "Unknown error"}`
-      );
-      throw error;
+
+      // Sanitize error message
+      const safeMessage = error instanceof Error
+        ? `Data insertion failed: ${error.message.substring(0, 500)}`
+        : "Data insertion failed due to unknown error";
+
+      try {
+        await ImportStatusManager.updateStatus(importId, "failed", safeMessage);
+      } catch (updateError) {
+        console.error(`[Import ${importId}] Could not update status to failed:`, updateError);
+      }
+
+      // Don't re-throw - worker should continue processing other jobs
+      console.error(`[Import ${importId}] Import chunk failed, worker continuing`);
     }
   });
 }
