@@ -96,10 +96,10 @@ export class ImportQuotaTracker {
           format: "JSONEachRow",
         });
 
-        const rows = await processResults<{ month: string; count: string }>(grandfatheredResult);
+        const rows = await processResults<{ month: string; count: number }>(grandfatheredResult);
         for (const row of rows) {
           const existing = monthlyUsage.get(row.month) || 0;
-          monthlyUsage.set(row.month, existing + parseInt(row.count, 10));
+          monthlyUsage.set(row.month, existing + row.count);
         }
       }
 
@@ -124,10 +124,10 @@ export class ImportQuotaTracker {
           format: "JSONEachRow",
         });
 
-        const rows = await processResults<{ month: string; count: string }>(newSitesResult);
+        const rows = await processResults<{ month: string; count: number }>(newSitesResult);
         for (const row of rows) {
           const existing = monthlyUsage.get(row.month) || 0;
-          monthlyUsage.set(row.month, existing + parseInt(row.count, 10));
+          monthlyUsage.set(row.month, existing + row.count);
         }
       }
 
