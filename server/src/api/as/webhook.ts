@@ -262,15 +262,24 @@ async function handleUpgradeEvent(licenseKey: string, tier: any, prevLicenseKey?
 
   // Get the old license to find the organization
   console.log(`[AppSumo] Querying old license: ${prevLicenseKey}`);
-  const oldLicenseResult = await db.execute(
+  let oldLicenseResult = await db.execute(
     sql`SELECT organization_id FROM as_licenses WHERE license_key = ${prevLicenseKey} LIMIT 1`
   );
 
   console.log(`[AppSumo] Old license query result:`, JSON.stringify(oldLicenseResult, null, 2));
 
+  // If previous license not found, try to find ANY license with an organization (fallback for missed webhooks)
   if (!Array.isArray(oldLicenseResult) || oldLicenseResult.length === 0) {
-    console.error(`[AppSumo] Old license not found: ${prevLicenseKey}`);
-    return;
+    console.warn(`[AppSumo] Old license not found: ${prevLicenseKey}, searching for any license with organization as fallback`);
+    oldLicenseResult = await db.execute(
+      sql`SELECT organization_id FROM as_licenses WHERE organization_id IS NOT NULL ORDER BY updated_at DESC LIMIT 1`
+    );
+
+    if (!Array.isArray(oldLicenseResult) || oldLicenseResult.length === 0) {
+      console.error(`[AppSumo] No licenses with organization found, cannot process upgrade`);
+      return;
+    }
+    console.log(`[AppSumo] Found fallback license:`, JSON.stringify(oldLicenseResult, null, 2));
   }
 
   const oldLicense = oldLicenseResult[0] as any;
@@ -376,15 +385,24 @@ async function handleDowngradeEvent(licenseKey: string, tier: any, prevLicenseKe
 
   // Get the old license to find the organization
   console.log(`[AppSumo] Querying old license: ${prevLicenseKey}`);
-  const oldLicenseResult = await db.execute(
+  let oldLicenseResult = await db.execute(
     sql`SELECT organization_id FROM as_licenses WHERE license_key = ${prevLicenseKey} LIMIT 1`
   );
 
   console.log(`[AppSumo] Old license query result:`, JSON.stringify(oldLicenseResult, null, 2));
 
+  // If previous license not found, try to find ANY license with an organization (fallback for missed webhooks)
   if (!Array.isArray(oldLicenseResult) || oldLicenseResult.length === 0) {
-    console.error(`[AppSumo] Old license not found: ${prevLicenseKey}`);
-    return;
+    console.warn(`[AppSumo] Old license not found: ${prevLicenseKey}, searching for any license with organization as fallback`);
+    oldLicenseResult = await db.execute(
+      sql`SELECT organization_id FROM as_licenses WHERE organization_id IS NOT NULL ORDER BY updated_at DESC LIMIT 1`
+    );
+
+    if (!Array.isArray(oldLicenseResult) || oldLicenseResult.length === 0) {
+      console.error(`[AppSumo] No licenses with organization found, cannot process downgrade`);
+      return;
+    }
+    console.log(`[AppSumo] Found fallback license:`, JSON.stringify(oldLicenseResult, null, 2));
   }
 
   const oldLicense = oldLicenseResult[0] as any;
