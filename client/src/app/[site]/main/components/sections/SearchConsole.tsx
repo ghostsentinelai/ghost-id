@@ -61,7 +61,7 @@ function DataList({ dimension, label, renderName }: DataListProps) {
               return (
                 <div
                   key={index}
-                  className="relative flex flex-row gap-2 justify-between pr-1 text-xs py-1 hover:bg-neutral-800/30 rounded px-2"
+                  className="relative flex flex-row gap-2 justify-between pr-1 text-xs py-1 hover:bg-neutral-850 rounded px-2"
                 >
                   <div
                     className="absolute inset-0 bg-dataviz py-2 opacity-25 rounded-md"
