@@ -4,32 +4,22 @@ import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGSCConnection, useConnectGSC, useDisconnectGSC } from "@/api/gsc/useGSCConnection";
 import { toast } from "sonner";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { useStore } from "@/lib/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 interface GSCManagerProps {
-  siteId: number;
   disabled?: boolean;
 }
 
-export function GSCManager({ siteId, disabled = false }: GSCManagerProps) {
+export function GSCManager({ disabled = false }: GSCManagerProps) {
   const { site } = useStore();
   const searchParams = useSearchParams();
   const { data: connection, isLoading, refetch } = useGSCConnection();
   const { mutate: connect, isPending: isConnecting } = useConnectGSC();
   const { mutate: disconnect, isPending: isDisconnecting } = useDisconnectGSC();
+  const [isDisconnectModalOpen, setIsDisconnectModalOpen] = useState(false);
 
   // Check for OAuth success/error in URL params
   useEffect(() => {
@@ -41,13 +31,17 @@ export function GSCManager({ siteId, disabled = false }: GSCManagerProps) {
   }, [searchParams, refetch]);
 
   const handleDisconnect = async () => {
-    disconnect(undefined, {
-      onSuccess: () => {
-        toast.success("Google Search Console disconnected");
-      },
-      onError: () => {
-        toast.error("Failed to disconnect Google Search Console");
-      },
+    return new Promise((resolve, reject) => {
+      disconnect(undefined, {
+        onSuccess: () => {
+          toast.success("Google Search Console disconnected");
+          resolve(undefined);
+        },
+        onError: (error) => {
+          toast.error("Failed to disconnect Google Search Console");
+          reject(error);
+        },
+      });
     });
   };
 
@@ -84,30 +78,23 @@ export function GSCManager({ siteId, disabled = false }: GSCManagerProps) {
               rel="noopener noreferrer"
               className="text-foreground hover:underline flex items-center gap-1"
             >
-              {connection.gscPropertyUrl}
+              {connection.gscPropertyUrl?.replace("sc-domain:", "")}
               <ExternalLink className="w-3 h-3" />
             </a>
           </div>
 
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="outline" disabled={disabled || isDisconnecting} className="w-full">
-                {isDisconnecting ? "Disconnecting..." : "Disconnect"}
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Disconnect Google Search Console?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This will remove the connection to Google Search Console. You can reconnect at any time.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleDisconnect}>Disconnect</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <ConfirmationModal
+            title="Disconnect Google Search Console?"
+            description="This will remove the connection to Google Search Console. You can reconnect at any time."
+            isOpen={isDisconnectModalOpen}
+            setIsOpen={setIsDisconnectModalOpen}
+            onConfirm={handleDisconnect}
+            primaryAction={{ variant: "destructive", children: "Disconnect" }}
+          >
+            <Button variant="outline" disabled={disabled || isDisconnecting}>
+              {isDisconnecting ? "Disconnecting..." : "Disconnect"}
+            </Button>
+          </ConfirmationModal>
         </div>
       ) : (
         <Button onClick={() => connect()} disabled={disabled || isConnecting} className="w-full">
