@@ -141,7 +141,7 @@ export default function HomePage() {
             tilt_wrap.className
           )}
         >
-          The Open Source Google Analytics Replacement
+          The Modern Google Analytics Replacement
         </h1>
         <h2 className="text-base md:text-xl pt-4 md:pt-6 px-4 tracking-tight max-w-4xl text-center text-neutral-300 font-light">
           Next-gen, open source, lightweight, cookieless web & product analytics for everyone.

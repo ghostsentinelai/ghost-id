@@ -11,7 +11,9 @@ interface CardProps {
 
 export function Card({ title, description, children, className, icon: Icon }: CardProps) {
   return (
-    <div className={cn("bg-neutral-800/20 p-4 md:p-6 rounded-xl border border-neutral-800/50", className)}>
+    <div
+      className={cn("bg-neutral-800/20 p-4 md:p-6 rounded-xl border border-neutral-800/50 overflow-hidden", className)}
+    >
       {Icon && (
         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 border border-emerald-500/30 shadow-md shadow-emerald-500/10 flex items-center justify-center mb-3">
           <Icon className="w-4 h-4 text-emerald-400" />

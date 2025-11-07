@@ -53,13 +53,13 @@ export function SessionReplay() {
       description="Watch real user sessions to understand their behavior and identify pain points."
       icon={Film}
     >
-      <div className="bg-neutral-900 rounded-lg overflow-hidden">
+      <div className=" mt-4 transform rotate-2 translate-x-8 translate-y-8 bg-neutral-900 rounded-lg -mb-[30px] rounded-xl">
         {/* Video player container */}
-        <div className="relative bg-black">
+        <div className="relative">
           {/* Mock website content */}
-          <div className="bg-neutral-950 relative overflow-hidden">
+          <div className="relative overflow-hidden">
             {/* Browser chrome */}
-            <div className="bg-neutral-800 h-7 flex items-center px-2 gap-2">
+            <div className="bg-neutral-800 h-7 flex items-center px-2 gap-2 rounded-t-lg">
               <div className="flex gap-1">
                 <div className="w-2 h-2 rounded-full bg-red-500"></div>
                 <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
@@ -158,7 +158,7 @@ export function SessionReplay() {
         </div>
 
         {/* Video controls */}
-        <div className="bg-neutral-800/50 backdrop-blur-sm p-2">
+        <div className="bg-neutral-800/50 backdrop-blur-sm p-2 pb-10">
           <div className="flex items-center gap-3">
             {/* Play/Pause button */}
             <button
@@ -176,9 +176,7 @@ export function SessionReplay() {
             </div>
 
             {/* Time display */}
-            <div className="text-[10px] text-neutral-400 tabular-nums">
-              2:34 / 5:12
-            </div>
+            <div className="text-[10px] text-neutral-400 tabular-nums">2:34 / 5:12</div>
           </div>
         </div>
       </div>

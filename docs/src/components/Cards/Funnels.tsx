@@ -13,7 +13,7 @@ const funnelData = [
     users: 59,
   },
   {
-    step: 4,
+    step: 3,
     label: "Purchase",
     users: 5,
   },
@@ -29,7 +29,7 @@ export function Funnels() {
       icon={Filter}
     >
       {/* Funnel Steps */}
-      <div className="space-y-4 mt-4">
+      <div className="space-y-4 mt-4 transform -rotate-2 translate-x-8 translate-y-8 bg-neutral-800/20 border border-neutral-800/50 pb-20 rounded-lg p-4">
         {funnelData.map((item, index) => {
           const overallConversion = (item.users / totalUsers) * 100;
           const previousUsers = index > 0 ? funnelData[index - 1].users : item.users;
