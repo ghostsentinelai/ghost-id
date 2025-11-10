@@ -10,17 +10,11 @@ import { CheckCircle, Code, Cookie, MousePointer, Target, TrendingUp, Zap } from
 import { Tilt_Warp } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { DEFAULT_EVENT_LIMIT } from "../../lib/const";
-import { UserBehaviorTrends } from "../../components/Cards/UserBehaviorTrends";
+import { Funnels } from "../../components/Cards/Funnels";
 import { RealTimeAnalytics } from "../../components/Cards/RealTimeAnalytics";
 import { SessionReplay } from "../../components/Cards/SessionReplay";
-import WebVitals from "../../components/Cards/WebVitals";
-import { UserProfiles } from "../../components/Cards/UserProfiles";
 import { UserSessions } from "../../components/Cards/UserSessions";
-import { UserFlowAnalysis } from "../../components/Cards/UserFlowAnalysis";
-import { EventTracking } from "../../components/Cards/EventTracking";
-import { GoalConversion } from "../../components/Cards/GoalConversion";
-import { Funnels } from "../../components/Cards/Funnels";
+import { DEFAULT_EVENT_LIMIT } from "../../lib/const";
 
 const tilt_wrap = Tilt_Warp({
   subsets: ["latin"],

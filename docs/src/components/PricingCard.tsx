@@ -1,0 +1,110 @@
+import { Check, X, CheckCircle } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { trackAdEvent } from "@/lib/trackAdEvent";
+
+interface PricingCardProps {
+  title: string;
+  description: string;
+  priceDisplay: React.ReactNode;
+  buttonText?: string;
+  buttonHref?: string;
+  buttonVariant?: "default" | "primary";
+  features: Array<{ feature: string; included?: boolean } | string>;
+  footerText?: React.ReactNode;
+  variant?: "free" | "default";
+  eventLocation?: string;
+  onClick?: () => void;
+  customButton?: React.ReactNode;
+}
+
+export function PricingCard({
+  title,
+  description,
+  priceDisplay,
+  buttonText,
+  buttonHref,
+  buttonVariant = "primary",
+  features,
+  footerText,
+  variant = "default",
+  eventLocation,
+  onClick,
+  customButton,
+}: PricingCardProps) {
+  const isFree = variant === "free";
+  const isPrimary = buttonVariant === "primary";
+
+  return (
+    <div className="w-full flex-shrink-0">
+      <div
+        className={cn(
+          "rounded-xl border overflow-hidden backdrop-blur-sm shadow-xl h-full",
+          isFree
+            ? "bg-neutral-800/15 border-neutral-800/60 text-neutral-300"
+            : "bg-neutral-800/50 border-neutral-800/90"
+        )}
+      >
+        <div className="p-6">
+          <div className="mb-4">
+            <h3 className="text-xl font-bold mb-2">{title}</h3>
+            <p className="text-sm text-neutral-400 h-10">{description}</p>
+          </div>
+
+          {/* Price display */}
+          <div className="mb-6">{priceDisplay}</div>
+
+          {customButton ? (
+            customButton
+          ) : (
+            <Link href={buttonHref!} className="w-full block">
+              <button
+                onClick={() => {
+                  if (eventLocation) {
+                    trackAdEvent("signup", { location: "pricing" });
+                  }
+                  onClick?.();
+                }}
+                data-rybbit-event={eventLocation ? "signup" : undefined}
+                data-rybbit-prop-location={eventLocation}
+                className={cn(
+                  "w-full font-medium px-5 py-3 rounded-lg transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-opacity-50 cursor-pointer",
+                  isPrimary
+                    ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/20 focus:ring-emerald-500"
+                    : "bg-neutral-700 hover:bg-neutral-600 text-white border border-neutral-600 focus:ring-neutral-400"
+                )}
+              >
+                {buttonText}
+              </button>
+            </Link>
+          )}
+
+          <div className={cn("my-6", "space-y-3")}>
+            {features.map((item, i) => {
+              const isObject = typeof item === "object";
+              const feature = isObject ? item.feature : item;
+              const included = isObject ? item.included : true;
+
+              return (
+                <div key={i} className="flex items-center">
+                  {included ? (
+                    <Check className="h-4 w-4 text-emerald-400 mr-3 shrink-0" />
+                  ) : (
+                    <X className="h-4 w-4 text-neutral-400 mr-3 shrink-0" />
+                  )}
+                  <span className="text-sm">{feature}</span>
+                </div>
+              );
+            })}
+          </div>
+
+          {footerText && (
+            <p className="text-center text-sm text-neutral-400 mt-4 flex items-center justify-center gap-2">
+              {footerText}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
