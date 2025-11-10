@@ -1,13 +1,13 @@
 // Common utility functions and constants for subscription components
 
+import { FREE_SITE_LIMIT, STANDARD_SITE_LIMIT, STANDARD_TEAM_LIMIT } from "../../../lib/const";
 import { getStripePrices, STRIPE_TIERS } from "../../../lib/stripe";
-import { FREE_SITE_LIMIT, STANDARD_SITE_LIMIT } from "../../components/AddSite";
 
 export const EVENT_TIERS = [...STRIPE_TIERS.map(tier => tier.events), "Custom"];
 
 export const STANDARD_FEATURES = [
   `Up to ${STANDARD_SITE_LIMIT} websites`,
-  "Up to 3 team members",
+  `Up to ${STANDARD_TEAM_LIMIT} team members`,
   "Web vitals",
   "Funnels",
   "Goals",

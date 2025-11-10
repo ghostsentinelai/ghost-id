@@ -1,9 +1,9 @@
 "use client";
 
 import { Slider } from "@/components/ui/slider";
-import { CheckCircle } from "lucide-react";
-import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { getCalApi } from "@calcom/embed-react";
+import { useEffect, useState } from "react";
 import {
   DEFAULT_EVENT_LIMIT,
   FREE_SITE_LIMIT,
@@ -13,7 +13,6 @@ import {
   STANDARD_TEAM_LIMIT,
 } from "../lib/const";
 import { PricingCard } from "./PricingCard";
-import { getCalApi } from "@calcom/embed-react";
 
 // Available event tiers for the slider
 const EVENT_TIERS = [100_000, 250_000, 500_000, 1_000_000, 2_000_000, 5_000_000, 10_000_000, 20_000_000, "Custom"];
@@ -249,7 +248,7 @@ export function PricingSection() {
                 </div>
               )
             }
-            buttonText={standardPrices.custom ? "Book a call" : "Try for free"}
+            buttonText={standardPrices.custom ? "Book a call" : "Get started"}
             buttonHref={standardPrices.custom ? "https://www.rybbit.com/contact" : "https://app.rybbit.io/signup"}
             features={STANDARD_FEATURES}
             eventLocation={standardPrices.custom ? undefined : "standard"}
@@ -271,7 +270,7 @@ export function PricingSection() {
                 </div>
               )
             }
-            buttonText={proPrices.custom ? "Book a call" : "Try for free"}
+            buttonText={proPrices.custom ? "Book a call" : "Get started"}
             buttonHref={proPrices.custom ? "https://www.rybbit.com/contact" : "https://app.rybbit.io/signup"}
             features={PRO_FEATURES}
             eventLocation={proPrices.custom ? undefined : "pro"}

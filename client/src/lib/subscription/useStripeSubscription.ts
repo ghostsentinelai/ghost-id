@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth";
 import { BACKEND_URL, IS_CLOUD } from "../const";
 
-interface SubscriptionData {
+export interface SubscriptionData {
   id: string;
   planName: string;
   status: "expired" | "active" | "trialing" | "free";
