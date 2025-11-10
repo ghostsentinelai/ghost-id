@@ -26,38 +26,6 @@ export interface UmamiEvent {
   created_at: string;
 }
 
-// Worker message types
-export type WorkerMessageToWorker =
-  | {
-      type: "PARSE_START";
-      file: File;
-      earliestAllowedDate: string; // Filter events before this date (quota-based, yyyy-MM-dd)
-      latestAllowedDate: string; // Filter events after this date (quota-based, yyyy-MM-dd)
-    }
-  | {
-      type: "CANCEL";
-    };
-
-export type WorkerMessageToMain =
-  | {
-      type: "CHUNK_READY";
-      events: UmamiEvent[]; // Raw CSV rows, not transformed
-      parsed: number; // Total rows parsed so far
-      skipped: number; // Total rows skipped so far
-      errors: number; // Total parse errors so far
-    }
-  | {
-      type: "COMPLETE";
-      parsed: number; // Total rows parsed
-      skipped: number; // Total rows skipped
-      errors: number; // Total parse errors
-    }
-  | {
-      type: "ERROR";
-      message: string;
-      error?: unknown;
-    };
-
 // Batch import request (client sends raw rows to server)
 export interface BatchImportRequest {
   events: UmamiEvent[]; // Raw Umami CSV rows

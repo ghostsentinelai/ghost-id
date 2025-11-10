@@ -1,14 +1,57 @@
-// Worker manager for coordinating CSV import process
-// Manages worker lifecycle and sequential batch uploads
+// CSV import manager using PapaParse with built-in worker
+// Handles streaming, batching, and sequential uploads
 // Server handles transformation and quota checking
 
-import type { WorkerMessageToWorker, WorkerMessageToMain, ImportProgress, UmamiEvent } from "./types";
+import Papa from "papaparse";
+import { DateTime } from "luxon";
+import type { ImportProgress, UmamiEvent } from "./types";
 
 type ProgressCallback = (progress: ImportProgress) => void;
 type CompleteCallback = (success: boolean, message: string) => void;
 
+const BATCH_SIZE = 5000;
+
+const umamiHeaders = [
+  undefined,
+  "session_id",
+  undefined,
+  undefined,
+  "hostname",
+  "browser",
+  "os",
+  "device",
+  "screen",
+  "language",
+  "country",
+  "region",
+  "city",
+  "url_path",
+  "url_query",
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  "referrer_path",
+  "referrer_query",
+  "referrer_domain",
+  "page_title",
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  "event_type",
+  "event_name",
+  undefined,
+  "distinct_id",
+  "created_at",
+  undefined,
+];
+
 export class CSVWorkerManager {
-  private worker: Worker | null = null;
+  private aborted = false;
   private progress: ImportProgress = {
     status: "idle",
     parsedRows: 0,
@@ -22,6 +65,10 @@ export class CSVWorkerManager {
   private parsingComplete = false;
   private siteId: number = 0;
   private importId: string = "";
+
+  private currentBatch: UmamiEvent[] = [];
+  private earliestAllowedDate: DateTime | null = null;
+  private latestAllowedDate: DateTime | null = null;
 
   constructor(onProgress?: ProgressCallback, onComplete?: CompleteCallback) {
     this.onProgress = onProgress || null;
@@ -39,6 +86,8 @@ export class CSVWorkerManager {
     this.importId = importId;
     this.parsingComplete = false;
     this.uploadInProgress = false;
+    this.currentBatch = [];
+    this.aborted = false;
 
     this.progress = {
       status: "parsing",
@@ -48,75 +97,145 @@ export class CSVWorkerManager {
       errors: 0,
     };
 
-    // Create worker
-    this.worker = new Worker(new URL("@/workers/csv-import.worker.ts", import.meta.url), {
-      type: "module",
+    // Set up date range filter
+    this.earliestAllowedDate = DateTime.fromFormat(earliestAllowedDate, "yyyy-MM-dd", { zone: "utc" }).startOf("day");
+    this.latestAllowedDate = DateTime.fromFormat(latestAllowedDate, "yyyy-MM-dd", { zone: "utc" }).endOf("day");
+
+    if (!this.earliestAllowedDate.isValid) {
+      this.handleError(`Invalid earliest allowed date: ${earliestAllowedDate}`);
+      return;
+    }
+
+    if (!this.latestAllowedDate.isValid) {
+      this.handleError(`Invalid latest allowed date: ${latestAllowedDate}`);
+      return;
+    }
+
+    // Start parsing with PapaParse worker
+    Papa.parse<UmamiEvent>(file, {
+      worker: true,
+      header: true,
+      skipEmptyLines: "greedy",
+      delimiter: "",
+      transformHeader: (header, index) => {
+        return umamiHeaders[index] || header;
+      },
+      step: results => {
+        if (this.aborted) return;
+
+        if (results.data) {
+          this.handleParsedRow(results.data);
+        }
+        if (results.errors && results.errors.length > 0) {
+          this.progress.errors++;
+        }
+      },
+      complete: () => {
+        if (this.aborted) return;
+        this.handleParseComplete();
+      },
+      error: error => {
+        if (this.aborted) return;
+        this.handleError(error.message);
+      },
     });
 
-    // Set up message handler
-    this.worker.onmessage = (event: MessageEvent<WorkerMessageToMain>) => {
-      this.handleWorkerMessage(event.data);
-    };
-
-    // Set up error handler
-    this.worker.onerror = error => {
-      this.progress.status = "failed";
-      this.progress.errors++;
-      this.notifyProgress();
-      if (this.onComplete) {
-        this.onComplete(false, `Worker error: ${error.message}`);
-      }
-    };
-
-    // Start parsing with quota-based date range for client-side filtering
-    const message: WorkerMessageToWorker = {
-      type: "PARSE_START",
-      file,
-      earliestAllowedDate,
-      latestAllowedDate,
-    };
-
-    this.worker.postMessage(message);
     this.notifyProgress();
   }
 
-  private handleWorkerMessage(message: WorkerMessageToMain): void {
-    switch (message.type) {
-      case "CHUNK_READY":
-        // Update progress from chunk stats
-        this.progress.parsedRows = message.parsed;
-        this.progress.skippedRows = message.skipped;
-        this.progress.errors = message.errors;
+  private isDateInRange(dateStr: string): boolean {
+    const createdAt = DateTime.fromFormat(dateStr, "yyyy-MM-dd HH:mm:ss", { zone: "utc" });
+    if (!createdAt.isValid) {
+      return false;
+    }
 
-        // Upload batch immediately (sequential)
-        this.progress.status = "uploading";
-        this.notifyProgress();
-        this.uploadBatch(message.events);
-        break;
+    if (this.earliestAllowedDate && createdAt < this.earliestAllowedDate) {
+      return false;
+    }
 
-      case "COMPLETE":
-        this.parsingComplete = true;
-        this.progress.parsedRows = message.parsed;
-        this.progress.skippedRows = message.skipped;
-        this.progress.errors = message.errors;
+    if (this.latestAllowedDate && createdAt > this.latestAllowedDate) {
+      return false;
+    }
 
-        this.notifyProgress();
+    return true;
+  }
 
-        // Check if upload is complete
-        this.checkCompletion();
-        break;
+  private handleParsedRow(row: unknown): void {
+    const rawEvent = row as Record<string, unknown>;
 
-      case "ERROR":
-        this.progress.status = "failed";
-        this.progress.errors++;
-        this.notifyProgress();
-        if (this.onComplete) {
-          this.onComplete(false, message.message);
-        }
-        break;
+    const umamiEvent: UmamiEvent = {
+      session_id: String(rawEvent.session_id || ""),
+      hostname: String(rawEvent.hostname || ""),
+      browser: String(rawEvent.browser || ""),
+      os: String(rawEvent.os || ""),
+      device: String(rawEvent.device || ""),
+      screen: String(rawEvent.screen || ""),
+      language: String(rawEvent.language || ""),
+      country: String(rawEvent.country || ""),
+      region: String(rawEvent.region || ""),
+      city: String(rawEvent.city || ""),
+      url_path: String(rawEvent.url_path || ""),
+      url_query: String(rawEvent.url_query || ""),
+      referrer_path: String(rawEvent.referrer_path || ""),
+      referrer_query: String(rawEvent.referrer_query || ""),
+      referrer_domain: String(rawEvent.referrer_domain || ""),
+      page_title: String(rawEvent.page_title || ""),
+      event_type: String(rawEvent.event_type || ""),
+      event_name: String(rawEvent.event_name || ""),
+      distinct_id: String(rawEvent.distinct_id || ""),
+      created_at: String(rawEvent.created_at || ""),
+    };
 
-      default:
-        console.warn("Unknown worker message type:", message);
+    // Skip rows with missing created_at (required field)
+    if (!umamiEvent.created_at) {
+      this.progress.skippedRows++;
+      return;
+    }
+
+    // Apply quota-based date range filter
+    if (!this.isDateInRange(umamiEvent.created_at)) {
+      this.progress.skippedRows++;
+      return;
+    }
+
+    // Add to batch
+    this.currentBatch.push(umamiEvent);
+    this.progress.parsedRows++;
+
+    // Send batch when it reaches chunk size
+    if (this.currentBatch.length >= BATCH_SIZE) {
+      this.sendBatch();
+    }
+  }
+
+  private sendBatch(): void {
+    if (this.currentBatch.length > 0) {
+      const batch = this.currentBatch;
+      this.currentBatch = [];
+
+      // Upload batch (sequential)
+      this.progress.status = "uploading";
+      this.notifyProgress();
+      this.uploadBatch(batch);
+    }
+  }
+
+  private handleParseComplete(): void {
+    this.parsingComplete = true;
+
+    // Send final batch if any
+    this.sendBatch();
+
+    // Check if upload is complete
+    this.checkCompletion();
+  }
+
+  private handleError(message: string): void {
+    this.progress.status = "failed";
+    this.progress.errors++;
+    this.notifyProgress();
+    if (this.onComplete) {
+      this.onComplete(false, message);
     }
   }
 
@@ -170,9 +289,6 @@ export class CSVWorkerManager {
       if (this.onComplete) {
         this.onComplete(true, `Import completed successfully: ${this.progress.importedEvents} events imported`);
       }
-
-      // Clean up worker
-      this.terminate();
     }
   }
 
@@ -187,13 +303,6 @@ export class CSVWorkerManager {
   }
 
   terminate(): void {
-    if (this.worker) {
-      const message: WorkerMessageToWorker = {
-        type: "CANCEL",
-      };
-      this.worker.postMessage(message);
-      this.worker.terminate();
-      this.worker = null;
-    }
+    this.aborted = true;
   }
 }
