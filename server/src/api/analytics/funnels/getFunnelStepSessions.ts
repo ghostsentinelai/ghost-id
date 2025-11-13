@@ -2,7 +2,7 @@ import { FilterParams } from "@rybbit/shared";
 import { FastifyReply, FastifyRequest } from "fastify";
 import SqlString from "sqlstring";
 import { clickhouse } from "../../../db/clickhouse/clickhouse.js";
-import { getTimeStatement, patternToRegex, processResults } from "../utils.js";
+import { getTimeStatement, patternToRegex, processResults, getFilterStatement } from "../utils.js";
 import { GetSessionsResponse } from "../getSessions.js";
 
 type FunnelStep = {
@@ -58,6 +58,16 @@ export async function getFunnelStepSessions(req: FastifyRequest<GetFunnelStepSes
 
   try {
     const timeStatement = getTimeStatement(req.query);
+    let filterStatement = getFilterStatement(req.query.filters, Number(site), timeStatement);
+
+    // Transform filter statement to use extracted UTM columns instead of map access
+    // since the CTE already extracts utm_source, utm_medium, etc. as separate columns
+    filterStatement = filterStatement
+      .replace(/url_parameters\['utm_source'\]/g, "utm_source")
+      .replace(/url_parameters\['utm_medium'\]/g, "utm_medium")
+      .replace(/url_parameters\['utm_campaign'\]/g, "utm_campaign")
+      .replace(/url_parameters\['utm_term'\]/g, "utm_term")
+      .replace(/url_parameters\['utm_content'\]/g, "utm_content");
 
     // Build conditional statements for each step we need
     const stepsToCheck = mode === "reached" ? stepNumber : stepNumber + 1;
@@ -106,6 +116,7 @@ export async function getFunnelStepSessions(req: FastifyRequest<GetFunnelStepSes
       WHERE
         site_id = {siteId:Int32}
         ${timeStatement}
+        ${filterStatement}
     ),
     Step1 AS (
       SELECT DISTINCT
@@ -211,6 +222,7 @@ export async function getFunnelStepSessions(req: FastifyRequest<GetFunnelStepSes
     )
     SELECT *
     FROM AggregatedSessions
+    WHERE 1 = 1 ${filterStatement}
     LIMIT {limit:Int32} OFFSET {offset:Int32}
     `;
 

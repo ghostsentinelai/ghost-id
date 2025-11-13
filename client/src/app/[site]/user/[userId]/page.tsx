@@ -47,9 +47,10 @@ export default function UserPage() {
 
   const { data: sessionCount } = useGetUserSessionCount(userId as string);
 
-  const { data: sessionsData, isLoading: isLoadingSessions } = useGetSessions(userId as string, page, LIMIT);
-  const sessions = sessionsData?.data || [];
-  const hasNextPage = sessions.length === LIMIT;
+  const { data: sessionsData, isLoading: isLoadingSessions } = useGetSessions(userId as string, page, LIMIT + 1);
+  const allSessions = sessionsData?.data || [];
+  const hasNextPage = allSessions.length > LIMIT;
+  const sessions = allSessions.slice(0, LIMIT);
   const hasPrevPage = page > 1;
 
   const { getRegionName } = useGetRegionName();

@@ -14,9 +14,10 @@ export default function SessionsPage() {
   useSetPageTitle("Rybbit · Sessions");
   const [page, setPage] = useState(1);
 
-  const { data, isLoading } = useGetSessions(undefined, page, LIMIT);
-  const sessions = data?.data || [];
-  const hasNextPage = sessions.length === LIMIT;
+  const { data, isLoading } = useGetSessions(undefined, page, LIMIT + 1);
+  const allSessions = data?.data || [];
+  const hasNextPage = allSessions.length > LIMIT;
+  const sessions = allSessions.slice(0, LIMIT);
   const hasPrevPage = page > 1;
 
   return (

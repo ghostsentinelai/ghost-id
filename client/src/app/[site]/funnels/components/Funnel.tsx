@@ -61,7 +61,7 @@ function FunnelStepComponent({ step, index, steps, chartData, firstStep, siteId 
     time,
     mode: "reached",
     page: reachedPage,
-    limit: LIMIT,
+    limit: LIMIT + 1,
     enabled: isExpanded && currentTab === "reached",
   });
 
@@ -74,16 +74,18 @@ function FunnelStepComponent({ step, index, steps, chartData, firstStep, siteId 
     time,
     mode: "dropped",
     page: droppedPage,
-    limit: LIMIT,
+    limit: LIMIT + 1,
     enabled: isExpanded && currentTab === "dropped" && !isFirstStep,
   });
 
-  const reachedSessions = reachedData?.data || [];
-  const droppedSessions = droppedData?.data || [];
-
-  const hasNextReached = reachedSessions.length === LIMIT;
+  const allReachedSessions = reachedData?.data || [];
+  const hasNextReached = allReachedSessions.length > LIMIT;
+  const reachedSessions = allReachedSessions.slice(0, LIMIT);
   const hasPrevReached = reachedPage > 1;
-  const hasNextDropped = droppedSessions.length === LIMIT;
+
+  const allDroppedSessions = droppedData?.data || [];
+  const hasNextDropped = allDroppedSessions.length > LIMIT;
+  const droppedSessions = allDroppedSessions.slice(0, LIMIT);
   const hasPrevDropped = droppedPage > 1;
 
   const toggleExpansion = () => {

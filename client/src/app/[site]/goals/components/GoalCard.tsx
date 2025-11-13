@@ -42,7 +42,7 @@ export default function GoalCard({ goal, siteId }: GoalCardProps) {
     siteId,
     time,
     page,
-    limit: LIMIT,
+    limit: LIMIT + 1,
     enabled: isExpanded,
   });
 
@@ -55,9 +55,9 @@ export default function GoalCard({ goal, siteId }: GoalCardProps) {
     }
   };
 
-  const sessions = sessionsData?.data || [];
-  const totalSessions = sessions.length;
-  const hasNextPage = totalSessions === LIMIT; // If we got 25 results, there might be more
+  const allSessions = sessionsData?.data || [];
+  const hasNextPage = allSessions.length > LIMIT;
+  const sessions = allSessions.slice(0, LIMIT);
   const hasPrevPage = page > 1;
 
   const toggleExpansion = () => {
