@@ -166,6 +166,7 @@ export function CustomHeader() {
               <a href="https://app.rybbit.io" target="_blank" rel="noopener noreferrer" className="block w-full">
                 <button
                   onClick={() => trackAdEvent("login", { location: "header" })}
+                  data-rybbit-event="login"
                   className="w-full bg-neutral-800 hover:bg-neutral-700 text-white text-sm font-medium px-3 py-2 rounded-md border border-neutral-600"
                 >
                   Login
