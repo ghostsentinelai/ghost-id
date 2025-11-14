@@ -157,7 +157,10 @@ export function PricingCard({ isLoggedIn }: { isLoggedIn: boolean }) {
 
         <div className="flex justify-between text-xs text-neutral-600 dark:text-neutral-400">
           {EVENT_TIERS.map((tier, index) => (
-            <span key={index} className={cn(eventLimitIndex === index && "font-bold text-emerald-600 dark:text-emerald-400")}>
+            <span
+              key={index}
+              className={cn(eventLimitIndex === index && "font-bold text-emerald-600 dark:text-emerald-400")}
+            >
               {formatEventTier(tier)}
             </span>
           ))}
@@ -167,7 +170,7 @@ export function PricingCard({ isLoggedIn }: { isLoggedIn: boolean }) {
       {/* Cards section */}
       <div className="grid min-[1100px]:grid-cols-4 min-[600px]:grid-cols-2 min-[400px]:grid-cols-1 gap-6 max-w-6xl mx-auto">
         {/* Free Plan Card */}
-        <div className="bg-neutral-50 dark:bg-neutral-800/15 rounded-xl border border-neutral-200 dark:border-neutral-700/60 overflow-hidden text-neutral-900 dark:text-neutral-300">
+        <div className="bg-neutral-100/30 dark:bg-neutral-800/15 rounded-xl border border-neutral-150 dark:border-neutral-800/60 overflow-hidden text-neutral-600 dark:text-neutral-300 shadow:lg">
           <div className="p-6">
             <div className="mb-4">
               <h3 className="text-xl font-bold mb-2">Free</h3>
@@ -185,7 +188,7 @@ export function PricingCard({ isLoggedIn }: { isLoggedIn: boolean }) {
             {/* Current plan button */}
             <button
               disabled
-              className="w-full bg-neutral-200 dark:bg-neutral-700/50 text-neutral-500 dark:text-neutral-400 font-medium px-5 py-3 rounded-xl border border-neutral-300 dark:border-neutral-600/50 cursor-not-allowed opacity-50"
+              className="w-full bg-neutral-300 dark:bg-neutral-700 text-neutral-500 dark:text-neutral-400 font-medium px-5 py-3 rounded-xl border border-neutral-200 dark:border-neutral-600 cursor-not-allowed opacity-50"
             >
               Current Plan
             </button>
@@ -194,7 +197,7 @@ export function PricingCard({ isLoggedIn }: { isLoggedIn: boolean }) {
             <div className="space-y-3 mt-6">
               {FREE_FEATURES.map((feature, i) => (
                 <div key={i} className="flex items-center">
-                  <Check className="h-4 w-4 text-emerald-400 mr-3 shrink-0" />
+                  <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mr-3 shrink-0" />
                   <span className="text-sm">{feature}</span>
                 </div>
               ))}
@@ -203,11 +206,13 @@ export function PricingCard({ isLoggedIn }: { isLoggedIn: boolean }) {
         </div>
 
         {/* Standard Plan Card */}
-        <div className="bg-neutral-100 dark:bg-neutral-800/50 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden text-neutral-900 dark:text-neutral-100">
+        <div className="bg-white dark:bg-neutral-800/50 rounded-xl border border-neutral-150 dark:border-neutral-800/90 overflow-hidden text-neutral-900 dark:text-neutral-100 shadow-lg">
           <div className="p-6">
             <div className="mb-4">
               <h3 className="text-xl font-bold mb-2">Standard</h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 h-10">Everything you need to get started as a small business</p>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 h-10">
+                Everything you need to get started as a small business
+              </p>
             </div>
 
             {/* Price display */}
@@ -237,7 +242,7 @@ export function PricingCard({ isLoggedIn }: { isLoggedIn: boolean }) {
             <div className="space-y-3 mt-6">
               {STANDARD_FEATURES.map((feature, i) => (
                 <div key={i} className="flex items-center">
-                  <Check className="h-4 w-4 text-emerald-400 mr-3 shrink-0" />
+                  <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mr-3 shrink-0" />
                   <span className="text-sm">{feature}</span>
                 </div>
               ))}
@@ -246,16 +251,18 @@ export function PricingCard({ isLoggedIn }: { isLoggedIn: boolean }) {
         </div>
 
         {/* Pro Plan Card */}
-        <div className="bg-white dark:bg-neutral-800/100 rounded-xl border-2 border-emerald-500 overflow-hidden text-neutral-900 dark:text-neutral-100">
+        <div className="bg-white dark:bg-neutral-800/100 rounded-xl border-2 border-emerald-500 overflow-hidden text-neutral-900 dark:text-neutral-100 shadow-lg">
           <div className="p-6">
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <h3 className="text-xl font-bold">Pro</h3>
-                <span className="px-2 py-0.5 text-xs font-semibold bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/30">
+                <span className="px-2 py-0.5 text-xs font-semibold bg-emerald-500/30 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-full border border-emerald-500/40 dark:border-emerald-500/30">
                   Recommended
                 </span>
               </div>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 h-10">Advanced features for professional teams</p>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 h-10">
+                Advanced features for professional teams
+              </p>
             </div>
 
             {/* Price display */}
@@ -285,7 +292,7 @@ export function PricingCard({ isLoggedIn }: { isLoggedIn: boolean }) {
             <div className="space-y-3 mt-6">
               {PRO_FEATURES.map((feature, i) => (
                 <div key={i} className="flex items-center">
-                  <Check className="h-4 w-4 text-emerald-400 mr-3 shrink-0" />
+                  <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mr-3 shrink-0" />
                   <span className="text-sm">{feature}</span>
                 </div>
               ))}
@@ -294,11 +301,13 @@ export function PricingCard({ isLoggedIn }: { isLoggedIn: boolean }) {
         </div>
 
         {/* Enterprise Plan Card */}
-        <div className="bg-neutral-100 dark:bg-neutral-800/50 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden text-neutral-900 dark:text-neutral-100">
+        <div className="bg-white dark:bg-neutral-800/50 rounded-xl border border-neutral-150 dark:border-neutral-800/90 overflow-hidden text-neutral-900 dark:text-neutral-100 shadow-lg">
           <div className="p-6">
             <div className="mb-4">
               <h3 className="text-xl font-bold mb-2">Enterprise</h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 h-10">Advanced features for enterprise teams</p>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 h-10">
+                Advanced features for enterprise teams
+              </p>
             </div>
 
             {/* Price display */}
@@ -317,7 +326,7 @@ export function PricingCard({ isLoggedIn }: { isLoggedIn: boolean }) {
             <div className="space-y-3 mt-6">
               {ENTERPRISE_FEATURES.map((feature, i) => (
                 <div key={i} className="flex items-center">
-                  <Check className="h-4 w-4 text-emerald-400 mr-3 shrink-0" />
+                  <Check className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mr-3 shrink-0" />
                   <span className="text-sm">{feature}</span>
                 </div>
               ))}
