@@ -128,7 +128,7 @@ export function PreviousChart({
       animate={false}
       // motionConfig="stiff"
       enableSlices={"x"}
-      colors={[theme === "dark" ? "hsl(var(--neutral-700))" : "hsl(var(--neutral-200))"]}
+      colors={[theme === "dark" ? "hsl(var(--neutral-700))" : "hsl(var(--neutral-100))"]}
     />
   );
 }

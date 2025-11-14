@@ -32,7 +32,7 @@ export function Referrers() {
                 <TabsTrigger value="utm_content">Content</TabsTrigger>
               </TabsList>
             </div>
-            <div className="w-8">
+            <div className="w-7">
               <Button size="smIcon" onClick={() => setExpanded(!expanded)}>
                 <Expand className="w-4 h-4" />
               </Button>

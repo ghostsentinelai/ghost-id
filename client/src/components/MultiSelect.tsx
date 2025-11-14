@@ -33,7 +33,7 @@ export const MultiSelect = forwardRef<any, MultiSelectProps<any>>(({ className, 
         placeholder: () => "text-muted-foreground",
         input: () => "text-sm",
         menu: () =>
-          "mt-2 rounded-md border border-neutral-200 bg-white text-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-50 shadow-md py-1",
+          "mt-2 rounded-md border border-neutral-150 bg-white text-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-50 shadow-md py-1",
         menuList: () => "text-sm",
         option: ({ isFocused, isSelected }) =>
           cn(

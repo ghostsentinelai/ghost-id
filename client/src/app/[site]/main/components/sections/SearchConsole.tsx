@@ -78,7 +78,9 @@ function DataList({ dimension, label, renderName, expanded, close }: DataListPro
                   </div>
                   <div className="flex flex-row gap-2 z-10">
                     <div className="w-28 text-right pr-1 flex flex-row gap-2 items-center justify-end">
-                      <div className="hidden group-hover:block text-neutral-600 dark:text-neutral-400">{round(percentage * 100, 1)}%</div>
+                      <div className="hidden group-hover:block text-neutral-600 dark:text-neutral-400">
+                        {round(percentage * 100, 1)}%
+                      </div>
                       {formatter(item.clicks)}
                     </div>
                     <div className="w-24 text-right pr-1">{formatter(item.impressions)}</div>
@@ -130,7 +132,7 @@ export function SearchConsole() {
           <TabsTrigger value="devices">Devices</TabsTrigger>
         </TabsList>
       </div>
-      <div className="w-8">
+      <div className="w-7">
         <Button size="smIcon" onClick={() => setExpanded(!expanded)}>
           <Expand className="w-4 h-4" />
         </Button>
