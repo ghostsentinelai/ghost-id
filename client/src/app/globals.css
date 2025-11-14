@@ -364,7 +364,7 @@ body {
     --dataviz-2: 230 100% 92%;
   }
 
-  /* Dark scrollbar styles */
+  /* Light mode scrollbar styles */
   /* For Webkit browsers (Chrome, Safari, newer Edge) */
   ::-webkit-scrollbar {
     width: 10px;
@@ -372,23 +372,44 @@ body {
   }
 
   ::-webkit-scrollbar-track {
-    background: hsl(0 0% 9%);
+    background: hsl(0 0% 90%);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(0 0% 35%);
+    background: hsl(0 0% 70%);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(0 0% 40%);
+    background: hsl(0 0% 60%);
   }
 
   /* For Firefox */
   * {
     scrollbar-width: thin;
-    scrollbar-color: hsl(0 0% 35%) hsl(0 0% 9%);
+    scrollbar-color: hsl(0 0% 70%) hsl(0 0% 90%);
+  }
+
+  .dark {
+    /* Dark mode scrollbar styles */
+    /* For Webkit browsers */
+    ::-webkit-scrollbar-track {
+      background: hsl(0 0% 9%);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: hsl(0 0% 35%);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: hsl(0 0% 40%);
+    }
+
+    /* For Firefox */
+    * {
+      scrollbar-color: hsl(0 0% 35%) hsl(0 0% 9%);
+    }
   }
 
   /* Custom scrollbar class for specific elements */
