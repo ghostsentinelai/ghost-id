@@ -180,7 +180,8 @@ function PageviewItem({
                       variant="outline"
                       className="px-1.5 py-0 h-5 text-xs bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium"
                     >
-                      <span className="text-neutral-600 dark:text-neutral-300 font-light mr-1">text:</span> {String(item.props.text)}
+                      <span className="text-neutral-600 dark:text-neutral-300 font-light mr-1">text:</span>{" "}
+                      {String(item.props.text)}
                     </Badge>
                   ) : null}
                   {item.props.target ? (
@@ -188,7 +189,8 @@ function PageviewItem({
                       variant="outline"
                       className="px-1.5 py-0 h-5 text-xs bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium"
                     >
-                      <span className="text-neutral-600 dark:text-neutral-300 font-light mr-1">target:</span> {String(item.props.target)}
+                      <span className="text-neutral-600 dark:text-neutral-300 font-light mr-1">target:</span>{" "}
+                      {String(item.props.target)}
                     </Badge>
                   ) : null}
                 </span>
@@ -207,7 +209,8 @@ function PageviewItem({
                       variant="outline"
                       className="px-1.5 py-0 h-5 text-xs bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium"
                     >
-                      <span className="text-neutral-600 dark:text-neutral-300 font-light mr-1">message:</span> {String(item.props.message)}
+                      <span className="text-neutral-600 dark:text-neutral-300 font-light mr-1">message:</span>{" "}
+                      {String(item.props.message)}
                     </Badge>
                   )}
 
@@ -323,7 +326,7 @@ export function SessionDetails({ session, userId }: SessionDetailsProps) {
       ) : sessionDetailsData?.pages[0]?.data ? (
         <Tabs defaultValue="timeline" className="mt-4">
           <div className="flex justify-between items-center mb-6">
-            <TabsList className="bg-neutral-200 dark:bg-neutral-800">
+            <TabsList>
               <TabsTrigger value="timeline">Timeline</TabsTrigger>
               <TabsTrigger value="info">Session Info</TabsTrigger>
             </TabsList>
@@ -425,7 +428,9 @@ export function SessionDetails({ session, userId }: SessionDetailsProps) {
 
                     {sessionDetails?.country && (
                       <div className="flex items-center gap-2 text-sm">
-                        <span className="font-medium text-neutral-600 dark:text-neutral-300 min-w-[80px]">Country:</span>
+                        <span className="font-medium text-neutral-600 dark:text-neutral-300 min-w-[80px]">
+                          Country:
+                        </span>
                         <div className="flex items-center gap-1 text-neutral-500 dark:text-neutral-400">
                           <CountryFlag country={sessionDetails.country} />
                           <span>{getCountryName(sessionDetails.country)}</span>

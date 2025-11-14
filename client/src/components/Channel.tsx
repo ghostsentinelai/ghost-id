@@ -139,7 +139,7 @@ export function Channel({ channel, referrer }: { channel: string; referrer: stri
   if (domain) {
     const displayName = getDisplayName(domain);
     return (
-      <Badge className="flex items-center gap-1 bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-gray-300">
+      <Badge className="flex items-center gap-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-gray-300">
         <Favicon domain={domain} className="w-4 h-4" />
         <span>{displayName}</span>
       </Badge>
@@ -147,7 +147,7 @@ export function Channel({ channel, referrer }: { channel: string; referrer: stri
   }
 
   return (
-    <Badge className="flex items-center gap-1 bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-gray-300">
+    <Badge className="flex items-center gap-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-gray-300">
       {getChannelIcon(channel)}
       <span>{channel}</span>
     </Badge>

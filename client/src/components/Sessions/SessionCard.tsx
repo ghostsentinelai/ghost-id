@@ -78,7 +78,7 @@ export function SessionCard({ session, onClick, userId, expandedByDefault }: Ses
             />
             <Tooltip>
               <TooltipTrigger asChild>
-                <Badge className="flex items-center gap-1 bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-gray-300">
+                <Badge className="flex items-center gap-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-gray-300">
                   <PageviewIcon />
                   <span>{formatter(session.pageviews)}</span>
                 </Badge>
@@ -87,7 +87,7 @@ export function SessionCard({ session, onClick, userId, expandedByDefault }: Ses
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Badge className="flex items-center gap-1 bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-gray-300">
+                <Badge className="flex items-center gap-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-gray-300">
                   <EventIcon />
                   <span>{formatter(session.events)}</span>
                 </Badge>
@@ -177,7 +177,10 @@ export const SessionCardSkeleton = memo(() => {
 
   // Create multiple skeletons for a realistic loading state
   const skeletons = Array.from({ length: 25 }).map((_, index) => (
-    <div className="rounded-lg bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 overflow-hidden" key={index}>
+    <div
+      className="rounded-lg bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 overflow-hidden"
+      key={index}
+    >
       <div className="p-3">
         <div className="flex items-center gap-2">
           {/* Avatar and User ID */}
