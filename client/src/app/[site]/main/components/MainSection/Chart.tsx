@@ -11,6 +11,7 @@ import { APIResponse } from "../../../../../api/types";
 import { Time } from "../../../../../components/DateSelector/types";
 import { formatSecondsAsMinutesAndSeconds, formatter } from "../../../../../lib/utils";
 import { userLocale, hour12, formatChartDateTime } from "../../../../../lib/dateTimeUtils";
+import { ChartTooltip } from "../../../../../components/charts/ChartTooltip";
 
 const getMax = (time: Time, bucket: TimeBucket) => {
   const now = DateTime.now();
@@ -324,7 +325,7 @@ export function Chart({
         const diffPercentage = previousY ? (diff / previousY) * 100 : null;
 
         return (
-          <div className="text-sm bg-white dark:bg-neutral-850 rounded-lg border border-neutral-100 dark:border-neutral-750 shadow-md">
+          <ChartTooltip>
             {diffPercentage !== null && (
               <div
                 className="text-base font-medium px-2 pt-1.5 pb-1"
@@ -356,7 +357,7 @@ export function Chart({
                 </div>
               )}
             </div>
-          </div>
+          </ChartTooltip>
         );
       }}
       layers={[

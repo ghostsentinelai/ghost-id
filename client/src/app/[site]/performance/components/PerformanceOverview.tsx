@@ -53,7 +53,7 @@ const Stat = ({
   return (
     <div
       className={cn(
-        "flex flex-col cursor-pointer border-r border-neutral-300 dark:border-neutral-800 last:border-r-0 text-nowrap",
+        "flex flex-col cursor-pointer border-r border-neutral-100 dark:border-neutral-800 last:border-r-0 text-nowrap",
         selectedPerformanceMetric === id && "bg-neutral-50 dark:bg-neutral-850"
       )}
       onClick={() => setSelectedPerformanceMetric(id)}
