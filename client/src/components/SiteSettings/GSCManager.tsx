@@ -1,14 +1,13 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useGSCConnection, useConnectGSC, useDisconnectGSC } from "@/api/gsc/useGSCConnection";
-import { toast } from "sonner";
+import { useConnectGSC, useDisconnectGSC, useGSCConnection } from "@/api/gsc/useGSCConnection";
 import { ConfirmationModal } from "@/components/ConfirmationModal";
-import { useStore } from "@/lib/store";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { SiGoogle } from "@icons-pack/react-simple-icons";
+import { ExternalLink } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface GSCManagerProps {
   disabled?: boolean;

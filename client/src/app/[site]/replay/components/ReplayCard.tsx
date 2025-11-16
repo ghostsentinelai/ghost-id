@@ -79,9 +79,9 @@ export function ReplayCard({ replay }: { replay: SessionReplayListItem }) {
   return (
     <div
       className={cn(
-        "bg-neutral-900 border-b border-neutral-800 p-3 hover:bg-neutral-800/80 transition-colors cursor-pointer w-[200px] group relative",
+        "bg-white dark:bg-neutral-900 border-b border-neutral-100 dark:border-neutral-800 p-3 hover:bg-neutral-50 dark:hover:bg-neutral-800/80 transition-colors cursor-pointer w-[200px] group relative",
         // "bg-neutral-900 border border-neutral-800 rounded-lg p-3 hover:bg-neutral-800/50 transition-colors cursor-pointer",
-        sessionId === replay.session_id && "bg-neutral-800/80"
+        sessionId === replay.session_id && "bg-neutral-100 dark:bg-neutral-800/80"
       )}
       onClick={() => {
         setSessionId(replay.session_id);
@@ -91,9 +91,9 @@ export function ReplayCard({ replay }: { replay: SessionReplayListItem }) {
         {/* <div className="text-xs text-neutral-500">
           {replay.user_id.slice(0, 12)}...
         </div> */}
-        <div className="text-xs  text-neutral-400">{startTime.toRelative()}</div>
+        <div className="text-xs text-neutral-600 dark:text-neutral-400">{startTime.toRelative()}</div>
         {duration && (
-          <div className="flex items-center gap-1 text-neutral-400 text-xs">
+          <div className="flex items-center gap-1 text-neutral-600 dark:text-neutral-400 text-xs">
             <Clock className="w-3 h-3" />
             {formatDuration(duration)}
           </div>
@@ -105,7 +105,7 @@ export function ReplayCard({ replay }: { replay: SessionReplayListItem }) {
               variant="ghost"
               size="sm"
               className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6 p-0 hover:bg-red-500/20 hover:text-red-400"
-              onClick={(e) => {
+              onClick={e => {
                 e.stopPropagation();
                 setIsDialogOpen(true);
               }}
@@ -113,7 +113,7 @@ export function ReplayCard({ replay }: { replay: SessionReplayListItem }) {
               <Trash2 className="w-3 h-3" />
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent onClick={(e) => e.stopPropagation()}>
+          <AlertDialogContent onClick={e => e.stopPropagation()}>
             <AlertDialogHeader>
               <AlertDialogTitle>Delete Session Replay</AlertDialogTitle>
               <AlertDialogDescription>
@@ -122,10 +122,10 @@ export function ReplayCard({ replay }: { replay: SessionReplayListItem }) {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel onClick={(e) => e.stopPropagation()}>Cancel</AlertDialogCancel>
+              <AlertDialogCancel onClick={e => e.stopPropagation()}>Cancel</AlertDialogCancel>
               <AlertDialogAction
                 variant="destructive"
-                onClick={(e) => {
+                onClick={e => {
                   e.stopPropagation();
                   handleDelete();
                 }}
@@ -138,11 +138,11 @@ export function ReplayCard({ replay }: { replay: SessionReplayListItem }) {
         </AlertDialog>
       </div>
 
-      <div className="text-xs text-neutral-200 truncate mb-2">
+      <div className="text-xs text-neutral-900 dark:text-neutral-200 truncate mb-2">
         {replay.page_url.replace("https://", "").replace("http://", "").replace("www.", "")}
       </div>
 
-      <div className="flex items-center gap-2 text-sm text-neutral-400">
+      <div className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
         <CountryFlagTooltipIcon country={replay.country} city={replay.city} region={replay.region} />
         <BrowserTooltipIcon browser={replay.browser} browser_version={replay.browser_version} />
         <OperatingSystemTooltipIcon
@@ -155,7 +155,10 @@ export function ReplayCard({ replay }: { replay: SessionReplayListItem }) {
           screen_height={replay.screen_height}
         />
 
-        <Badge variant="outline" className="flex items-center gap-1 bg-neutral-800 text-gray-300">
+        <Badge
+          variant="outline"
+          className="flex items-center gap-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300"
+        >
           <MousePointerClick className="w-4 h-4 text-amber-500" />
           <span>{formatter(replay.event_count)}</span>
         </Badge>
@@ -166,7 +169,7 @@ export function ReplayCard({ replay }: { replay: SessionReplayListItem }) {
 
 export function ReplayCardSkeleton() {
   return (
-    <div className="bg-neutral-900 border-b border-neutral-800 p-3 hover:bg-neutral-800/80 transition-colors">
+    <div className="bg-white dark:bg-neutral-900 border-b border-neutral-100 dark:border-neutral-800 p-3 hover:bg-neutral-50 dark:hover:bg-neutral-800/80 transition-colors">
       {/* Time and duration row */}
       <div className="flex items-center gap-2 mb-1">
         <Skeleton className="h-3 w-16" />

@@ -45,7 +45,7 @@ export function ShareSite() {
               <Input
                 value={`${globalThis.location.protocol}//${globalThis.location.host}/${site}/${privateLink?.privateLinkKey}`}
                 readOnly
-                className="rounded-r-none bg-neutral-900"
+                className="rounded-r-none bg-white dark:bg-neutral-900"
               />
               <Button
                 size="icon"
@@ -60,7 +60,7 @@ export function ShareSite() {
               </Button>
             </div>
             <div
-              className="text-xs text-neutral-500 mt-1 cursor-pointer hover:text-neutral-400"
+              className="text-xs text-neutral-500 dark:text-neutral-500 mt-1 cursor-pointer hover:text-neutral-600 dark:hover:text-neutral-400"
               onClick={() => {
                 revokePrivateLinkKey(Number(site));
                 toast.success("Private link revoked");
@@ -70,7 +70,7 @@ export function ShareSite() {
             </div>
           </>
         )}
-        <span className="text-xs text-neutral-300 mt-2">
+        <span className="text-xs text-neutral-600 dark:text-neutral-300 mt-2">
           Generate a private link to share a read-only view of this dashboard with your team.
         </span>
       </DropdownMenuContent>

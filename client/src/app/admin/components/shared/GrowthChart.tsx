@@ -7,6 +7,7 @@ import { nivoTheme } from "@/lib/nivo";
 import { formatter } from "@/lib/utils";
 import { DateTime } from "luxon";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { ChartTooltip } from "@/components/charts/ChartTooltip";
 
 interface GrowthChartProps {
   data?: Array<{ createdAt: string }>;
@@ -47,11 +48,11 @@ export function GrowthChart({ data, color = "#3b82f6", title }: GrowthChartProps
   }, [data]);
 
   if (data === undefined) {
-    return <div className="h-64 flex items-center justify-center text-neutral-400 text-sm">Loading...</div>;
+    return <div className="h-64 flex items-center justify-center text-neutral-500 dark:text-neutral-400 text-sm">Loading...</div>;
   }
 
   if (!data || data.length === 0) {
-    return <div className="h-64 flex items-center justify-center text-neutral-400 text-sm">No data available</div>;
+    return <div className="h-64 flex items-center justify-center text-neutral-500 dark:text-neutral-400 text-sm">No data available</div>;
   }
 
   return (
@@ -109,16 +110,18 @@ export function GrowthChart({ data, color = "#3b82f6", title }: GrowthChartProps
           const currentTime = DateTime.fromSQL(point.data.x as string);
 
           return (
-            <div className="text-sm bg-neutral-850 p-3 rounded-md min-w-[100px] border border-neutral-750">
-              <div className="font-medium mb-1">{point.data.currentTime.toLocaleString(DateTime.DATE_SHORT)}</div>
-              <div className="flex justify-between gap-4 text-sm">
-                <div className="flex items-center gap-2 text-neutral-300">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: point.seriesColor }} />
-                  <span>New {title}</span>
+            <ChartTooltip>
+              <div className="p-3 min-w-[100px]">
+                <div className="font-medium mb-1">{point.data.currentTime.toLocaleString(DateTime.DATE_SHORT)}</div>
+                <div className="flex justify-between gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: point.seriesColor }} />
+                    <span>New {title}</span>
+                  </div>
+                  <div>{formatter(Number(point.data.yFormatted))}</div>
                 </div>
-                <div>{formatter(Number(point.data.yFormatted))}</div>
               </div>
-            </div>
+            </ChartTooltip>
           );
         }}
       />

@@ -20,6 +20,7 @@ import { authClient } from "../../../lib/auth";
 import { IS_CLOUD } from "../../../lib/const";
 import { userStore } from "../../../lib/userStore";
 import { cn, isValidDomain, normalizeDomain } from "../../../lib/utils";
+import { RybbitTextLogo } from "../../../components/RybbitLogo";
 
 // Animation variants for step transitions
 const contentVariants = {
@@ -330,9 +331,7 @@ export default function AppSumoSignupPage() {
         return (
           <motion.div initial="hidden" animate="visible" variants={contentVariants}>
             <h2 className="text-2xl font-semibold mb-2">Add your site (optional)</h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              You can always add sites later from your dashboard
-            </p>
+            <p className="text-sm text-muted-foreground mb-6">You can always add sites later from your dashboard</p>
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="domain">Website Domain</Label>
@@ -394,7 +393,7 @@ export default function AppSumoSignupPage() {
         {/* Logo and title above the card */}
         <div className="relative z-10 mb-6 text-center">
           <a href="https://rybbit.com" target="_blank" className="inline-block mb-2">
-            <Image src="/rybbit-text.svg" alt="Rybbit" width={150} height={34} />
+            <RybbitTextLogo />
           </a>
           <h1 className="text-lg text-neutral-300">AppSumo License Activation</h1>
         </div>

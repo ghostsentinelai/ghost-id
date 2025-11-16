@@ -77,7 +77,7 @@ export function NewFilterButton({ availableFilters }: { availableFilters?: Filte
             />
           ))}
         </div>
-        <div className="flex justify-between border-t border-neutral-750 p-3">
+        <div className="flex justify-between border-t border-neutral-200 dark:border-neutral-750 p-3">
           <Button variant={"ghost"} onClick={() => addLocalFilter()} size={"sm"} className="gap-1">
             <Plus className="w-3 h-3" />
             Add Filter

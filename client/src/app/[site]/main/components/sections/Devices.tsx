@@ -31,7 +31,7 @@ export function Devices() {
                 <TabsTrigger value="dimensions">Screen Dimensions</TabsTrigger>
               </TabsList>
             </div>
-            <div className="w-8">
+            <div className="w-7">
               <Button size="smIcon" onClick={() => setExpanded(!expanded)}>
                 <Expand className="w-4 h-4" />
               </Button>

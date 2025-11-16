@@ -18,7 +18,6 @@ import { DEFAULT_EVENT_LIMIT } from "../../lib/const";
 
 const tilt_wrap = Tilt_Warp({
   subsets: ["latin"],
-  weight: "400",
 });
 
 // FAQ Structured Data
@@ -131,7 +130,7 @@ export default function HomePage() {
 
         <h1
           className={cn(
-            "text-4xl md:text-5xl lg:text-7xl font-semibold  px-4 tracking-tight max-w-4xl text-center text-neutral-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-white dark:via-gray-100 dark:to-gray-400",
+            "text-4xl md:text-5xl lg:text-7xl px-4 tracking-tight max-w-4xl text-center text-neutral-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-white dark:via-gray-100 dark:to-gray-400",
             tilt_wrap.className
           )}
         >
@@ -173,7 +172,7 @@ export default function HomePage() {
               target="_blank"
               rel="noopener noreferrer"
               eventProps={{ location: "hero", button_text: "Live demo" }}
-              className="w-full whitespace-nowrap sm:w-auto bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white font-medium px-6 py-3 rounded-lg border border-neutral-400 dark:border-neutral-600 transform hover:-translate-y-0.5 transition-all duration-200 hover:border-neutral-500 dark:hover:border-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-opacity-50 cursor-pointer"
+              className="w-full whitespace-nowrap sm:w-auto bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white font-medium px-6 py-3 rounded-lg transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-opacity-50 cursor-pointer"
             >
               Live demo
             </TrackedButton>
@@ -201,13 +200,13 @@ export default function HomePage() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/3 -translate-y-1/3 w-[350px] h-[350px] bg-sky-400/15 dark:bg-sky-400/20 rounded-full blur-[75px] opacity-50 dark:opacity-40"></div>
 
           {/* Iframe container with responsive visibility */}
-          <div className="relative z-10 rounded-lg overflow-hidden border-8 border-neutral-200/50 dark:border-neutral-100/5 shadow-2xl shadow-neutral-900/20 dark:shadow-emerald-900/10">
+          <div className="relative z-10 rounded-2xl overflow-hidden bg-neutral-400/10 dark:bg-neutral-100/5 border-8 shadow-2xl shadow-neutral-900/20 dark:shadow-emerald-900/10">
             {/* Remove mobile message and show iframe on all devices */}
             <iframe
-              src="https://demo.rybbit.com/21/globe?timeMode=range&wellKnown=last-7-days&bucket=day&stat=users"
+              src="https://demo.rybbit.com/1/main"
               width="1300"
               height="750"
-              className="w-full h-[600px] md:h-[700px] lg:h-[750px]"
+              className="w-full h-[600px] md:h-[700px] lg:h-[750px] rounded-xl"
               style={{ border: "none" }}
               title="Rybbit Analytics Demo"
             ></iframe>
@@ -294,7 +293,7 @@ export default function HomePage() {
                   alt="DTelecom"
                   width={120}
                   height={40}
-                  className="opacity-40 hover:opacity-70 dark:opacity-60 dark:hover:opacity-100 transition-opacity grayscale invert dark:invert-0 dark:grayscale-0"
+                  className="opacity-40 hover:opacity-70 dark:opacity-60 dark:hover:opacity-100 transition-opacity grayscale invert dark:invert-0"
                 />
               </div>
 
@@ -305,7 +304,7 @@ export default function HomePage() {
                     alt="DPM.lol"
                     width={120}
                     height={40}
-                    className="opacity-40 hover:opacity-70 dark:opacity-60 dark:hover:opacity-100 transition-opacity grayscale invert dark:invert-0 dark:grayscale-0"
+                    className="opacity-40 hover:opacity-70 dark:opacity-60 dark:hover:opacity-100 transition-opacity grayscale invert dark:invert-0"
                   />
                 </Link>
               </div>
@@ -364,7 +363,7 @@ export default function HomePage() {
               <TweetCard id="1920899082253434950" className="break-inside-avoid mb-4" />
               <TweetCard id="1982378431166963982" className="break-inside-avoid mb-4" />
               <TweetCard id="1927817460993884321" className="break-inside-avoid mb-4" />
-              <TweetCard id="1971933281324355679" className="break-inside-avoid mb-4" />
+              {/* <TweetCard id="1971933281324355679" className="break-inside-avoid mb-4" /> */}
             </div>
           </div>
         </section>

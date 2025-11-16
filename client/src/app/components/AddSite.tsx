@@ -151,7 +151,7 @@ export function AddSite({ trigger, disabled }: { trigger?: React.ReactNode; disa
 
           <div className="grid gap-4 py-2">
             <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="domain" className="text-sm font-medium text-white">
+              <Label htmlFor="domain" className="text-sm font-medium">
                 Domain
               </Label>
               <Input
@@ -164,7 +164,7 @@ export function AddSite({ trigger, disabled }: { trigger?: React.ReactNode; disa
             {/* Public Analytics Setting */}
             <div className="flex items-center justify-between">
               <div>
-                <Label htmlFor="isPublic" className="text-sm font-medium text-white">
+                <Label htmlFor="isPublic" className="text-sm font-medium">
                   Public Analytics
                 </Label>
                 <p className="text-xs text-muted-foreground mt-1">
@@ -177,7 +177,7 @@ export function AddSite({ trigger, disabled }: { trigger?: React.ReactNode; disa
             {/* User ID Salting Setting */}
             <div className="flex items-center justify-between">
               <div>
-                <Label htmlFor="saltUserIds" className="text-sm font-medium text-white">
+                <Label htmlFor="saltUserIds" className="text-sm font-medium">
                   Enable User ID Salting
                 </Label>
                 <p className="text-xs text-muted-foreground mt-1">

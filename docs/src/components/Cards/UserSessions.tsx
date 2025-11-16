@@ -45,8 +45,8 @@ export function UserSessions() {
           {/* Event 1 */}
           <div className="flex mb-2">
             <div className="relative flex-shrink-0">
-              <div className="absolute top-7 left-3.5 w-[1px] bg-neutral-400 dark:bg-neutral-700 h-[calc(100%-16px)]" />
-              <div className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-900/30 border border-blue-500/50">
+              <div className="absolute top-7 left-3.5 w-[1px] bg-neutral-200 dark:bg-neutral-700 h-[calc(100%-16px)]" />
+              <div className="flex items-center justify-center w-7 h-7 rounded-full bg-neutral-50 border border-neutral-200 dark:bg-neutral-600/25 dark:border-neutral-600/25">
                 <span className="text-xs font-medium">1</span>
               </div>
             </div>
@@ -70,8 +70,8 @@ export function UserSessions() {
           {/* Event 2 */}
           <div className="flex mb-2">
             <div className="relative flex-shrink-0">
-              <div className="absolute top-7 left-3.5 w-[1px] bg-neutral-400 dark:bg-neutral-700 h-[calc(100%-16px)]" />
-              <div className="flex items-center justify-center w-7 h-7 rounded-full bg-amber-900/30 border border-amber-500/50">
+              <div className="absolute top-7 left-3.5 w-[1px] bg-neutral-300 dark:bg-neutral-700 h-[calc(100%-16px)]" />
+              <div className="flex items-center justify-center w-7 h-7 rounded-full bg-neutral-50 border border-neutral-200 dark:bg-neutral-600/25 dark:border-neutral-600/25">
                 <span className="text-xs font-medium">2</span>
               </div>
             </div>
@@ -102,8 +102,8 @@ export function UserSessions() {
           {/* Event 3 */}
           <div className="flex mb-2">
             <div className="relative flex-shrink-0">
-              <div className="absolute top-7 left-3.5 w-[1px] bg-neutral-400 dark:bg-neutral-700 h-[calc(100%-16px)]" />
-              <div className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-900/30 border border-blue-500/50">
+              <div className="absolute top-7 left-3.5 w-[1px] bg-neutral-300 dark:bg-neutral-700 h-[calc(100%-16px)]" />
+              <div className="flex items-center justify-center w-7 h-7 rounded-full bg-neutral-50 border border-neutral-200 dark:bg-neutral-600/25 dark:border-neutral-600/25">
                 <span className="text-xs font-medium">3</span>
               </div>
             </div>
@@ -128,7 +128,7 @@ export function UserSessions() {
           {/* Event 4 */}
           <div className="flex mb-2">
             <div className="relative flex-shrink-0">
-              <div className="flex items-center justify-center w-7 h-7 rounded-full bg-amber-900/30 border border-amber-500/50">
+              <div className="flex items-center justify-center w-7 h-7 rounded-full bg-neutral-50 border border-neutral-200 dark:bg-neutral-600/25 dark:border-neutral-600/25">
                 <span className="text-xs font-medium">4</span>
               </div>
             </div>

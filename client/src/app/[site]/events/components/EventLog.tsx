@@ -92,7 +92,7 @@ export function EventLog() {
       </div>
       {/* Pagination info */}
       {data?.pages[0]?.pagination && (
-        <div className="text-center text-xs text-neutral-400 pt-2">
+        <div className="text-center text-xs text-neutral-500 dark:text-neutral-400 pt-2">
           Showing {allEvents.length} of {formatter(data.pages[0].pagination.total)} events
         </div>
       )}

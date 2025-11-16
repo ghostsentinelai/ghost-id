@@ -11,11 +11,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import { addSite } from "../../api/admin/sites";
+import { RybbitLogo, RybbitTextLogo } from "../../components/RybbitLogo";
 import { useSetPageTitle } from "../../hooks/useSetPageTitle";
 import { authClient } from "../../lib/auth";
 import { useConfigs } from "../../lib/configs";
@@ -174,7 +174,8 @@ export default function SignupPage() {
         const normalizedDomain = normalizeDomain(domain);
         const response = await addSite(normalizedDomain, normalizedDomain, organizationId);
         // Navigate directly to dashboard after adding website
-        router.push(`/${response.siteId}`);
+        // router.push(`/${response.siteId}`);
+        router.push("/subscribe?siteId=" + response.siteId);
       } catch (error) {
         setError(String(error));
       }
@@ -269,7 +270,7 @@ export default function SignupPage() {
                   value={orgName}
                   onChange={e => handleOrgNameChange(e.target.value)}
                   required
-                  className="h-10 transition-all bg-neutral-800/50 border-neutral-700"
+                  className="h-10 transition-all bg-neutral-100 dark:bg-neutral-800/50 border-neutral-200 dark:border-neutral-700"
                 />
               </div>
 
@@ -324,7 +325,7 @@ export default function SignupPage() {
                   value={domain}
                   onChange={e => setDomain(e.target.value.toLowerCase())}
                   required
-                  className="h-10 transition-all bg-neutral-800/50 border-neutral-700"
+                  className="h-10 transition-all bg-neutral-100 dark:bg-neutral-800/50 border-neutral-200 dark:border-neutral-700"
                 />
                 <p className="text-xs text-muted-foreground">Enter the domain of the website you want to track</p>
               </div>
@@ -357,7 +358,7 @@ export default function SignupPage() {
       <div className="flex justify-center items-center h-dvh w-full">
         <Card className="w-full max-w-sm p-1">
           <CardHeader>
-            <Image src="/rybbit.svg" alt="Rybbit" width={32} height={32} />
+            <RybbitLogo width={32} height={32} />
             <CardTitle className="text-2xl flex justify-center">Sign Up Disabled</CardTitle>
           </CardHeader>
           <CardContent>
@@ -385,23 +386,23 @@ export default function SignupPage() {
         </Suspense>
 
         {/* Background gradients similar to docs page */}
-        <div className="absolute top-0 left-0 w-[550px] h-[550px] bg-emerald-500/40 rounded-full blur-[80px] opacity-40"></div>
+        {/* <div className="absolute top-0 left-0 w-[550px] h-[550px] bg-emerald-500/40 rounded-full blur-[80px] opacity-40"></div>
         <div className="absolute top-20 left-20 w-[400px] h-[400px] bg-emerald-600/30 rounded-full blur-[70px] opacity-30"></div>
 
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-500/40 rounded-full blur-[80px] opacity-30"></div>
         <div className="absolute bottom-40 right-20 w-[350px] h-[350px] bg-indigo-500/30 rounded-full blur-[75px] opacity-30"></div>
 
-        <div className="absolute top-1/4 right-0 w-[320px] h-[320px] bg-purple-500/40 rounded-full blur-[70px] opacity-20"></div>
+        <div className="absolute top-1/4 right-0 w-[320px] h-[320px] bg-purple-500/40 rounded-full blur-[70px] opacity-20"></div> */}
 
         {/* Logo and title above the card */}
         <div className="relative z-10 mb-6 text-center">
           <a href="https://rybbit.com" target="_blank" className="inline-block mb-2">
-            <Image src="/rybbit-text.svg" alt="Rybbit" width={150} height={34} />
+            <RybbitTextLogo />
           </a>
-          <h1 className="text-lg text-neutral-300">Get started with Rybbit</h1>
+          <h1 className="text-lg text-neutral-600 dark:text-neutral-300">Get started with Rybbit</h1>
         </div>
 
-        <Card className="w-full md:w-[500px] p-0 overflow-hidden shadow-2xl border-neutral-700/50 backdrop-blur-sm bg-neutral-800/20 z-10 p-8">
+        <Card className="w-full md:w-[500px] p-0 overflow-hidden shadow-2xl border-neutral-200/50 dark:border-neutral-700/50 backdrop-blur-sm bg-white/80 dark:bg-neutral-800/20 z-10 p-8">
           {/* Horizontal step indicator */}
           <div className="flex items-center w-full mb-4">
             {[1, 2, 3].map((step, index) => (

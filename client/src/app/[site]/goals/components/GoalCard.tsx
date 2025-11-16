@@ -69,9 +69,9 @@ export default function GoalCard({ goal, siteId }: GoalCardProps) {
 
   return (
     <>
-      <div className="rounded-lg bg-neutral-900 border border-neutral-800 overflow-hidden relative">
+      <div className="rounded-lg bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 overflow-hidden relative">
         <div
-          className="px-4 py-3 flex items-center mb-1 cursor-pointer hover:bg-neutral-800/50 transition-colors"
+          className="px-4 py-3 flex items-center mb-1 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors"
           onClick={toggleExpansion}
         >
           {/* Left section - Title and type */}
@@ -100,15 +100,15 @@ export default function GoalCard({ goal, siteId }: GoalCardProps) {
             </h3>
 
             <div className="mt-1">
-              <span className="text-xs text-neutral-400 mr-2">Pattern:</span>
-              <code className="text-xs bg-neutral-800 px-1 py-0.5 rounded">
+              <span className="text-xs text-neutral-500 dark:text-neutral-400 mr-2">Pattern:</span>
+              <code className="text-xs bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">
                 {goal.goalType === "path" ? goal.config.pathPattern : goal.config.eventName}
               </code>
 
               {goal.goalType === "event" && goal.config.eventPropertyKey && (
-                <div className="mt-1 text-xs text-neutral-400">
+                <div className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
                   Property:{" "}
-                  <code className="text-xs bg-neutral-800 px-1 py-0.5 rounded text-neutral-100">
+                  <code className="text-xs bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded text-neutral-900 dark:text-neutral-100">
                     {goal.config.eventPropertyKey}: {String(goal.config.eventPropertyValue)}
                   </code>
                 </div>
@@ -121,58 +121,50 @@ export default function GoalCard({ goal, siteId }: GoalCardProps) {
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center">
                 <div className="font-bold text-base">{goal.total_conversions.toLocaleString()}</div>
-                <div className="text-xs text-neutral-400">Conversions</div>
+                <div className="text-xs text-neutral-500 dark:text-neutral-400">Conversions</div>
               </div>
               <div className="text-center">
                 <div className="font-bold text-base">{(goal.conversion_rate * 100).toFixed(2)}%</div>
-                <div className="text-xs text-neutral-400">Conversion Rate</div>
+                <div className="text-xs text-neutral-500 dark:text-neutral-400">Conversion Rate</div>
               </div>
             </div>
           </div>
 
           {/* Right section - Actions */}
           <div className="flex flex-shrink-0 gap-1 pl-4">
-            <GoalFormModal
-              siteId={siteId}
-              goal={goal}
-              trigger={
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="smIcon"
-                      onClick={e => {
-                        e.stopPropagation(); // Prevent expanding when clicking edit
-                      }}
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Edit Goal</TooltipContent>
-                </Tooltip>
-              }
-            />
-            <GoalFormModal
-              siteId={siteId}
-              goal={goal}
-              isCloneMode={true}
-              trigger={
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="smIcon"
-                      onClick={e => {
-                        e.stopPropagation(); // Prevent expanding when clicking clone
-                      }}
-                    >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Clone Goal</TooltipContent>
-                </Tooltip>
-              }
-            />
+            <div onClick={e => e.stopPropagation()}>
+              <GoalFormModal
+                siteId={siteId}
+                goal={goal}
+                trigger={
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="ghost" size="smIcon">
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Edit Goal</TooltipContent>
+                  </Tooltip>
+                }
+              />
+            </div>
+            <div onClick={e => e.stopPropagation()}>
+              <GoalFormModal
+                siteId={siteId}
+                goal={goal}
+                isCloneMode={true}
+                trigger={
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="ghost" size="smIcon">
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Clone Goal</TooltipContent>
+                  </Tooltip>
+                }
+              />
+            </div>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
@@ -199,7 +191,7 @@ export default function GoalCard({ goal, siteId }: GoalCardProps) {
           </div>
         </div>
         <div className="relative">
-          <div className="bg-neutral-700 h-1.5 w-full absolute bottom-0 left-0"></div>
+          <div className="bg-neutral-100 dark:bg-neutral-700 h-1.5 w-full absolute bottom-0 left-0"></div>
           <div
             style={{
               width: goal.conversion_rate * 100 + "%",
@@ -210,8 +202,8 @@ export default function GoalCard({ goal, siteId }: GoalCardProps) {
 
         {/* Expanded Sessions Section */}
         {isExpanded && (
-          <div className="border-t border-neutral-800 bg-neutral-900/50 p-4">
-            <h4 className="text-sm font-medium text-neutral-200 mb-3">Converted Sessions</h4>
+          <div className="border-t border-neutral-100 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/50 p-4">
+            <h4 className="text-sm font-medium text-neutral-700 dark:text-neutral-200 mb-3">Converted Sessions</h4>
             <SessionsList
               sessions={sessions}
               isLoading={isLoadingSessions}

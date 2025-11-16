@@ -276,10 +276,10 @@ export default function UsersPage() {
     <DisabledOverlay message="Users" featurePath="users">
       <div className="p-2 md:p-4 max-w-[1400px] mx-auto space-y-3">
         <SubHeader availableFilters={USER_PAGE_FILTERS} />
-        <div className="rounded-md border border-neutral-800 bg-neutral-900">
+        <div className="rounded-md border border-neutral-100 dark:border-neutral-800 bg-white dark:bg-neutral-900">
           <div className="relative overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-neutral-850 text-neutral-400 ">
+              <thead className="bg-neutral-50 dark:bg-neutral-850 text-neutral-500 dark:text-neutral-400 ">
                 {table.getHeaderGroups().map(headerGroup => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map(header => (
@@ -300,17 +300,17 @@ export default function UsersPage() {
               <tbody>
                 {isLoading ? (
                   Array.from({ length: 15 }).map((_, index) => (
-                    <tr key={index} className="border-b border-neutral-800 animate-pulse">
+                    <tr key={index} className="border-b border-neutral-100 dark:border-neutral-800 animate-pulse">
                       {Array.from({ length: columns.length }).map((_, cellIndex) => (
                         <td key={cellIndex} className="px-3 py-3">
-                          <div className="h-4 bg-neutral-800 rounded"></div>
+                          <div className="h-4 bg-neutral-200 dark:bg-neutral-800 rounded"></div>
                         </td>
                       ))}
                     </tr>
                   ))
                 ) : table.getRowModel().rows.length === 0 ? (
                   <tr>
-                    <td colSpan={columns.length} className="px-3 py-8 text-center text-neutral-400">
+                    <td colSpan={columns.length} className="px-3 py-8 text-center text-neutral-500 dark:text-neutral-400">
                       No users found
                     </td>
                   </tr>
@@ -320,7 +320,7 @@ export default function UsersPage() {
                     const href = `/${site}/user/${userId}`;
 
                     return (
-                      <tr key={row.id} className="border-b border-neutral-800 group">
+                      <tr key={row.id} className="border-b border-neutral-100 dark:border-neutral-800 group">
                         {row.getVisibleCells().map(cell => (
                           <td key={cell.id} className="px-3 py-3 relative">
                             {/* <Link
@@ -344,7 +344,7 @@ export default function UsersPage() {
           </div>
 
           {/* Pagination */}
-          <div className="border-t border-neutral-800">
+          <div className="border-t border-neutral-100 dark:border-neutral-800">
             <div className="px-4 py-3">
               <Pagination
                 table={table}

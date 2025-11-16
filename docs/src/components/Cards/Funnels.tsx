@@ -37,7 +37,7 @@ export function Funnels() {
           return (
             <div key={item.step} className="flex items-center gap-3">
               {/* Step number */}
-              <div className="flex-shrink-0 w-8 h-8 mt-7 bg-neutral-300 dark:bg-neutral-800 rounded-full flex items-center justify-center text-xs">
+              <div className="flex-shrink-0 w-8 h-8 mt-7 bg-neutral-50 dark:bg-neutral-800 border border-neutral-300/70 dark:border-neutral-800/70 rounded-full flex items-center justify-center text-xs">
                 {item.step}
               </div>
 
@@ -49,7 +49,7 @@ export function Funnels() {
                   <span className="text-sm font-medium">{item.label}</span>
                 </div>
 
-                <div className="h-8 bg-neutral-300 dark:bg-neutral-800 relative">
+                <div className="h-8 bg-neutral-200 dark:bg-neutral-800 relative">
                   <div
                     className="h-8 bg-emerald-600 rounded flex items-center justify-end pr-3"
                     style={{ width: `${overallConversion}%` }}

@@ -101,10 +101,10 @@ function FunnelStepComponent({ step, index, steps, chartData, firstStep, siteId 
     <div key={step.stepNumber} className="relative pb-4">
       {/* Step Header - Clickable */}
       <div
-        className="flex items-center cursor-pointer hover:bg-neutral-800/30 rounded-md p-2 -ml-2 transition-colors"
+        className="flex items-center cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800/30 rounded-md p-2 -ml-2 transition-colors"
         onClick={toggleExpansion}
       >
-        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-neutral-800 flex items-center justify-center text-xs mr-2">
+        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center text-xs mr-2">
           {step.stepNumber}
         </div>
         <div className="font-medium text-sm flex items-center gap-2 flex-1">
@@ -122,7 +122,7 @@ function FunnelStepComponent({ step, index, steps, chartData, firstStep, siteId 
         <div className="flex-shrink-0 min-w-[130px] mr-4 space-y-1">
           <div className="flex items-baseline">
             <span className="text-base font-semibold">{step.visitors.toLocaleString()}</span>
-            <span className="text-sm text-neutral-400 ml-1">sessions</span>
+            <span className="text-sm text-neutral-500 dark:text-neutral-400 ml-1">sessions</span>
           </div>
           {index !== 0 && (
             <div className="flex items-baseline text-orange-500 text-xs font-medium">
@@ -132,7 +132,7 @@ function FunnelStepComponent({ step, index, steps, chartData, firstStep, siteId 
         </div>
 
         {/* Bar */}
-        <div className="flex-grow h-10 bg-neutral-800 rounded-md overflow-hidden relative mt-2">
+        <div className="flex-grow h-10 bg-neutral-100 dark:bg-neutral-800 rounded-md overflow-hidden relative mt-2">
           {/* Relative conversion bar (from previous step) */}
           {index > 0 && prevStep && (
             <div
@@ -242,13 +242,13 @@ export function Funnel({ data, steps, isError, error, isPending }: FunnelProps) 
         </div>
       ) : (
         <div className="h-[400px] flex items-center justify-center">
-          <div className="text-neutral-400 text-sm">
+          <div className="text-neutral-500 dark:text-neutral-400 text-sm">
             {isPending ? "Analyzing funnel..." : "Configure your funnel steps and click 'Analyze Funnel'"}
           </div>
         </div>
       )}
       <div className="flex justify-between items-center gap-2 ml-4">
-        <div className="flex items-center gap-4 mt-3 text-xs text-neutral-400">
+        <div className="flex items-center gap-4 mt-3 text-xs text-neutral-500 dark:text-neutral-400">
           <div className="flex items-center">
             <div className="w-3 h-3 bg-emerald-500/70 rounded-sm mr-1"></div>
             <span>Overall conversion</span>

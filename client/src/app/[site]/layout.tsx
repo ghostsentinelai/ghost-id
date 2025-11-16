@@ -3,7 +3,6 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { AppSidebar } from "../../components/AppSidebar";
-import { TopBar } from "../../components/TopBar";
 import { useStore } from "../../lib/store";
 import { useSyncStateWithUrl } from "../../lib/urlParams";
 import { Footer } from "../components/Footer";
