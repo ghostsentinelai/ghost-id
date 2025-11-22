@@ -203,7 +203,7 @@ Use Rybbit's event tracking to capture this:
 
 ```javascript
 // When a customer cancels their subscription
-rybbit.event("Churn", {
+window.rybbit.event("Churn", {
   reason: "subscription_cancelled",
   customer_lifetime_days: 180,
   mrr_lost: 99,
@@ -211,7 +211,7 @@ rybbit.event("Churn", {
 });
 
 // Or when they haven't been active in 30 days
-rybbit.event("Churn", {
+window.rybbit.event("Churn", {
   reason: "inactivity",
   days_inactive: 30,
   customer_lifetime_days: 45
@@ -239,24 +239,24 @@ Example:
 
 ```javascript
 // User takes a meaningful action
-rybbit.event("Feature_Usage", {
+window.rybbit.event("Feature_Usage", {
   feature_name: "advanced_reporting",
   user_signup_cohort: "2025-10"
 });
 
 // Track weekly active users
-rybbit.event("Weekly_Active", {
+window.rybbit.event("Weekly_Active", {
   days_since_signup: 7,
   signup_month: "2025-10"
 });
 
 // Track 30-day and 90-day retention markers
-rybbit.event("Milestone_Reached", {
+window.rybbit.event("Milestone_Reached", {
   milestone_type: "30_day_user",
   signup_month: "2025-10"
 });
 
-rybbit.event("Milestone_Reached", {
+window.rybbit.event("Milestone_Reached", {
   milestone_type: "90_day_user",
   signup_month: "2025-10"
 });
@@ -302,19 +302,19 @@ Let's say you're running a project management tool:
 **Week 1 After Signup:**
 ```javascript
 // Day 1: User signs up
-rybbit.event("Account_Created", {
+window.rybbit.event("Account_Created", {
   plan_type: "free",
   signup_source: "organic"
 });
 
 // Day 3: User creates first project
-rybbit.event("Feature_Used", {
+window.rybbit.event("Feature_Used", {
   feature: "create_project",
   days_active: 3
 });
 
 // Day 7: Still using the app
-rybbit.event("Retention_Day7", {
+window.rybbit.event("Retention_Day7", {
   active: true,
   sessions: 4,
   projects_created: 2
@@ -324,7 +324,7 @@ rybbit.event("Retention_Day7", {
 **Month 1:**
 ```javascript
 // Day 30: User still active
-rybbit.event("Retention_Day30", {
+window.rybbit.event("Retention_Day30", {
   active: true,
   sessions: 12,
   projects_created: 4,
@@ -335,14 +335,14 @@ rybbit.event("Retention_Day30", {
 **Month 3:**
 ```javascript
 // If they upgraded, they're retained
-rybbit.event("Plan_Upgraded", {
+window.rybbit.event("Plan_Upgraded", {
   from_plan: "free",
   to_plan: "professional",
   days_to_upgrade: 45
 });
 
 // If they're inactive
-rybbit.event("Churn", {
+window.rybbit.event("Churn", {
   reason: "inactivity",
   days_active: 31
 });

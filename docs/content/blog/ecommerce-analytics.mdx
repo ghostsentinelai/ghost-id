@@ -61,7 +61,7 @@ While Rybbit automatically tracks page views, you'll want to track key e-commerc
 Here's how you track a purchase:
 
 ```javascript
-rybbit.event("Purchase", {
+window.rybbit.event("Purchase", {
   value: orderTotal,
   currency: "USD",
   transaction_id: orderId,
@@ -266,13 +266,13 @@ Track repeat purchases to understand customer lifetime value:
 
 ```javascript
 // Track first purchase
-rybbit.event("First Purchase", {
+window.rybbit.event("First Purchase", {
   value: orderTotal,
   customer_id: customerId,
 });
 
 // Track repeat purchases
-rybbit.event("Repeat Purchase", {
+window.rybbit.event("Repeat Purchase", {
   value: orderTotal,
   customer_id: customerId,
   purchase_count: totalPurchases,
@@ -285,18 +285,18 @@ Track when users add items to cart but don't complete checkout:
 
 ```javascript
 // Add to cart
-rybbit.event("Add to Cart", {
+window.rybbit.event("Add to Cart", {
   product_id: productId,
   value: productPrice,
 });
 
 // Checkout started
-rybbit.event("Checkout Started", {
+window.rybbit.event("Checkout Started", {
   cart_value: totalValue,
 });
 
 // Purchase completed (or not)
-rybbit.event("Purchase", {
+window.rybbit.event("Purchase", {
   value: orderTotal,
 });
 ```
@@ -308,7 +308,7 @@ By tracking these events, you can calculate your cart abandonment rate and work 
 Track which product categories perform best:
 
 ```javascript
-rybbit.event("Product View", {
+window.rybbit.event("Product View", {
   category: "Electronics",
   subcategory: "Headphones",
   product_id: productId,
