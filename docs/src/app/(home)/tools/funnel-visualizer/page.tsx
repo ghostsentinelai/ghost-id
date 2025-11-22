@@ -95,7 +95,8 @@ export default function FunnelVisualizerPage() {
             Funnel Visualizer
           </h1>
           <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
-            Visualize your conversion funnel step-by-step. Input visitor counts at each stage and see where you're losing customers.
+            Visualize your conversion funnel step-by-step. Input visitor counts at each stage and see where you're
+            losing customers.
           </p>
         </div>
 
@@ -149,23 +150,6 @@ export default function FunnelVisualizerPage() {
             {/* Funnel Visualization */}
             {chartData && chartData.length > 0 && (
               <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800">
-                <div className="mb-6 p-4 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-sm text-emerald-700 dark:text-emerald-400">Overall Conversion Rate</div>
-                      <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
-                        {totalConversionRate.toFixed(2)}%
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-emerald-700 dark:text-emerald-400">Total Drop-off</div>
-                      <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
-                        {firstStep && lastStep ? ((firstStep.visitors - lastStep.visitors).toLocaleString()) : 0}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="space-y-0">
                   {chartData.map((step, index) => {
                     const maxBarWidth = 100;
@@ -278,7 +262,9 @@ export default function FunnelVisualizerPage() {
                   What is a conversion funnel?
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4 text-neutral-700 dark:text-neutral-300">
-                  A conversion funnel is the path visitors take from initial contact to conversion. It shows how many users progress through each step and where they drop off. Understanding your funnel helps identify friction points and optimization opportunities.
+                  A conversion funnel is the path visitors take from initial contact to conversion. It shows how many
+                  users progress through each step and where they drop off. Understanding your funnel helps identify
+                  friction points and optimization opportunities.
                 </AccordionContent>
               </AccordionItem>
 
@@ -287,7 +273,9 @@ export default function FunnelVisualizerPage() {
                   What's a good funnel conversion rate?
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4 text-neutral-700 dark:text-neutral-300">
-                  It varies by industry, but e-commerce funnels typically see 2-3% overall conversion rates. SaaS free trial funnels might see 10-20% conversion to paid. The key is identifying your biggest drop-off points and improving those steps first—even small improvements compound.
+                  It varies by industry, but e-commerce funnels typically see 2-3% overall conversion rates. SaaS free
+                  trial funnels might see 10-20% conversion to paid. The key is identifying your biggest drop-off points
+                  and improving those steps first—even small improvements compound.
                 </AccordionContent>
               </AccordionItem>
 
@@ -296,7 +284,9 @@ export default function FunnelVisualizerPage() {
                   How do I improve my funnel?
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4 text-neutral-700 dark:text-neutral-300">
-                  Focus on the steps with the biggest drop-offs. Common improvements include: simplifying forms, improving page load speed, adding trust signals, clarifying value propositions, reducing friction, and A/B testing changes. Track your funnels automatically with{" "}
+                  Focus on the steps with the biggest drop-offs. Common improvements include: simplifying forms,
+                  improving page load speed, adding trust signals, clarifying value propositions, reducing friction, and
+                  A/B testing changes. Track your funnels automatically with{" "}
                   <Link href="https://app.rybbit.io" className="text-emerald-600 dark:text-emerald-400 hover:underline">
                     Rybbit Analytics
                   </Link>{" "}
@@ -315,7 +305,8 @@ export default function FunnelVisualizerPage() {
             Track funnels automatically with Rybbit
           </h2>
           <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8 max-w-2xl mx-auto">
-            No manual data entry—Rybbit automatically tracks conversion funnels with real-time session data. Get started for free with up to {DEFAULT_EVENT_LIMIT.toLocaleString()} events per month.
+            No manual data entry—Rybbit automatically tracks conversion funnels with real-time session data. Get started
+            for free with up to {DEFAULT_EVENT_LIMIT.toLocaleString()} events per month.
           </p>
           <TrackedButton
             href="https://app.rybbit.io/signup"
