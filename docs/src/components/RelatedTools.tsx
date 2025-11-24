@@ -519,6 +519,96 @@ const allTools: Tool[] = [
     href: "/tools/substack-post-generator",
     category: "social-media",
   },
+  {
+    name: "Instagram Username Generator",
+    description: "Generate creative Instagram usernames with AI",
+    href: "/tools/instagram-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "TikTok Username Generator",
+    description: "Generate catchy TikTok usernames with AI",
+    href: "/tools/tiktok-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "X (Twitter) Username Generator",
+    description: "Generate memorable X (Twitter) usernames with AI",
+    href: "/tools/x-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "Twitch Username Generator",
+    description: "Generate gaming-focused Twitch usernames with AI",
+    href: "/tools/twitch-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "YouTube Username Generator",
+    description: "Generate memorable YouTube handles with AI",
+    href: "/tools/youtube-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "Reddit Username Generator",
+    description: "Generate creative Reddit usernames with AI",
+    href: "/tools/reddit-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "Discord Username Generator",
+    description: "Generate unique Discord usernames with AI",
+    href: "/tools/discord-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "GitHub Username Generator",
+    description: "Generate professional GitHub usernames with AI",
+    href: "/tools/github-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "Pinterest Username Generator",
+    description: "Generate creative Pinterest usernames with AI",
+    href: "/tools/pinterest-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "Snapchat Username Generator",
+    description: "Generate fun Snapchat usernames with AI",
+    href: "/tools/snapchat-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "Spotify Username Generator",
+    description: "Generate creative Spotify usernames with AI",
+    href: "/tools/spotify-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "Steam Username Generator",
+    description: "Generate gaming-focused Steam usernames with AI",
+    href: "/tools/steam-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "LinkedIn Custom URL Generator",
+    description: "Generate professional LinkedIn URLs with AI",
+    href: "/tools/linkedin-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "Medium Username Generator",
+    description: "Generate professional Medium usernames with AI",
+    href: "/tools/medium-username-generator",
+    category: "social-media",
+  },
+  {
+    name: "Substack URL Generator",
+    description: "Generate professional Substack URLs with AI",
+    href: "/tools/substack-username-generator",
+    category: "social-media",
+  },
 ];
 
 interface RelatedToolsProps {

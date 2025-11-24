@@ -26,6 +26,7 @@ import { platformList } from "./components/platform-configs";
 import { commentPlatformList } from "./components/comment-platform-configs";
 import { pageNamePlatformList } from "./components/page-name-platform-configs";
 import { postGeneratorPlatformList } from "./components/post-generator-platform-configs";
+import { usernameGeneratorPlatformList } from "./components/username-generator-platform-configs";
 import {
   SiDiscord,
   SiX,
@@ -49,6 +50,8 @@ import {
   SiGithub,
   SiMedium,
   SiSubstack,
+  SiSnapchat,
+  SiSteam,
 } from "@icons-pack/react-simple-icons";
 
 export const metadata = {
@@ -232,6 +235,8 @@ const platformIconMap: Record<string, any> = {
   github: SiGithub,
   medium: SiMedium,
   substack: SiSubstack,
+  snapchat: SiSnapchat,
+  steam: SiSteam,
 };
 
 const fontGeneratorTools = platformList.map(platform => ({
@@ -262,11 +267,19 @@ const postGeneratorTools = postGeneratorPlatformList.map(platform => ({
   description: `Generate engaging posts for ${platform.name} with AI-powered content creation.`,
 }));
 
+const usernameGeneratorTools = usernameGeneratorPlatformList.map(platform => ({
+  href: `/tools/${platform.id}-username-generator`,
+  icon: platformIconMap[platform.id],
+  title: platform.displayName,
+  description: `Generate creative usernames for ${platform.name} with AI.`,
+}));
+
 const socialMediaTools = [
   ...fontGeneratorTools,
   ...commentGeneratorTools,
   ...pageNameGeneratorTools,
   ...postGeneratorTools,
+  ...usernameGeneratorTools,
 ];
 
 function ToolCard({ tool }: { tool: { href: string; icon: any; title: string; description: string } }) {

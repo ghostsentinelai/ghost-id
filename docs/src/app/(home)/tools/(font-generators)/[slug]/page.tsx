@@ -3,6 +3,7 @@ import { FontGeneratorTool } from "../../components/FontGeneratorTool";
 import AICommentForm from "../../components/AICommentForm";
 import PageNameGenerator from "../../components/PageNameGenerator";
 import PostGenerator from "../../components/PostGenerator";
+import UsernameGenerator from "../../components/UsernameGenerator";
 import { platformConfigs, platformList } from "../../components/platform-configs";
 import {
   commentPlatformConfigs,
@@ -16,6 +17,10 @@ import {
   postGeneratorPlatformConfigs,
   postGeneratorPlatformList,
 } from "../../components/post-generator-platform-configs";
+import {
+  usernameGeneratorPlatformConfigs,
+  usernameGeneratorPlatformList,
+} from "../../components/username-generator-platform-configs";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -43,11 +48,16 @@ export async function generateStaticParams() {
     slug: `${platform.id}-post-generator`,
   }));
 
+  const usernameGenerators = usernameGeneratorPlatformList.map((platform) => ({
+    slug: `${platform.id}-username-generator`,
+  }));
+
   return [
     ...fontGenerators,
     ...commentGenerators,
     ...pageNameGenerators,
     ...postGenerators,
+    ...usernameGenerators,
   ];
 }
 
@@ -56,6 +66,36 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+
+  // Check if it's a username generator
+  if (slug.endsWith("-username-generator")) {
+    const platformId = slug.replace("-username-generator", "");
+    const platform = usernameGeneratorPlatformConfigs[platformId];
+
+    if (!platform) {
+      return { title: "Username Generator Not Found" };
+    }
+
+    return {
+      title: `${platform.displayName} | AI-Powered ${platform.name} Usernames`,
+      description: platform.description,
+      openGraph: {
+        title: platform.displayName,
+        description: platform.description,
+        type: "website",
+        url: `https://rybbit.com/tools/${platform.id}-username-generator`,
+        siteName: "Rybbit Documentation",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: platform.displayName,
+        description: platform.description,
+      },
+      alternates: {
+        canonical: `https://rybbit.com/tools/${platform.id}-username-generator`,
+      },
+    };
+  }
 
   // Check if it's a post generator
   if (slug.endsWith("-post-generator")) {
@@ -180,6 +220,188 @@ export async function generateMetadata({
 
 export default async function PlatformToolPage({ params }: PageProps) {
   const { slug } = await params;
+
+  // Check if it's a username generator
+  if (slug.endsWith("-username-generator")) {
+    const platformId = slug.replace("-username-generator", "");
+    const platform = usernameGeneratorPlatformConfigs[platformId];
+
+    // Handle invalid platform
+    if (!platform) {
+      notFound();
+    }
+
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: platform.displayName,
+      description: platform.description,
+      url: `https://rybbit.com/tools/${platform.id}-username-generator`,
+      applicationCategory: "Utility",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      author: {
+        "@type": "Organization",
+        name: "Rybbit",
+        url: "https://rybbit.com",
+      },
+    };
+
+    const educationalContent = (
+      <>
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-4">
+          About {platform.name} Usernames
+        </h2>
+        <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed mb-6">
+          {platform.educationalContent}
+        </p>
+
+        <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-3">
+          How to Use This Tool
+        </h3>
+        <ol className="space-y-2 text-neutral-700 dark:text-neutral-300 mb-6">
+          <li>
+            <strong>Enter your name or brand</strong> - What should the
+            username be based on?
+          </li>
+          <li>
+            <strong>Add interests (optional)</strong> - Include keywords or
+            interests to incorporate
+          </li>
+          <li>
+            <strong>Choose number preference</strong> - Decide if you want
+            numbers included
+          </li>
+          <li>
+            <strong>Click "Generate Usernames"</strong> to get 5 unique
+            suggestions
+          </li>
+          <li>
+            <strong>Check availability</strong> on {platform.name} and claim
+            your favorite
+          </li>
+        </ol>
+
+        <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-3">
+          Username Best Practices for {platform.name}
+        </h3>
+        <ul className="space-y-2 text-neutral-700 dark:text-neutral-300 mb-6">
+          <li>
+            <strong>Keep it memorable:</strong> Choose something easy to spell
+            and remember
+          </li>
+          <li>
+            <strong>Make it brandable:</strong> Think long-term - will this
+            still work in 5 years?
+          </li>
+          <li>
+            <strong>Avoid excessive numbers:</strong> Numbers make usernames
+            harder to remember and share
+          </li>
+          <li>
+            <strong>Check availability:</strong> Always verify the username is
+            available before committing
+          </li>
+          <li>
+            <strong>Be consistent:</strong> Use the same or similar username
+            across platforms when possible
+          </li>
+        </ul>
+
+        <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4 mb-6">
+          <h4 className="font-semibold text-emerald-900 dark:text-emerald-100 mb-2">
+            Platform Requirements
+          </h4>
+          <ul className="space-y-1 text-sm text-emerald-800 dark:text-emerald-200">
+            <li>
+              <strong>Allowed characters:</strong>{" "}
+              {platform.allowedCharacters}
+            </li>
+            {platform.characterLimit && (
+              <li>
+                <strong>Maximum length:</strong> {platform.characterLimit}{" "}
+                characters
+              </li>
+            )}
+            {platform.minLength && (
+              <li>
+                <strong>Minimum length:</strong> {platform.minLength}{" "}
+                characters
+              </li>
+            )}
+          </ul>
+        </div>
+
+        <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-6">
+          <strong>Note:</strong> Always check availability on {platform.name}{" "}
+          before settling on a username. Generated suggestions are not
+          guaranteed to be available.
+        </p>
+      </>
+    );
+
+    const faqs = [
+      {
+        question: `How does the ${platform.name} username generator work?`,
+        answer: `This tool uses AI to create creative, memorable usernames based on your name, brand, or interests. It considers ${platform.name}'s character limits and naming rules to generate platform-appropriate suggestions.`,
+      },
+      {
+        question: "Are the generated usernames available?",
+        answer: `No, this tool generates creative suggestions but doesn't check availability on ${platform.name}. Always verify that your chosen username is available on the platform before committing to it.`,
+      },
+      {
+        question: "Can I modify the generated usernames?",
+        answer:
+          "Absolutely! Use the generated usernames as inspiration and modify them to better fit your preferences. Combining elements from different suggestions often works well.",
+      },
+      {
+        question: "Should I include numbers in my username?",
+        answer:
+          "Generally, avoid excessive numbers as they make usernames harder to remember and share verbally. However, a single strategic number can work if it's meaningful or makes the username unique.",
+      },
+      {
+        question: "What makes a good username?",
+        answer: `A good ${platform.name} username is memorable, easy to spell, appropriate for the platform, and reflects your brand or personality. It should be something you're comfortable using long-term and sharing professionally if needed.`,
+      },
+      {
+        question: "How can Rybbit help me grow my presence?",
+        answer: (
+          <>
+            Once you've claimed your username, Rybbit helps you track
+            engagement, clicks, and growth on {platform.name}. Understand your
+            audience and optimize your content strategy.{" "}
+            <a
+              href="https://rybbit.com"
+              className="text-emerald-600 hover:text-emerald-500 underline"
+            >
+              Start tracking for free
+            </a>
+            .
+          </>
+        ),
+      },
+    ];
+
+    return (
+      <ToolPageLayout
+        toolSlug={`${platform.id}-username-generator`}
+        title={platform.displayName}
+        description={platform.description}
+        badge="AI-Powered Tool"
+        toolComponent={<UsernameGenerator platform={platform} />}
+        educationalContent={educationalContent}
+        faqs={faqs}
+        relatedToolsCategory="social-media"
+        ctaTitle={`Build your ${platform.name} presence with Rybbit`}
+        ctaDescription={`Track your growth and engagement on ${platform.name} to optimize your content strategy.`}
+        ctaEventLocation={`${platform.id}_username_generator_cta`}
+        structuredData={structuredData}
+      />
+    );
+  }
 
   // Check if it's a post generator
   if (slug.endsWith("-post-generator")) {
