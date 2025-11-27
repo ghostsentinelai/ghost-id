@@ -1,7 +1,6 @@
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useGetSite } from "../../../../../api/admin/sites";
-import { usePaginatedMetric } from "../../../../../api/analytics/useGetMetric";
 import { TabsContent, TabsList, TabsTrigger } from "../../../../../components/ui/basic-tabs";
 import { Card, CardContent } from "../../../../../components/ui/card";
 import { Tabs } from "../../../../../components/ui/tabs";
@@ -14,16 +13,7 @@ export function UserTopPages() {
   const { userId } = useParams();
   const [tab, setTab] = useState<Tab>("pages");
 
-  const { data, isLoading, isFetching, error, refetch } = usePaginatedMetric({
-    parameter: "pathname",
-    limit: 100,
-    page: 1,
-  });
   const { data: siteMetadata } = useGetSite();
-
-  const itemsForDisplay = data?.data;
-
-  const ratio = itemsForDisplay?.[0]?.percentage ? 100 / itemsForDisplay[0].percentage : 1;
 
   return (
     <Card>
@@ -33,9 +23,9 @@ export function UserTopPages() {
             <TabsList>
               <TabsTrigger value="pages">Top Pages</TabsTrigger>
             </TabsList>
-            <TabsList>
+            {/* <TabsList>
               <TabsTrigger value="events">Events</TabsTrigger>
-            </TabsList>
+            </TabsList> */}
           </div>
           <TabsContent value="pages">
             <StandardSection
@@ -48,6 +38,10 @@ export function UserTopPages() {
               expanded={false}
               close={close}
               customFilters={[{ parameter: "user_id", value: [userId as string], type: "equals" }]}
+              customTime={{
+                mode: "all-time",
+                wellKnown: "all-time",
+              }}
             />
           </TabsContent>
           <TabsContent value="events">
@@ -61,6 +55,10 @@ export function UserTopPages() {
               expanded={false}
               close={close}
               customFilters={[{ parameter: "user_id", value: [userId as string], type: "equals" }]}
+              customTime={{
+                mode: "all-time",
+                wellKnown: "all-time",
+              }}
             />
           </TabsContent>
         </Tabs>

@@ -9,6 +9,7 @@ import {
 import { useStore } from "../../lib/store";
 import { APIResponse } from "../types";
 import { authedFetch, getQueryParams } from "../utils";
+import { Time } from "../../components/DateSelector/types";
 
 type PeriodTime = "current" | "previous";
 
@@ -91,6 +92,7 @@ export function usePaginatedMetric({
   enabled = true,
   additionalFilters = [],
   customFilters = [],
+  customTime,
 }: {
   parameter: FilterParameter;
   limit?: number;
@@ -99,11 +101,12 @@ export function usePaginatedMetric({
   enabled?: boolean;
   additionalFilters?: Filter[];
   customFilters?: Filter[];
+  customTime?: Time;
 }): UseQueryResult<PaginatedResponse> {
   const { time, site, filters } = useStore();
 
   const queryParams = {
-    ...getQueryParams(time),
+    ...getQueryParams(customTime ?? time),
     parameter,
     limit,
     page,
@@ -111,7 +114,7 @@ export function usePaginatedMetric({
   };
 
   return useQuery({
-    queryKey: [parameter, time, site, filters, limit, page, additionalFilters],
+    queryKey: [parameter, customTime, time, site, filters, limit, page, additionalFilters, customFilters],
     queryFn: async () => {
       const response = await authedFetch<{ data: PaginatedResponse }>(`/metric/${site}`, queryParams);
       return response.data;

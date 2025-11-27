@@ -12,6 +12,7 @@ import { IS_CLOUD } from "../../../../../lib/const";
 import { Row } from "./Row";
 import { StandardSkeleton } from "./Skeleton";
 import { StandardSectionDialog } from "./StandardSectionDialog";
+import { Time } from "../../../../../components/DateSelector/types";
 
 const MAX_ITEMS_TO_DISPLAY = 10;
 
@@ -29,6 +30,7 @@ export function StandardSection({
   hasSubrow,
   getSubrowLabel,
   customFilters,
+  customTime,
 }: {
   title: string;
   getKey: (item: MetricResponse) => string;
@@ -43,12 +45,14 @@ export function StandardSection({
   hasSubrow?: boolean;
   getSubrowLabel?: (item: MetricResponse) => ReactNode;
   customFilters?: Filter[];
+  customTime?: Time;
 }) {
   const { data, isLoading, isFetching, error, refetch } = usePaginatedMetric({
     parameter: filterParameter,
     limit: 100,
     page: 1,
     customFilters,
+    customTime,
   });
 
   const itemsForDisplay = data?.data;
