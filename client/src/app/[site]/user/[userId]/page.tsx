@@ -82,7 +82,7 @@ export default function UserPage() {
             <div>
               <div className="text-lg font-bold flex items-center gap-2">
                 {displayName}
-                {isIdentified && <IdentifiedBadge />}
+                {isIdentified && <IdentifiedBadge traits={data?.traits} />}
               </div>
               <div className="flex flex-col gap-0.5">
                 {traitsEmail && (
