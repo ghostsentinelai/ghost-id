@@ -121,7 +121,7 @@ export default function UsersPage() {
             <span className="max-w-32 truncate hover:underline" title={displayName}>
               {displayName}
             </span>
-            {isIdentified && <IdentifiedBadge />}
+            {isIdentified && <IdentifiedBadge traits={traits} />}
           </Link>
         );
       },

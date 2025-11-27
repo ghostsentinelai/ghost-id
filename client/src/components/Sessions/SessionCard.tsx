@@ -65,7 +65,7 @@ export function SessionCard({ session, onClick, userId, expandedByDefault }: Ses
           <div className="hidden md:flex items-center gap-2">
             <Avatar size={24} id={session.user_id} />
             <span className="text-xs text-neutral-600 dark:text-neutral-200 w-24 truncate">{displayName}</span>
-            {isIdentified && <IdentifiedBadge />}
+            {isIdentified && <IdentifiedBadge traits={traits} />}
           </div>
 
           {/* Icons section */}
