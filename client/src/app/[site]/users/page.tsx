@@ -15,24 +15,24 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useGetUsers, UsersResponse } from "../../../api/analytics/useGetUsers";
-import { Avatar, generateName } from "../../../components/Avatar";
+import { Avatar } from "../../../components/Avatar";
 import { extractDomain, getChannelIcon, getDisplayName } from "../../../components/Channel";
 import { DisabledOverlay } from "../../../components/DisabledOverlay";
+import { ErrorState } from "../../../components/ErrorState";
 import { Favicon } from "../../../components/Favicon";
 import { IdentifiedBadge } from "../../../components/IdentifiedBadge";
 import { Pagination } from "../../../components/pagination";
 import { Button } from "../../../components/ui/button";
-import { Switch } from "../../../components/ui/switch";
 import { Label } from "../../../components/ui/label";
+import { Switch } from "../../../components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../../components/ui/tooltip";
 import { useSetPageTitle } from "../../../hooks/useSetPageTitle";
 import { USER_PAGE_FILTERS } from "../../../lib/filterGroups";
-import { getCountryName } from "../../../lib/utils";
+import { getCountryName, getUserDisplayName } from "../../../lib/utils";
 import { Browser } from "../components/shared/icons/Browser";
 import { CountryFlag } from "../components/shared/icons/CountryFlag";
 import { OperatingSystem } from "../components/shared/icons/OperatingSystem";
 import { SubHeader } from "../components/SubHeader/SubHeader";
-import { ErrorState } from "../../../components/ErrorState";
 
 // Set up column helper
 const columnHelper = createColumnHelper<UsersResponse>();
@@ -107,16 +107,11 @@ export default function UsersPage() {
     columnHelper.accessor("user_id", {
       header: "User",
       cell: info => {
-        const deviceId = info.getValue(); // user_id is always device fingerprint
         const identifiedUserId = info.row.original.identified_user_id;
         const isIdentified = !!info.row.original.identified_user_id;
-        const traits = info.row.original.traits;
         // For links: use identified_user_id for identified users, device ID for anonymous
-        const linkId = isIdentified ? identifiedUserId : deviceId;
-        // Priority: username > name > identified_user_id (for identified) or generated name (for anonymous)
-        const displayName = isIdentified
-          ? (traits?.username as string) || (traits?.name as string) || identifiedUserId
-          : generateName(deviceId);
+        const linkId = isIdentified ? identifiedUserId : info.getValue();
+        const displayName = getUserDisplayName(info.row.original);
 
         return (
           <Link href={`/${site}/user/${linkId}`} className="flex items-center gap-2">
@@ -124,7 +119,7 @@ export default function UsersPage() {
             <span className="max-w-32 truncate hover:underline" title={displayName}>
               {displayName}
             </span>
-            {isIdentified && <IdentifiedBadge traits={traits} />}
+            {isIdentified && <IdentifiedBadge traits={info.row.original.traits} />}
           </Link>
         );
       },
@@ -298,11 +293,7 @@ export default function UsersPage() {
       <div className="p-2 md:p-4 max-w-[1400px] mx-auto space-y-3">
         <SubHeader availableFilters={USER_PAGE_FILTERS} />
         <div className="flex items-center justify-end gap-2">
-          <Switch
-            id="identified-only"
-            checked={identifiedOnly}
-            onCheckedChange={setIdentifiedOnly}
-          />
+          <Switch id="identified-only" checked={identifiedOnly} onCheckedChange={setIdentifiedOnly} />
           <Label htmlFor="identified-only" className="text-sm text-neutral-600 dark:text-neutral-400 cursor-pointer">
             Identified only
           </Label>

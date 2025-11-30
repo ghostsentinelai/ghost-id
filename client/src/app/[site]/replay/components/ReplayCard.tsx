@@ -1,18 +1,15 @@
 import { Clock, MousePointerClick, Trash2 } from "lucide-react";
 import { DateTime } from "luxon";
-import Link from "next/link";
 import { useState } from "react";
+import { useDeleteSessionReplay } from "../../../../api/analytics/sessionReplay/useDeleteSessionReplay";
+import { Avatar } from "../../../../components/Avatar";
+import { IdentifiedBadge } from "../../../../components/IdentifiedBadge";
 import {
   BrowserTooltipIcon,
   CountryFlagTooltipIcon,
   DeviceTypeTooltipIcon,
   OperatingSystemTooltipIcon,
 } from "../../../../components/TooltipIcons/TooltipIcons";
-import { Avatar, generateName } from "../../../../components/Avatar";
-import { IdentifiedBadge } from "../../../../components/IdentifiedBadge";
-import { Badge } from "../../../../components/ui/badge";
-import { Skeleton } from "../../../../components/ui/skeleton";
-import { Button } from "../../../../components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,9 +21,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../../../../components/ui/alert-dialog";
-import { cn, formatter } from "../../../../lib/utils";
+import { Badge } from "../../../../components/ui/badge";
+import { Button } from "../../../../components/ui/button";
+import { Skeleton } from "../../../../components/ui/skeleton";
+import { cn, formatter, getUserDisplayName } from "../../../../lib/utils";
 import { useReplayStore } from "./replayStore";
-import { useDeleteSessionReplay } from "../../../../api/analytics/sessionReplay/useDeleteSessionReplay";
 
 interface SessionReplayListItem {
   session_id: string;
@@ -58,13 +57,6 @@ export function ReplayCard({ replay }: { replay: SessionReplayListItem }) {
     zone: "utc",
   }).toLocal();
   const duration = replay.duration_ms ? Math.ceil(replay.duration_ms / 1000) : null;
-
-  // Calculate display name based on identification status
-  const isIdentified = !!replay.identified_user_id;
-  const traits = replay.traits;
-  const displayName = isIdentified
-    ? (traits?.username as string) || (traits?.name as string) || replay.identified_user_id
-    : generateName(replay.user_id);
 
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -101,8 +93,10 @@ export function ReplayCard({ replay }: { replay: SessionReplayListItem }) {
       {/* User info row */}
       <div className="flex items-center gap-1.5 mb-1.5">
         <Avatar size={16} id={replay.user_id} />
-        <span className="text-xs text-neutral-700 dark:text-neutral-200 truncate max-w-[100px]">{displayName}</span>
-        {isIdentified && <IdentifiedBadge traits={traits} />}
+        <span className="text-xs text-neutral-700 dark:text-neutral-200 truncate max-w-[100px]">
+          {getUserDisplayName(replay)}
+        </span>
+        {replay.identified_user_id && <IdentifiedBadge traits={replay.traits} />}
       </div>
 
       <div className="flex items-center gap-2 mb-1">

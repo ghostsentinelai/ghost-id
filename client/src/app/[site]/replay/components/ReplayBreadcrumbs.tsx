@@ -25,16 +25,16 @@ import {
   Type,
 } from "lucide-react";
 import { Duration } from "luxon";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { useGetSessionReplayEvents } from "../../../../api/analytics/sessionReplay/useGetSessionReplayEvents";
-import { ScrollArea } from "../../../../components/ui/scroll-area";
-import { cn } from "../../../../lib/utils";
-import { useReplayStore } from "./replayStore";
-import { Avatar, generateName } from "../../../../components/Avatar";
+import { Avatar } from "../../../../components/Avatar";
 import { IdentifiedBadge } from "../../../../components/IdentifiedBadge";
-import Link from "next/link";
 import { Button } from "../../../../components/ui/button";
+import { ScrollArea } from "../../../../components/ui/scroll-area";
+import { cn, getUserDisplayName } from "../../../../lib/utils";
+import { useReplayStore } from "./replayStore";
 
 // Event type mapping based on rrweb event types
 const EVENT_TYPE_INFO = {
@@ -256,10 +256,6 @@ export function ReplayBreadcrumbs() {
 
   // Calculate display name based on identification status
   const isIdentified = !!data.metadata.identified_user_id;
-  const traits = data.metadata.traits;
-  const displayName = isIdentified
-    ? (traits?.username as string) || (traits?.name as string) || data.metadata.identified_user_id
-    : generateName(data.metadata.user_id);
   const userLink = isIdentified
     ? `/${siteId}/user/${data.metadata.identified_user_id}`
     : `/${siteId}/user/${data.metadata.user_id}`;
@@ -269,8 +265,8 @@ export function ReplayBreadcrumbs() {
       <div className="rounded-lg border border-neutral-100 dark:border-neutral-800 bg-white dark:bg-neutral-900 flex items-center justify-between gap-2 p-2 text-xs text-neutral-900 dark:text-neutral-200">
         <div className="flex items-center gap-2">
           <Avatar id={data.metadata.user_id} size={20} />
-          <span className="truncate max-w-[120px]">{displayName}</span>
-          {isIdentified && <IdentifiedBadge traits={traits} />}
+          <span className="truncate max-w-[120px]">{getUserDisplayName(data.metadata)}</span>
+          {isIdentified && <IdentifiedBadge traits={data.metadata.traits} />}
         </div>
         <Link href={userLink} className="flex items-center gap-2">
           <Button size="sm">View User</Button>

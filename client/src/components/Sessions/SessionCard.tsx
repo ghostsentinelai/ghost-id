@@ -5,8 +5,8 @@ import { DateTime } from "luxon";
 import { memo, useState } from "react";
 import { GetSessionsResponse } from "../../api/analytics/useGetUserSessions";
 import { formatShortDuration, hour12, userLocale } from "../../lib/dateTimeUtils";
-import { cn, formatter } from "../../lib/utils";
-import { Avatar, generateName } from "../Avatar";
+import { cn, formatter, getUserDisplayName } from "../../lib/utils";
+import { Avatar } from "../Avatar";
 import { Channel } from "../Channel";
 import { EventIcon, PageviewIcon } from "../EventIcons";
 import { IdentifiedBadge } from "../IdentifiedBadge";
@@ -51,13 +51,6 @@ export function SessionCard({ session, onClick, userId, expandedByDefault }: Ses
     }
   };
 
-  const isIdentified = !!session.identified_user_id;
-  const traits = session.traits;
-  // Priority: username > name > identified_user_id (for identified) or generated name (for anonymous)
-  const displayName = isIdentified
-    ? (traits?.username as string) || (traits?.name as string) || session.identified_user_id
-    : generateName(session.user_id);
-
   return (
     <div className="rounded-lg bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-850 overflow-hidden">
       <div className="p-3 cursor-pointer" onClick={handleCardClick}>
@@ -65,8 +58,10 @@ export function SessionCard({ session, onClick, userId, expandedByDefault }: Ses
           {!userId && (
             <div className="hidden md:flex items-center gap-2">
               <Avatar size={24} id={session.user_id} />
-              <span className="text-xs text-neutral-600 dark:text-neutral-200 w-24 truncate">{displayName}</span>
-              {isIdentified && <IdentifiedBadge traits={traits} />}
+              <span className="text-xs text-neutral-600 dark:text-neutral-200 w-24 truncate">
+                {getUserDisplayName(session)}
+              </span>
+              {!!session.identified_user_id && <IdentifiedBadge traits={session.traits} />}
             </div>
           )}
 
