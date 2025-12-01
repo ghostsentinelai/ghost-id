@@ -52,7 +52,7 @@ export class SimpleAnalyticsImportMapper {
     SimpleAnalyticsImportMapper.simpleAnalyticsEventSchema
   );
 
-  static transform(events: SimpleAnalyticsEvent[], site: string, importId: string): RybbitEvent[] {
+  static transform(events: SimpleAnalyticsEvent[], site: number, importId: string): RybbitEvent[] {
     return events.reduce<RybbitEvent[]>((acc, event) => {
       const parsed = SimpleAnalyticsImportMapper.simpleAnalyticsEventSchema.safeParse(event);
       if (!parsed.success) {
@@ -65,7 +65,7 @@ export class SimpleAnalyticsImportMapper {
       const screenHeight = parseInt(data.screen_height, 10);
 
       acc.push({
-        site_id: Number(site),
+        site_id: site,
         timestamp: DateTime.fromISO(data.added_iso).toFormat("yyyy-MM-dd HH:mm:ss"),
         session_id: data.session_id,
         user_id: data.uuid,
