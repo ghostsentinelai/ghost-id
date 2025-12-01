@@ -7,6 +7,7 @@ import { useGetOverview } from "../../../../../api/analytics/hooks/useGetOvervie
 import { useGetOverviewBucketed } from "../../../../../api/analytics/hooks/useGetOverviewBucketed";
 import { BucketSelection } from "../../../../../components/BucketSelection";
 import { RybbitLogo } from "../../../../../components/RybbitLogo";
+import { useWhiteLabel } from "../../../../../hooks/useIsWhiteLabel";
 import { authClient } from "../../../../../lib/auth";
 import { useStore } from "../../../../../lib/store";
 import { cn } from "../../../../../lib/utils";
@@ -32,6 +33,7 @@ const tilt_wrap = Tilt_Warp({
 });
 
 export function MainSection() {
+  const { isWhiteLabel } = useWhiteLabel();
   const session = authClient.useSession();
 
   const { selectedStat, time, site, bucket, showUsersSplit, setShowUsersSplit } = useStore();
@@ -84,9 +86,9 @@ export function MainSection() {
       <Card className="overflow-visible">
         {(isFetching || isPreviousFetching) && <CardLoader />}
         <CardContent className="p-2 md:p-4 py-3 w-full">
-          <div className="flex gap-2 justify-between items-center px-2 md:px-0 relative">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-between px-2 md:px-0">
+            <div className="flex items-center space-x-4">
+              {!isWhiteLabel && (
                 <Link
                   href={session.data ? "/" : "https://rybbit.com"}
                   className={cn("text-lg font-semibold flex items-center gap-1.5 opacity-75", tilt_wrap.className)}
@@ -94,7 +96,7 @@ export function MainSection() {
                   <RybbitLogo width={20} height={20} />
                   rybbit.com
                 </Link>
-              </div>
+              )}
             </div>
             <span className="text-sm text-neutral-700 dark:text-neutral-200">{SELECTED_STAT_MAP[selectedStat]}</span>
             <div className="flex items-center">
