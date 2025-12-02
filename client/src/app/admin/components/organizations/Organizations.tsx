@@ -169,7 +169,6 @@ export function Organizations() {
     return filtered;
   }, [organizations, searchQuery, showZeroEvents, showFreeUsers, showOnlyOverLimit]);
 
-  // Impersonation handler
   const handleImpersonate = useCallback(
     async (userId: string) => {
       try {
@@ -188,12 +187,7 @@ export function Organizations() {
     [router]
   );
 
-  // Format subscription status
   const formatSubscriptionStatus = (subscription: AdminOrganizationData["subscription"]) => {
-    if (!subscription.id) {
-      return <Badge variant="secondary">Free</Badge>;
-    }
-
     const statusColor =
       subscription.status === "active" ? "default" : subscription.status === "canceled" ? "destructive" : "secondary";
 
@@ -515,15 +509,21 @@ export function Organizations() {
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 border border-neutral-100 dark:border-neutral-800 rounded">
                               <div>
-                                <div className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">Plan</div>
+                                <div className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">
+                                  Plan
+                                </div>
                                 <div className="font-medium">{row.original.subscription.planName}</div>
                               </div>
                               <div>
-                                <div className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">Status</div>
+                                <div className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">
+                                  Status
+                                </div>
                                 <div className="font-medium">{row.original.subscription.status}</div>
                               </div>
                               <div>
-                                <div className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">Event Limit</div>
+                                <div className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">
+                                  Event Limit
+                                </div>
                                 <div className="font-medium">
                                   {row.original.subscription.eventLimit
                                     ? formatter(row.original.subscription.eventLimit)
@@ -532,7 +532,9 @@ export function Organizations() {
                               </div>
                               {row.original.subscription.currentPeriodEnd && (
                                 <div>
-                                  <div className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">Period End</div>
+                                  <div className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">
+                                    Period End
+                                  </div>
                                   <div className="font-medium">
                                     {formatDistanceToNow(new Date(row.original.subscription.currentPeriodEnd), {
                                       addSuffix: true,
@@ -542,7 +544,9 @@ export function Organizations() {
                               )}
                               {row.original.subscription.cancelAtPeriodEnd && (
                                 <div>
-                                  <div className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">Cancellation</div>
+                                  <div className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">
+                                    Cancellation
+                                  </div>
                                   <div className="font-medium text-orange-400">Cancels at period end</div>
                                 </div>
                               )}
@@ -576,7 +580,9 @@ export function Organizations() {
                                 ))}
                               </div>
                             ) : (
-                              <div className="text-neutral-500 dark:text-neutral-400 p-4 border border-neutral-100 dark:border-neutral-800 rounded">No sites</div>
+                              <div className="text-neutral-500 dark:text-neutral-400 p-4 border border-neutral-100 dark:border-neutral-800 rounded">
+                                No sites
+                              </div>
                             )}
                           </div>
 
@@ -600,7 +606,9 @@ export function Organizations() {
                                           {member.role}
                                         </Badge>
                                       </div>
-                                      <div className="text-sm text-neutral-700 dark:text-neutral-200">{member.email}</div>
+                                      <div className="text-sm text-neutral-700 dark:text-neutral-200">
+                                        {member.email}
+                                      </div>
                                       <div className="text-xs text-neutral-500 dark:text-neutral-400">
                                         <CopyText text={member.userId} className="text-xs"></CopyText>
                                       </div>
@@ -619,7 +627,9 @@ export function Organizations() {
                                 ))}
                               </div>
                             ) : (
-                              <div className="text-neutral-500 dark:text-neutral-400 p-4 border border-neutral-100 dark:border-neutral-800 rounded">No members</div>
+                              <div className="text-neutral-500 dark:text-neutral-400 p-4 border border-neutral-100 dark:border-neutral-800 rounded">
+                                No members
+                              </div>
                             )}
                           </div>
                         </div>
