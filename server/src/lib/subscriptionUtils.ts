@@ -48,7 +48,7 @@ export interface OverrideSubscriptionInfo {
   replayLimit: number;
   periodStart: string;
   status: "active";
-  interval: "month" | "year";
+  interval: "month" | "year" | "lifetime";
   cancelAtPeriodEnd: false;
   isPro: boolean;
 }
@@ -114,7 +114,26 @@ export async function getOverrideSubscription(organizationId: string): Promise<O
       return null;
     }
 
-    // Look up plan details from the plan name
+    // Check if it's an AppSumo tier override (e.g., "appsumo-1", "appsumo-2", "appsumo-3")
+    const appsumoMatch = org.planOverride.match(/^appsumo-([123])$/);
+    if (appsumoMatch) {
+      const tier = appsumoMatch[1] as keyof typeof APPSUMO_TIER_LIMITS;
+      const eventLimit = APPSUMO_TIER_LIMITS[tier];
+
+      return {
+        source: "override",
+        planName: org.planOverride,
+        eventLimit,
+        replayLimit: 0, // AppSumo doesn't include replays
+        periodStart: getStartOfMonth(),
+        status: "active",
+        interval: "lifetime",
+        cancelAtPeriodEnd: false,
+        isPro: false,
+      };
+    }
+
+    // Look up plan details from the plan name (Stripe plans)
     const planDetails = getStripePrices().find((plan: StripePlan) => plan.name === org.planOverride);
 
     if (!planDetails) {
