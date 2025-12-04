@@ -93,7 +93,8 @@ export function InviteMemberDialog({ organizationId, onSuccess, memberCount }: I
           </span>
         </TooltipTrigger>
         <TooltipContent>
-          You have reached the limit of {subscription?.isPro ? 10 : 3} members. Upgrade to add more members
+          You have reached the limit of {getMemberLimit(subscription)} member
+          {getMemberLimit(subscription) > 1 ? "s" : ""}. Upgrade to add more members
         </TooltipContent>
       </Tooltip>
     );

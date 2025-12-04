@@ -77,6 +77,7 @@ import { auth } from "./lib/auth.js";
 import { IS_CLOUD } from "./lib/const.js";
 import { siteConfig } from "./lib/siteConfig.js";
 import { trackEvent } from "./services/tracker/trackEvent.js";
+import { handleIdentify } from "./services/tracker/identifyService.js";
 // need to import telemetry service here to start it
 import { telemetryService } from "./services/telemetryService.js";
 import { weeklyReportService } from "./services/weekyReports/weeklyReportService.js";
@@ -90,6 +91,10 @@ import { getGSCStatus } from "./api/gsc/status.js";
 import { disconnectGSC } from "./api/gsc/disconnect.js";
 import { getGSCData } from "./api/gsc/getData.js";
 import { selectGSCProperty } from "./api/gsc/selectProperty.js";
+import { getSiteImports } from "./api/sites/getSiteImports.js";
+import { createSiteImport } from "./api/sites/createSiteImport.js";
+import { batchImportEvents } from "./api/sites/batchImportEvents.js";
+import { deleteSiteImport } from "./api/sites/deleteSiteImport.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -202,7 +207,7 @@ server.register(
 const PUBLIC_ROUTES: string[] = [
   "/api/health",
   "/api/track",
-  "/track",
+  "/api/identify",
   "/api/script.js",
   "/api/script-full.js",
   "/api/replay.js",
@@ -216,7 +221,7 @@ const PUBLIC_ROUTES: string[] = [
   "/api/as/webhook",
   "/api/session-replay/record",
   "/api/admin/telemetry",
-  "/api/site/:siteId/tracking-config",
+  "/api/site/tracking-config",
 ];
 
 // Define analytics routes that can be public
@@ -356,6 +361,12 @@ server.get("/api/session-replay/list/:site", getSessionReplays);
 server.get("/api/session-replay/:sessionId/:site", getSessionReplayEvents);
 server.delete("/api/session-replay/:sessionId/:site", deleteSessionReplay);
 
+// Imports
+server.get("/api/get-site-imports/:site", getSiteImports);
+server.post("/api/create-site-import/:site", createSiteImport);
+server.post("/api/batch-import-events/:site/:importId", batchImportEvents);
+server.delete("/api/delete-site-import/:site/:importId", deleteSiteImport);
+
 // Administrative
 server.get("/api/config", getConfig);
 server.post("/api/add-site", addSite);
@@ -365,7 +376,7 @@ server.get("/api/get-sites-from-org/:organizationId", getSitesFromOrg);
 server.get("/api/get-site/:id", getSite);
 server.get("/api/site/:siteId/private-link-config", getSitePrivateLinkConfig);
 server.post("/api/site/:siteId/private-link-config", updateSitePrivateLinkConfig);
-server.get("/api/site/:siteId/tracking-config", getTrackingConfig);
+server.get("/api/site/tracking-config/:siteId", getTrackingConfig);
 server.get("/api/site/:siteId/excluded-ips", getSiteExcludedIPs);
 server.get("/api/site/:siteId/excluded-countries", getSiteExcludedCountries);
 server.get("/api/list-organization-members/:organizationId", listOrganizationMembers);
@@ -448,6 +459,9 @@ if (IS_CLOUD) {
 
 server.post("/track", trackEvent);
 server.post("/api/track", trackEvent);
+
+server.post("/identify", handleIdentify);
+server.post("/api/identify", handleIdentify);
 
 server.get("/api/health", { logLevel: "silent" }, (_, reply) => reply.send("OK"));
 

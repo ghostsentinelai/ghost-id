@@ -1,6 +1,9 @@
 import { ResultSet } from "@clickhouse/client";
 import { FilterParams } from "@rybbit/shared";
+import { and, eq, inArray } from "drizzle-orm";
 import SqlString from "sqlstring";
+import { db } from "../../db/postgres/postgres.js";
+import { userProfiles } from "../../db/postgres/schema.js";
 import { filterParamSchema, validateFilters, validateTimeStatementParams } from "./query-validation.js";
 import { FilterParameter, FilterType } from "./types.js";
 
@@ -72,9 +75,13 @@ export async function processResults<T>(results: ResultSet<"JSONEachRow">): Prom
       if (
         key !== "session_id" &&
         key !== "user_id" &&
+        key !== "identified_user_id" &&
+        key !== "effective_user_id" &&
         row[key] !== null &&
         row[key] !== undefined &&
         row[key] !== "" &&
+        row[key] !== true &&
+        row[key] !== false &&
         !isNaN(Number(row[key]))
       ) {
         row[key] = Number(row[key]) as any;
@@ -255,6 +262,35 @@ export function getFilterStatement(filters: string, siteId?: number, timeStateme
           )`;
         }
 
+        // Special handling for user_id to also check identified_user_id
+        // This is needed because URLs may contain either the device fingerprint (user_id)
+        // or the custom identified user ID (identified_user_id)
+        if (filter.parameter === "user_id") {
+          if (filter.value.length === 1) {
+            const escapedValue = SqlString.escape(filter.value[0]);
+            if (filter.type === "equals") {
+              return `(user_id = ${escapedValue} OR identified_user_id = ${escapedValue})`;
+            } else if (filter.type === "not_equals") {
+              return `(user_id != ${escapedValue} AND identified_user_id != ${escapedValue})`;
+            }
+          }
+
+          const conditions = filter.value.map(value => {
+            const escapedValue = SqlString.escape(value);
+            if (filter.type === "equals") {
+              return `(user_id = ${escapedValue} OR identified_user_id = ${escapedValue})`;
+            } else {
+              return `(user_id != ${escapedValue} AND identified_user_id != ${escapedValue})`;
+            }
+          });
+
+          if (filter.type === "equals") {
+            return `(${conditions.join(" OR ")})`;
+          } else {
+            return `(${conditions.join(" AND ")})`;
+          }
+        }
+
         // Special handling for lat/lon with tolerance
         if (filter.parameter === "lat" || filter.parameter === "lon") {
           const tolerance = 0.001;
@@ -335,3 +371,39 @@ export const bucketIntervalMap = {
   month: "1 MONTH",
   year: "1 YEAR",
 } as const;
+
+/**
+ * Enriches data with user traits from Postgres for identified users.
+ * This is a shared utility to avoid duplicating the traits fetching logic.
+ * Uses identified_user_id to look up traits since that's the custom user ID.
+ */
+export async function enrichWithTraits<T extends { identified_user_id: string }>(
+  data: T[],
+  siteId: number
+): Promise<Array<T & { traits: Record<string, unknown> | null }>> {
+  const identifiedUserIds = [
+    ...new Set(data.filter((item) => item.identified_user_id).map((item) => item.identified_user_id)),
+  ];
+
+  let traitsMap: Map<string, Record<string, unknown>> = new Map();
+  if (identifiedUserIds.length > 0) {
+    const profiles = await db
+      .select({
+        userId: userProfiles.userId,
+        traits: userProfiles.traits,
+      })
+      .from(userProfiles)
+      .where(and(eq(userProfiles.siteId, siteId), inArray(userProfiles.userId, identifiedUserIds)));
+
+    traitsMap = new Map(
+      profiles.map((p) => [
+        p.userId,
+        p.traits && typeof p.traits === "object" && !Array.isArray(p.traits)
+          ? (p.traits as Record<string, unknown>)
+          : {},
+      ])
+    );
+  }
+
+  return data.map((item) => ({ ...item, traits: traitsMap.get(item.identified_user_id) || null }));
+}
