@@ -3,7 +3,8 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import SqlString from "sqlstring";
 import { clickhouse } from "../../db/clickhouse/clickhouse.js";
 import { validateTimeStatementFillParams } from "./query-validation.js";
-import { getFilterStatement, getTimeStatement, processResults, TimeBucketToFn, bucketIntervalMap } from "./utils.js";
+import { getTimeStatement, processResults, TimeBucketToFn, bucketIntervalMap } from "./utils.js";
+import { getFilterStatement } from "./getFilterStatement.js";
 import { TimeBucket } from "./types.js";
 
 function getTimeStatementFill(params: FilterParams, bucket: TimeBucket) {
