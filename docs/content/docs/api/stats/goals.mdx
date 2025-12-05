@@ -22,15 +22,15 @@ See the [API Reference](/docs/api/stats/reference) for authentication, common pa
   </a>
   <a href="#create-goal" className="flex items-center gap-3 p-3 rounded-lg bg-fd-secondary/50 hover:bg-fd-secondary transition-colors no-underline">
     <span className="px-2 py-1 text-xs font-bold rounded bg-blue-500/20 text-blue-600 dark:text-blue-400">POST</span>
-    <code className="text-sm">/api/goal/create</code>
+    <code className="text-sm">/api/goals/:site</code>
   </a>
   <a href="#update-goal" className="flex items-center gap-3 p-3 rounded-lg bg-fd-secondary/50 hover:bg-fd-secondary transition-colors no-underline">
     <span className="px-2 py-1 text-xs font-bold rounded bg-yellow-500/20 text-yellow-600 dark:text-yellow-400">PUT</span>
-    <code className="text-sm">/api/goal/update</code>
+    <code className="text-sm">/api/goals/:goalId/:site</code>
   </a>
   <a href="#delete-goal" className="flex items-center gap-3 p-3 rounded-lg bg-fd-secondary/50 hover:bg-fd-secondary transition-colors no-underline">
     <span className="px-2 py-1 text-xs font-bold rounded bg-red-500/20 text-red-600 dark:text-red-400">DELETE</span>
-    <code className="text-sm">/api/goal/:goalId</code>
+    <code className="text-sm">/api/goals/:goalId/:site</code>
   </a>
 </div>
 
@@ -454,20 +454,27 @@ data = response.json()
 <div>
 
 ```
-POST /api/goal/create
+POST /api/goals/:site
 ```
 
 Creates a new goal for tracking conversions.
+
+### Path Parameters
+
+<TypeTable
+  type={{
+    site: {
+      description: 'Site ID or site identifier',
+      type: 'string | number',
+      required: true,
+    },
+  }}
+/>
 
 ### Request Body
 
 <TypeTable
   type={{
-    siteId: {
-      description: 'Site ID to create the goal for',
-      type: 'number',
-      required: true,
-    },
     name: {
       description: 'Goal name',
       type: 'string',
@@ -543,11 +550,10 @@ Creates a new goal for tracking conversions.
 <Tabs items={['cURL', 'JavaScript', 'Python']}>
   <Tab value="cURL">
 ```bash title="Path Goal"
-curl -X POST "https://api.rybbit.io/api/goal/create" \
+curl -X POST "https://api.rybbit.io/api/goals/123" \
   -H "Authorization: Bearer your_api_key_here" \
   -H "Content-Type: application/json" \
   -d '{
-    "siteId": 123,
     "name": "Checkout Complete",
     "goalType": "path",
     "config": {
@@ -559,7 +565,7 @@ curl -X POST "https://api.rybbit.io/api/goal/create" \
   <Tab value="JavaScript">
 ```javascript title="Event Goal"
 const response = await fetch(
-  'https://api.rybbit.io/api/goal/create',
+  'https://api.rybbit.io/api/goals/123',
   {
     method: 'POST',
     headers: {
@@ -567,7 +573,6 @@ const response = await fetch(
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      siteId: 123,
       name: 'Purchase Made',
       goalType: 'event',
       config: {
@@ -587,9 +592,8 @@ const data = await response.json();
 import requests
 
 response = requests.post(
-    'https://api.rybbit.io/api/goal/create',
+    'https://api.rybbit.io/api/goals/123',
     json={
-        'siteId': 123,
         'name': 'Signup Complete',
         'goalType': 'path',
         'config': {
@@ -624,25 +628,32 @@ data = response.json()
 <div>
 
 ```
-PUT /api/goal/update
+PUT /api/goals/:goalId/:site
 ```
 
 Updates an existing goal.
 
-### Request Body
+### Path Parameters
 
 <TypeTable
   type={{
     goalId: {
       description: 'ID of the goal to update',
-      type: 'number',
+      type: 'string | number',
       required: true,
     },
-    siteId: {
-      description: 'Site ID the goal belongs to',
-      type: 'number',
+    site: {
+      description: 'Site ID or site identifier',
+      type: 'string | number',
       required: true,
     },
+  }}
+/>
+
+### Request Body
+
+<TypeTable
+  type={{
     name: {
       description: 'Updated goal name',
       type: 'string',
@@ -683,12 +694,10 @@ Updates an existing goal.
 <Tabs items={['cURL', 'JavaScript', 'Python']}>
   <Tab value="cURL">
 ```bash title="Request"
-curl -X PUT "https://api.rybbit.io/api/goal/update" \
+curl -X PUT "https://api.rybbit.io/api/goals/1/123" \
   -H "Authorization: Bearer your_api_key_here" \
   -H "Content-Type: application/json" \
   -d '{
-    "goalId": 1,
-    "siteId": 123,
     "name": "Signup Completed (Updated)",
     "goalType": "path",
     "config": {
@@ -700,7 +709,7 @@ curl -X PUT "https://api.rybbit.io/api/goal/update" \
   <Tab value="JavaScript">
 ```javascript title="Request"
 const response = await fetch(
-  'https://api.rybbit.io/api/goal/update',
+  'https://api.rybbit.io/api/goals/1/123',
   {
     method: 'PUT',
     headers: {
@@ -708,8 +717,6 @@ const response = await fetch(
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      goalId: 1,
-      siteId: 123,
       name: 'Signup Completed (Updated)',
       goalType: 'path',
       config: {
@@ -727,10 +734,8 @@ const data = await response.json();
 import requests
 
 response = requests.put(
-    'https://api.rybbit.io/api/goal/update',
+    'https://api.rybbit.io/api/goals/1/123',
     json={
-        'goalId': 1,
-        'siteId': 123,
         'name': 'Signup Completed (Updated)',
         'goalType': 'path',
         'config': {
@@ -765,7 +770,7 @@ data = response.json()
 <div>
 
 ```
-DELETE /api/goal/:goalId
+DELETE /api/goals/:goalId/:site
 ```
 
 Deletes a goal. This action cannot be undone.
@@ -776,6 +781,11 @@ Deletes a goal. This action cannot be undone.
   type={{
     goalId: {
       description: 'ID of the goal to delete',
+      type: 'string | number',
+      required: true,
+    },
+    site: {
+      description: 'Site ID or site identifier',
       type: 'string | number',
       required: true,
     },
@@ -799,14 +809,14 @@ Deletes a goal. This action cannot be undone.
 <Tabs items={['cURL', 'JavaScript', 'Python']}>
   <Tab value="cURL">
 ```bash title="Request"
-curl -X DELETE "https://api.rybbit.io/api/goal/1" \
+curl -X DELETE "https://api.rybbit.io/api/goals/1/123" \
   -H "Authorization: Bearer your_api_key_here"
 ```
   </Tab>
   <Tab value="JavaScript">
 ```javascript title="Request"
 const response = await fetch(
-  'https://api.rybbit.io/api/goal/1',
+  'https://api.rybbit.io/api/goals/1/123',
   {
     method: 'DELETE',
     headers: {
@@ -823,7 +833,7 @@ const data = await response.json();
 import requests
 
 response = requests.delete(
-    'https://api.rybbit.io/api/goal/1',
+    'https://api.rybbit.io/api/goals/1/123',
     headers={
         'Authorization': 'Bearer your_api_key_here'
     }

@@ -9,7 +9,7 @@ export function useDeleteGoal() {
   return useMutation<{ success: boolean }, Error, number>({
     mutationFn: async (goalId: number) => {
       try {
-        return await authedFetch<{ success: boolean }>(`/goal/${goalId}`, undefined, {
+        return await authedFetch<{ success: boolean }>(`/goals/${goalId}/${site}`, undefined, {
           method: "DELETE",
         });
       } catch (error) {

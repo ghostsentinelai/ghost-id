@@ -27,7 +27,7 @@ export function useUpdateGoal() {
   return useMutation<UpdateGoalResponse, Error, UpdateGoalRequest>({
     mutationFn: async goalData => {
       try {
-        return await authedFetch<UpdateGoalResponse>("/goal/update", undefined, {
+        return await authedFetch<UpdateGoalResponse>(`/goals/${goalData.goalId}/${goalData.siteId}`, undefined, {
           method: "PUT",
           data: goalData,
         });

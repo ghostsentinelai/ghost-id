@@ -18,15 +18,15 @@ See the [API Reference](/docs/api/stats/reference) for authentication, common pa
   </a>
   <a href="#get-user-sessions" className="flex items-center gap-3 p-3 rounded-lg bg-fd-secondary/50 hover:bg-fd-secondary transition-colors no-underline">
     <span className="px-2 py-1 text-xs font-bold rounded bg-green-500/20 text-green-600 dark:text-green-400">GET</span>
-    <code className="text-sm">/api/user/:userId/sessions/:site</code>
+    <code className="text-sm">/api/users/:userId/sessions/:site</code>
   </a>
   <a href="#get-user-session-count" className="flex items-center gap-3 p-3 rounded-lg bg-fd-secondary/50 hover:bg-fd-secondary transition-colors no-underline">
     <span className="px-2 py-1 text-xs font-bold rounded bg-green-500/20 text-green-600 dark:text-green-400">GET</span>
-    <code className="text-sm">/api/user/session-count/:site</code>
+    <code className="text-sm">/api/users/session-count/:site</code>
   </a>
   <a href="#get-user-info" className="flex items-center gap-3 p-3 rounded-lg bg-fd-secondary/50 hover:bg-fd-secondary transition-colors no-underline">
     <span className="px-2 py-1 text-xs font-bold rounded bg-green-500/20 text-green-600 dark:text-green-400">GET</span>
-    <code className="text-sm">/api/user/info/:userId/:site</code>
+    <code className="text-sm">/api/users/:userId/:site</code>
   </a>
 </div>
 
@@ -276,7 +276,7 @@ data = response.json()
 <div>
 
 ```
-GET /api/user/:userId/sessions/:site
+GET /api/users/:userId/sessions/:site
 ```
 
 Returns all sessions for a specific user, grouped with their pageviews. Useful for viewing a user's browsing history and behavior patterns.
@@ -392,14 +392,14 @@ Accepts all [Common Parameters](/docs/api/stats/reference#common-parameters) (ti
 <Tabs items={['cURL', 'JavaScript', 'Python']}>
   <Tab value="cURL">
 ```bash title="Request"
-curl -X GET "https://api.rybbit.io/api/user/abc123def456/sessions/123?start_date=2024-01-01&end_date=2024-01-31" \
+curl -X GET "https://api.rybbit.io/api/users/abc123def456/sessions/123?start_date=2024-01-01&end_date=2024-01-31" \
   -H "Authorization: Bearer your_api_key_here"
 ```
   </Tab>
   <Tab value="JavaScript">
 ```javascript title="Request"
 const response = await fetch(
-  'https://api.rybbit.io/api/user/abc123def456/sessions/123?start_date=2024-01-01&end_date=2024-01-31',
+  'https://api.rybbit.io/api/users/abc123def456/sessions/123?start_date=2024-01-01&end_date=2024-01-31',
   {
     headers: {
       'Authorization': 'Bearer your_api_key_here'
@@ -415,7 +415,7 @@ const data = await response.json();
 import requests
 
 response = requests.get(
-    'https://api.rybbit.io/api/user/abc123def456/sessions/123',
+    'https://api.rybbit.io/api/users/abc123def456/sessions/123',
     params={
         'start_date': '2024-01-01',
         'end_date': '2024-01-31'
@@ -481,7 +481,7 @@ data = response.json()
 <div>
 
 ```
-GET /api/user/session-count/:site
+GET /api/users/session-count/:site
 ```
 
 Returns the number of sessions per day for a specific user. Useful for visualizing user engagement over time.
@@ -549,14 +549,14 @@ Returns the number of sessions per day for a specific user. Useful for visualizi
 <Tabs items={['cURL', 'JavaScript', 'Python']}>
   <Tab value="cURL">
 ```bash title="Request"
-curl -X GET "https://api.rybbit.io/api/user/session-count/123?user_id=abc123def456&time_zone=America/New_York" \
+curl -X GET "https://api.rybbit.io/api/users/session-count/123?user_id=abc123def456&time_zone=America/New_York" \
   -H "Authorization: Bearer your_api_key_here"
 ```
   </Tab>
   <Tab value="JavaScript">
 ```javascript title="Request"
 const response = await fetch(
-  'https://api.rybbit.io/api/user/session-count/123?user_id=abc123def456&time_zone=America/New_York',
+  'https://api.rybbit.io/api/users/session-count/123?user_id=abc123def456&time_zone=America/New_York',
   {
     headers: {
       'Authorization': 'Bearer your_api_key_here'
@@ -572,7 +572,7 @@ const data = await response.json();
 import requests
 
 response = requests.get(
-    'https://api.rybbit.io/api/user/session-count/123',
+    'https://api.rybbit.io/api/users/session-count/123',
     params={
         'user_id': 'abc123def456',
         'time_zone': 'America/New_York'
@@ -621,7 +621,7 @@ data = response.json()
 <div>
 
 ```
-GET /api/user/info/:userId/:site
+GET /api/users/:userId/:site
 ```
 
 Returns detailed information about a specific user, including their profile traits and linked devices.
@@ -769,14 +769,14 @@ Returns detailed information about a specific user, including their profile trai
 <Tabs items={['cURL', 'JavaScript', 'Python']}>
   <Tab value="cURL">
 ```bash title="Request"
-curl -X GET "https://api.rybbit.io/api/user/info/user@example.com/123" \
+curl -X GET "https://api.rybbit.io/api/users/user@example.com/123" \
   -H "Authorization: Bearer your_api_key_here"
 ```
   </Tab>
   <Tab value="JavaScript">
 ```javascript title="Request"
 const response = await fetch(
-  'https://api.rybbit.io/api/user/info/user@example.com/123',
+  'https://api.rybbit.io/api/users/user@example.com/123',
   {
     headers: {
       'Authorization': 'Bearer your_api_key_here'
@@ -792,7 +792,7 @@ const data = await response.json();
 import requests
 
 response = requests.get(
-    'https://api.rybbit.io/api/user/info/user@example.com/123',
+    'https://api.rybbit.io/api/users/user@example.com/123',
     headers={
         'Authorization': 'Bearer your_api_key_here'
     }

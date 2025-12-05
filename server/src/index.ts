@@ -236,30 +236,19 @@ const ANALYTICS_ROUTES = [
   "/api/site-has-data/",
   "/api/site-is-public/",
   "/api/sessions/",
-  "/api/session/",
   "/api/users/",
-  "/api/user/info/",
-  "/api/user/session-count/",
   "/api/session-locations/",
   "/api/funnels/",
-  "/api/funnel/",
-  "/api/funnel/:stepNumber/sessions/",
   "/api/journeys/",
   "/api/goals/",
-  "/api/goal/",
-  "/api/goals/:goalId/sessions/",
-  "/api/analytics/events/names/",
-  "/api/analytics/events/properties/",
   "/api/events/",
   "/api/events/outbound/",
   "/api/get-site/",
   "/api/performance/overview/",
   "/api/performance/time-series/",
-  "/api/performance/by-path/",
   "/api/performance/by-dimension/",
   "/api/error-names/",
   "/api/error-events/",
-  "/api/error-bucketed/",
   "/api/session-replay/",
   "/api/gsc/data/",
 ];
@@ -343,24 +332,24 @@ server.get("/api/retention/:site", getRetention);
 server.get("/api/site-has-data/:site", getSiteHasData);
 server.get("/api/site-is-public/:site", getSiteIsPublic);
 server.get("/api/sessions/:site", getSessions);
-server.get("/api/session/:sessionId/:site", getSession);
+server.get("/api/sessions/:sessionId/:site", getSession);
 server.get("/api/events/:site", getEvents);
 server.get("/api/users/:site", getUsers);
-server.get("/api/user/:userId/sessions/:site", getUserSessions);
-server.get("/api/user/session-count/:site", getUserSessionCount);
-server.get("/api/user/info/:userId/:site", getUserInfo);
+server.get("/api/users/:userId/sessions/:site", getUserSessions);
+server.get("/api/users/session-count/:site", getUserSessionCount);
+server.get("/api/users/:userId/:site", getUserInfo);
 server.get("/api/session-locations/:site", getSessionLocations);
 server.get("/api/funnels/:site", getFunnels);
 server.get("/api/journeys/:site", getJourneys);
-server.post("/api/funnel/:site", getFunnel);
-server.post("/api/funnel/:stepNumber/sessions/:site", getFunnelStepSessions);
-server.post("/api/funnel/create/:site", createFunnel);
-server.delete("/api/funnel/:funnelId", deleteFunnel);
+server.post("/api/funnels/analyze/:site", getFunnel);
+server.post("/api/funnels/:stepNumber/sessions/:site", getFunnelStepSessions);
+server.post("/api/funnels/:site", createFunnel);
+server.delete("/api/funnels/:funnelId/:site", deleteFunnel);
 server.get("/api/goals/:site", getGoals);
 server.get("/api/goals/:goalId/sessions/:site", getGoalSessions);
-server.post("/api/goal/create", createGoal);
-server.delete("/api/goal/:goalId", deleteGoal);
-server.put("/api/goal/update", updateGoal);
+server.post("/api/goals/:site", createGoal);
+server.delete("/api/goals/:goalId/:site", deleteGoal);
+server.put("/api/goals/:goalId/:site", updateGoal);
 server.get("/api/events/names/:site", getEventNames);
 server.get("/api/events/properties/:site", getEventProperties);
 server.get("/api/events/outbound/:site", getOutboundLinks);

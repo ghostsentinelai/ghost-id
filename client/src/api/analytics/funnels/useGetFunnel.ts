@@ -57,7 +57,7 @@ export function useGetFunnel(config?: FunnelRequest, debounce?: boolean) {
         ...configToUse,
       };
       try {
-        const response = await authedFetch<{ data: FunnelResponse[] }>(`/funnel/${site}`, queryParams, {
+        const response = await authedFetch<{ data: FunnelResponse[] }>(`/funnels/analyze/${site}`, queryParams, {
           method: "POST",
           data: fullConfig,
         });
@@ -91,7 +91,7 @@ export function useSaveFunnel() {
         const saveResponse = await authedFetch<{
           success: boolean;
           funnelId: number;
-        }>(`/funnel/create/${site}`, undefined, {
+        }>(`/funnels/${site}`, undefined, {
           method: "POST",
           data: fullConfig,
         });

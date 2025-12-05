@@ -18,7 +18,7 @@ See the [API Reference](/docs/api/stats/reference) for authentication, common pa
   </a>
   <a href="#get-session" className="flex items-center gap-3 p-3 rounded-lg bg-fd-secondary/50 hover:bg-fd-secondary transition-colors no-underline">
     <span className="px-2 py-1 text-xs font-bold rounded bg-green-500/20 text-green-600 dark:text-green-400">GET</span>
-    <code className="text-sm">/api/session/:sessionId/:site</code>
+    <code className="text-sm">/api/sessions/:sessionId/:site</code>
   </a>
   <a href="#get-session-locations" className="flex items-center gap-3 p-3 rounded-lg bg-fd-secondary/50 hover:bg-fd-secondary transition-colors no-underline">
     <span className="px-2 py-1 text-xs font-bold rounded bg-green-500/20 text-green-600 dark:text-green-400">GET</span>
@@ -277,7 +277,7 @@ data = response.json()
 <div>
 
 ```
-GET /api/session/:sessionId/:site
+GET /api/sessions/:sessionId/:site
 ```
 
 Returns detailed information about a specific session including all events and pageviews.
@@ -394,14 +394,14 @@ Returns detailed information about a specific session including all events and p
 <Tabs items={['cURL', 'JavaScript', 'Python']}>
   <Tab value="cURL">
 ```bash title="Request"
-curl -X GET "https://api.rybbit.io/api/session/sess_abc123/123?limit=50" \
+curl -X GET "https://api.rybbit.io/api/sessions/sess_abc123/123?limit=50" \
   -H "Authorization: Bearer your_api_key_here"
 ```
   </Tab>
   <Tab value="JavaScript">
 ```javascript title="Request"
 const response = await fetch(
-  'https://api.rybbit.io/api/session/sess_abc123/123?limit=50',
+  'https://api.rybbit.io/api/sessions/sess_abc123/123?limit=50',
   {
     headers: {
       'Authorization': 'Bearer your_api_key_here'
@@ -417,7 +417,7 @@ const data = await response.json();
 import requests
 
 response = requests.get(
-    'https://api.rybbit.io/api/session/sess_abc123/123',
+    'https://api.rybbit.io/api/sessions/sess_abc123/123',
     params={'limit': 50},
     headers={
         'Authorization': 'Bearer your_api_key_here'

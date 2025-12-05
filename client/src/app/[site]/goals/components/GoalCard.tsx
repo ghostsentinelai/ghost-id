@@ -101,14 +101,14 @@ export default function GoalCard({ goal, siteId }: GoalCardProps) {
 
             <div className="mt-1">
               <span className="text-xs text-neutral-500 dark:text-neutral-400 mr-2">Pattern:</span>
-              <code className="text-xs bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">
+              <code className="text-xs bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded">
                 {goal.goalType === "path" ? goal.config.pathPattern : goal.config.eventName}
               </code>
 
               {goal.goalType === "event" && goal.config.eventPropertyKey && (
                 <div className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
                   Property:{" "}
-                  <code className="text-xs bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded text-neutral-900 dark:text-neutral-100">
+                  <code className="text-xs bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded text-neutral-900 dark:text-neutral-100">
                     {goal.config.eventPropertyKey}: {String(goal.config.eventPropertyValue)}
                   </code>
                 </div>

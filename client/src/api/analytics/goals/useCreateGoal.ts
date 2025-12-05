@@ -24,7 +24,7 @@ export function useCreateGoal() {
   return useMutation<CreateGoalResponse, Error, CreateGoalRequest>({
     mutationFn: async goalData => {
       try {
-        return await authedFetch<CreateGoalResponse>("/goal/create", undefined, {
+        return await authedFetch<CreateGoalResponse>(`/goals/${goalData.siteId}`, undefined, {
           method: "POST",
           data: goalData,
         });

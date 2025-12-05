@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useStore } from "../../../lib/store";
 import { authedFetch } from "../../utils";
 
 /**
@@ -6,11 +7,12 @@ import { authedFetch } from "../../utils";
  */
 export function useDeleteFunnel() {
   const queryClient = useQueryClient();
+  const { site } = useStore();
 
   return useMutation<{ success: boolean }, Error, number>({
     mutationFn: async reportId => {
       try {
-        return await authedFetch<{ success: boolean }>(`/funnel/${reportId}`, undefined, {
+        return await authedFetch<{ success: boolean }>(`/funnels/${reportId}/${site}`, undefined, {
           method: "DELETE",
         });
       } catch (error) {

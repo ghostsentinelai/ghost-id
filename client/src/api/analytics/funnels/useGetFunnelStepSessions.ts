@@ -36,7 +36,7 @@ export function useGetFunnelStepSessions({
     queryKey: ["funnel-step-sessions", steps, stepNumber, siteId, timeParams, mode, page, limit, filteredFilters],
     queryFn: async () => {
       return authedFetch<FunnelStepSessionsResponse>(
-        `/funnel/${stepNumber}/sessions/${siteId}`,
+        `/funnels/${stepNumber}/sessions/${siteId}`,
         {
           ...timeParams,
           mode,

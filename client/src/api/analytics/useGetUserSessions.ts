@@ -219,7 +219,7 @@ export function useGetSessionDetailsInfinite(sessionId: string | null) {
         queryParams.minutes = minutes;
       }
 
-      return authedFetch<APIResponse<SessionPageviewsAndEvents>>(`/session/${sessionId}/${site}`, queryParams);
+      return authedFetch<APIResponse<SessionPageviewsAndEvents>>(`/sessions/${sessionId}/${site}`, queryParams);
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => {
@@ -244,7 +244,7 @@ export function useGetUserSessionCount(userId: string) {
   return useQuery<APIResponse<UserSessionCountResponse[]>>({
     queryKey: ["user-session-count", userId, site],
     queryFn: () => {
-      return authedFetch<APIResponse<UserSessionCountResponse[]>>(`/user/session-count/${site}`, {
+      return authedFetch<APIResponse<UserSessionCountResponse[]>>(`/users/session-count/${site}`, {
         user_id: userId,
         time_zone: timeZone,
       });
