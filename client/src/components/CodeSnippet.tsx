@@ -2,11 +2,33 @@
 
 import { Check, Copy } from "lucide-react";
 import * as React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
+import python from "react-syntax-highlighter/dist/esm/languages/hljs/python";
+import bash from "react-syntax-highlighter/dist/esm/languages/hljs/bash";
+import php from "react-syntax-highlighter/dist/esm/languages/hljs/php";
+import ruby from "react-syntax-highlighter/dist/esm/languages/hljs/ruby";
+import go from "react-syntax-highlighter/dist/esm/languages/hljs/go";
+import rust from "react-syntax-highlighter/dist/esm/languages/hljs/rust";
+import java from "react-syntax-highlighter/dist/esm/languages/hljs/java";
+import csharp from "react-syntax-highlighter/dist/esm/languages/hljs/csharp";
+import json from "react-syntax-highlighter/dist/esm/languages/hljs/json";
+import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+
+// Register only the languages we need
+SyntaxHighlighter.registerLanguage("javascript", js);
+SyntaxHighlighter.registerLanguage("python", python);
+SyntaxHighlighter.registerLanguage("bash", bash);
+SyntaxHighlighter.registerLanguage("php", php);
+SyntaxHighlighter.registerLanguage("ruby", ruby);
+SyntaxHighlighter.registerLanguage("go", go);
+SyntaxHighlighter.registerLanguage("rust", rust);
+SyntaxHighlighter.registerLanguage("java", java);
+SyntaxHighlighter.registerLanguage("csharp", csharp);
+SyntaxHighlighter.registerLanguage("json", json);
 
 interface CodeSnippetProps extends React.HTMLAttributes<HTMLPreElement> {
   code: string;
@@ -14,7 +36,12 @@ interface CodeSnippetProps extends React.HTMLAttributes<HTMLPreElement> {
   showLanguageLabel?: boolean;
 }
 
-export function CodeSnippet({ code, language, showLanguageLabel = false, className }: CodeSnippetProps) {
+export const CodeSnippet = React.memo(function CodeSnippet({
+  code,
+  language,
+  showLanguageLabel = false,
+  className
+}: CodeSnippetProps) {
   const [hasCopied, setHasCopied] = React.useState(false);
 
   const copyToClipboard = React.useCallback(async () => {
@@ -30,7 +57,7 @@ export function CodeSnippet({ code, language, showLanguageLabel = false, classNa
       )}
       <SyntaxHighlighter
         language={language || "text"}
-        style={oneDark}
+        style={atomOneDark}
         customStyle={{
           margin: 0,
           borderRadius: "0.5rem",
@@ -52,4 +79,4 @@ export function CodeSnippet({ code, language, showLanguageLabel = false, classNa
       </Button>
     </div>
   );
-}
+});

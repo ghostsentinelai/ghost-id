@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { CodeSnippet } from "@/components/CodeSnippet";
 import { codeGenerators, languageOrder, CodeGenConfig } from "../utils/codeGenerators";
@@ -9,10 +9,19 @@ interface CodeExamplesProps {
   config: CodeGenConfig;
 }
 
-export function CodeExamples({ config }: CodeExamplesProps) {
+export const CodeExamples = memo(function CodeExamples({ config }: CodeExamplesProps) {
   const [selectedLang, setSelectedLang] = useState("cURL");
 
-  const code = codeGenerators[selectedLang]?.(config) || "";
+  // Memoize the code generation
+  const code = useMemo(
+    () => codeGenerators[selectedLang]?.(config) || "",
+    [selectedLang, config]
+  );
+
+  const language = useMemo(
+    () => getLanguageForHighlight(selectedLang),
+    [selectedLang]
+  );
 
   return (
     <div className="space-y-2">
@@ -37,11 +46,11 @@ export function CodeExamples({ config }: CodeExamplesProps) {
       {/* Code display */}
       <CodeSnippet
         code={code}
-        language={getLanguageForHighlight(selectedLang)}
+        language={language}
       />
     </div>
   );
-}
+});
 
 function getLanguageForHighlight(lang: string): string {
   const map: Record<string, string> = {

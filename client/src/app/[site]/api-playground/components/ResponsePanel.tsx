@@ -21,7 +21,7 @@ export function ResponsePanel() {
     startDate,
     endDate,
     timeZone,
-    getApiFilters,
+    filters,
     endpointParams,
     pathParams,
     requestBody,
@@ -56,7 +56,14 @@ export function ResponsePanel() {
       qp.end_date = endDate;
       qp.time_zone = timeZone;
 
-      const apiFilters = getApiFilters();
+      // Convert filters to API format inline
+      const apiFilters = filters
+        .filter((f) => f.value.trim() !== "")
+        .map((f) => ({
+          parameter: f.parameter,
+          type: f.operator,
+          value: [f.value],
+        }));
       if (apiFilters.length > 0) {
         qp.filters = JSON.stringify(apiFilters);
       }
@@ -99,7 +106,7 @@ export function ResponsePanel() {
     startDate,
     endDate,
     timeZone,
-    getApiFilters,
+    filters,
     endpointParams,
     pathParams,
     requestBody,
