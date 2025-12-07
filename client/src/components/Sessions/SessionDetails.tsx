@@ -9,11 +9,8 @@ import { DateTime } from "luxon";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { memo, useMemo } from "react";
-import {
-  GetSessionsResponse,
-  SessionEvent,
-  useGetSessionDetailsInfinite,
-} from "../../api/analytics/useGetUserSessions";
+import { useGetSessionDetailsInfinite } from "../../api/analytics/hooks/useGetUserSessions";
+import { GetSessionsResponse, SessionEvent } from "../../api/analytics/endpoints";
 import { Browser } from "../../app/[site]/components/shared/icons/Browser";
 import { CountryFlag } from "../../app/[site]/components/shared/icons/CountryFlag";
 import { OperatingSystem } from "../../app/[site]/components/shared/icons/OperatingSystem";

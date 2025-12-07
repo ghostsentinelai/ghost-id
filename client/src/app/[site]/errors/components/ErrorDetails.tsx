@@ -1,6 +1,7 @@
 "use client";
 
-import { ErrorEvent, useGetErrorEventsInfinite } from "@/api/analytics/errors/useGetErrorEvents";
+import { useGetErrorEventsInfinite } from "@/api/analytics/hooks/errors/useGetErrorEvents";
+import { ErrorEvent } from "@/api/analytics/endpoints";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";

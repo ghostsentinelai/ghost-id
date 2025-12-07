@@ -5,8 +5,8 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { ErrorDetails } from "./ErrorDetails";
 import { ErrorSparklineChart } from "./ErrorSparklineChart";
-import { useGetErrorBucketed } from "@/api/analytics/errors/useGetErrorBucketed";
-import { ErrorNameItem } from "../../../../api/analytics/errors/useGetErrorNames";
+import { useGetErrorBucketed } from "@/api/analytics/hooks/errors/useGetErrorBucketed";
+import { ErrorNameItem } from "../../../../api/analytics/endpoints";
 
 // Maximum length for error messages
 const MAX_ERROR_MESSAGE_LENGTH = 150;
@@ -26,7 +26,6 @@ export function ErrorListItem({ errorData }: ErrorListItemProps) {
   // Get error bucketed data for sparkline
   const { data: errorBucketedData, isLoading: isLoadingBucketed } = useGetErrorBucketed({
     errorMessage: errorData.value,
-    enabled: true,
   });
 
   return (

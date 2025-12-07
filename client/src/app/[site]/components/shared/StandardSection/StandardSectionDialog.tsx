@@ -15,7 +15,8 @@ import {
 import { useDebounce, useIntersectionObserver } from "@uidotdev/usehooks";
 import { Loader2, SquareArrowOutUpRight } from "lucide-react";
 import { ReactNode, useEffect, useMemo, useState } from "react";
-import { MetricResponse, useInfiniteMetric } from "../../../../../api/analytics/useGetMetric";
+import { useInfiniteMetric } from "../../../../../api/analytics/hooks/useGetMetric";
+import { MetricResponse } from "../../../../../api/analytics/endpoints";
 import { addFilter } from "../../../../../lib/store";
 import { cn, formatSecondsAsMinutesAndSeconds } from "../../../../../lib/utils";
 

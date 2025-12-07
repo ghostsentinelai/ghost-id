@@ -2,9 +2,9 @@
 
 import { ChevronDown, ChevronUp, Copy, Edit, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { useDeleteGoal } from "../../../../api/analytics/goals/useDeleteGoal";
-import { Goal } from "../../../../api/analytics/goals/useGetGoals";
-import { useGetGoalSessions } from "../../../../api/analytics/goals/useGetGoalSessions";
+import { useDeleteGoal } from "../../../../api/analytics/hooks/goals/useDeleteGoal";
+import { Goal } from "../../../../api/analytics/endpoints";
+import { useGetGoalSessions } from "../../../../api/analytics/hooks/goals/useGetGoalSessions";
 import { EventIcon, PageviewIcon } from "../../../../components/EventIcons";
 import { SessionsList } from "../../../../components/Sessions/SessionsList";
 import {

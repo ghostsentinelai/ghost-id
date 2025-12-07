@@ -40,7 +40,7 @@ export async function getUsers(req: FastifyRequest<GetUsersRequest>, res: Fastif
   const {
     filters,
     page = "1",
-    page_size: pageSize = "20",
+    page_size: pageSize = "100",
     sort_by: sortBy = "last_seen",
     sort_order: sortOrder = "desc",
     identified_only: identifiedOnly = "false",

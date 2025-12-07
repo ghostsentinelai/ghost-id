@@ -7,9 +7,9 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { ArrowRight, ChevronDown, ChevronUp, Copy, Edit, Eye, MousePointerClick, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useDeleteFunnel } from "../../../../api/analytics/funnels/useDeleteFunnel";
-import { useGetFunnel } from "../../../../api/analytics/funnels/useGetFunnel";
-import { SavedFunnel } from "../../../../api/analytics/funnels/useGetFunnels";
+import { useDeleteFunnel } from "../../../../api/analytics/hooks/funnels/useDeleteFunnel";
+import { useGetFunnel } from "../../../../api/analytics/hooks/funnels/useGetFunnel";
+import { SavedFunnel } from "../../../../api/analytics/endpoints";
 import { ThreeDotLoader } from "../../../../components/Loaders";
 import { EditFunnelDialog } from "./EditFunnel";
 import { Funnel } from "./Funnel";
