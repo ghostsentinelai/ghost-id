@@ -51,7 +51,7 @@ function EndpointItem({ endpoint, isSelected, onClick }: EndpointItemProps) {
         isSelected && "bg-neutral-100 dark:bg-neutral-800"
       )}
     >
-      <span className={cn("shrink-0 px-1.5 py-0.5 text-[10px] font-bold rounded", methodColors[endpoint.method])}>
+      <span className={cn("shrink-0 px-1 py-0.5 text-[10px] font-bold rounded", methodColors[endpoint.method])}>
         {endpoint.method}
       </span>
       <span className="text-sm text-neutral-700 dark:text-neutral-300 truncate">{endpoint.name}</span>

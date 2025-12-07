@@ -109,6 +109,7 @@ export const endpointCategories: EndpointCategory[] = [
         name: "Get Error Events",
         description: "Returns individual error occurrences with context and stack traces",
         hasCommonParams: true,
+        requiredParams: ["errorMessage"],
         specificParams: ["errorMessage", "page", "limit"],
       },
       {
@@ -117,6 +118,7 @@ export const endpointCategories: EndpointCategory[] = [
         name: "Get Error Time Series",
         description: "Returns error occurrence counts over time",
         hasCommonParams: true,
+        requiredParams: ["errorMessage"],
         specificParams: ["errorMessage", "bucket"],
       },
     ],

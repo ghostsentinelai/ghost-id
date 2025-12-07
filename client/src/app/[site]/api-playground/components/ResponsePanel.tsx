@@ -1,10 +1,7 @@
 "use client";
 
-import { authedFetch } from "@/api/utils";
 import { CodeSnippet } from "@/components/CodeSnippet";
-import { Button } from "@/components/ui/button";
-import { BACKEND_URL } from "@/lib/const";
-import { Loader2, Play, XCircle } from "lucide-react";
+import { XCircle } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { usePlaygroundStore } from "../hooks/usePlaygroundStore";
@@ -26,25 +23,13 @@ export function ResponsePanel() {
     requestBody,
     response,
     responseError,
-    isLoading,
     responseTime,
-    setResponse,
-    setResponseError,
-    setIsLoading,
   } = usePlaygroundStore();
 
-  // Build the full URL
-  const { fullUrl, queryParams, parsedBody } = useMemo(() => {
+  // Build the full URL and query params for code generation
+  const { queryParams, parsedBody } = useMemo(() => {
     if (!selectedEndpoint) {
-      return { fullUrl: "", queryParams: {}, parsedBody: undefined };
-    }
-
-    // Replace path params and :site
-    let path = selectedEndpoint.path.replace(":site", siteId);
-    if (selectedEndpoint.pathParams) {
-      for (const param of selectedEndpoint.pathParams) {
-        path = path.replace(`:${param}`, pathParams[param] || `:${param}`);
-      }
+      return { queryParams: {}, parsedBody: undefined };
     }
 
     // Build query params
@@ -87,16 +72,8 @@ export function ResponsePanel() {
       }
     }
 
-    // Build query string
-    const queryString = Object.entries(qp)
-      .filter(([, v]) => v !== undefined && v !== null && v !== "")
-      .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
-      .join("&");
-
-    const url = `${BACKEND_URL}${path}${queryString ? `?${queryString}` : ""}`;
-
-    return { fullUrl: url, queryParams: qp, parsedBody: body };
-  }, [selectedEndpoint, siteId, startDate, endDate, timeZone, filters, endpointParams, pathParams, requestBody]);
+    return { queryParams: qp, parsedBody: body };
+  }, [selectedEndpoint, startDate, endDate, timeZone, filters, endpointParams, requestBody]);
 
   // Code generation config
   const codeConfig: CodeGenConfig = useMemo(() => {
@@ -123,71 +100,6 @@ export function ResponsePanel() {
     };
   }, [selectedEndpoint, siteId, pathParams, queryParams, parsedBody]);
 
-  // Handle execute
-  const handleExecute = async () => {
-    if (!selectedEndpoint) return;
-
-    // Validate path params
-    if (selectedEndpoint.pathParams) {
-      for (const param of selectedEndpoint.pathParams) {
-        if (!pathParams[param]) {
-          setResponseError(`Missing required path parameter: ${param}`);
-          return;
-        }
-      }
-    }
-
-    // Validate required query params
-    if (selectedEndpoint.requiredParams) {
-      for (const param of selectedEndpoint.requiredParams) {
-        if (!endpointParams[param]) {
-          setResponseError(`Missing required parameter: ${param}`);
-          return;
-        }
-      }
-    }
-
-    // Validate request body for POST/PUT
-    if (selectedEndpoint.hasRequestBody && requestBody) {
-      try {
-        JSON.parse(requestBody);
-      } catch {
-        setResponseError("Invalid JSON in request body");
-        return;
-      }
-    }
-
-    setIsLoading(true);
-    const startTime = performance.now();
-
-    try {
-      // Build the path
-      let path = selectedEndpoint.path.replace(":site", siteId);
-      if (selectedEndpoint.pathParams) {
-        for (const param of selectedEndpoint.pathParams) {
-          path = path.replace(`:${param}`, pathParams[param]);
-        }
-      }
-
-      // Make the request
-      const result = await authedFetch<any>(
-        path,
-        queryParams,
-        selectedEndpoint.method !== "GET"
-          ? {
-              method: selectedEndpoint.method,
-              data: parsedBody,
-            }
-          : undefined
-      );
-
-      const endTime = performance.now();
-      setResponse(result, Math.round(endTime - startTime));
-    } catch (err: any) {
-      setResponseError(err.message || "Request failed");
-    }
-  };
-
   if (!selectedEndpoint) {
     return (
       <div className="h-full flex items-center justify-center text-neutral-500 dark:text-neutral-400 p-4">
@@ -198,23 +110,7 @@ export function ResponsePanel() {
 
   return (
     <div className="h-full overflow-y-auto overflow-x-hidden p-4 space-y-4 min-w-0">
-      {/* Execute Button */}
-      <Button onClick={handleExecute} disabled={isLoading} className="w-full">
-        {isLoading ? (
-          <>
-            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            Executing...
-          </>
-        ) : (
-          <>
-            <Play className="h-4 w-4 mr-2" />
-            Execute Request
-          </>
-        )}
-      </Button>
-
       {/* Code Examples */}
-
       <CodeExamples config={codeConfig} />
 
       {/* Response */}

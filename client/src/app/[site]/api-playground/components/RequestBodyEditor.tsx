@@ -37,7 +37,7 @@ export function RequestBodyEditor() {
         {error && <span className="text-xs text-red-500">{error}</span>}
       </div>
       <div
-        className="relative min-h-[120px] rounded border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 overflow-hidden"
+        className="relative min-h-[120px] rounded border border-neutral-150 dark:border-neutral-800 overflow-hidden"
         onClick={() => textareaRef.current?.focus()}
       >
         <SyntaxHighlighter
