@@ -16,7 +16,14 @@ function buildQueryString(params: Record<string, any>): string {
   return (
     "?" +
     filtered
-      .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
+      .map(([k, v]) => {
+        // For arrays and plain objects, JSON.stringify before encoding
+        const value =
+          Array.isArray(v) || (typeof v === "object" && v !== null)
+            ? JSON.stringify(v)
+            : String(v);
+        return `${encodeURIComponent(k)}=${encodeURIComponent(value)}`;
+      })
       .join("&")
   );
 }
@@ -130,6 +137,11 @@ curl_close($ch);
 $data = json_decode($response, true);`;
   }
 
+  // Escape for PHP single-quoted string: backslashes first, then single quotes
+  const escapedBody = formatJsonForCode(body)
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'");
+
   return `$ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, '${fullUrl}');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -138,7 +150,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
     'Authorization: Bearer ${apiKey}',
     'Content-Type: application/json'
 ]);
-curl_setopt($ch, CURLOPT_POSTFIELDS, '${formatJsonForCode(body)}');
+curl_setopt($ch, CURLOPT_POSTFIELDS, '${escapedBody}');
 
 $response = curl_exec($ch);
 curl_close($ch);
@@ -194,7 +206,7 @@ var data map[string]interface{}
 json.NewDecoder(resp.Body).Decode(&data)`;
   }
 
-  return `payload, _ := json.Marshal(${formatJsonForCode(body)})
+  return `payload := []byte(\`${formatJsonForCode(body)}\`)
 req, _ := http.NewRequest("${method}", "${fullUrl}", bytes.NewBuffer(payload))
 req.Header.Set("Authorization", "Bearer ${apiKey}")
 req.Header.Set("Content-Type", "application/json")
@@ -276,8 +288,14 @@ var data = await response.Content.ReadAsStringAsync();`;
   }
 
   if (!body) {
-    const methodName =
-      method === "POST" ? "PostAsync" : method === "PUT" ? "PutAsync" : "DeleteAsync";
+    if (method === "DELETE") {
+      return `using var client = new HttpClient();
+client.DefaultRequestHeaders.Add("Authorization", "Bearer ${apiKey}");
+
+var response = await client.DeleteAsync("${fullUrl}");
+var data = await response.Content.ReadAsStringAsync();`;
+    }
+    const methodName = method === "POST" ? "PostAsync" : "PutAsync";
     return `using var client = new HttpClient();
 client.DefaultRequestHeaders.Add("Authorization", "Bearer ${apiKey}");
 
@@ -285,8 +303,7 @@ var response = await client.${methodName}("${fullUrl}", null);
 var data = await response.Content.ReadAsStringAsync();`;
   }
 
-  const methodName =
-    method === "POST" ? "PostAsync" : method === "PUT" ? "PutAsync" : "SendAsync";
+  const httpMethod = method === "POST" ? "Post" : method === "PUT" ? "Put" : "Delete";
 
   return `using var client = new HttpClient();
 client.DefaultRequestHeaders.Add("Authorization", "Bearer ${apiKey}");
@@ -297,7 +314,12 @@ var content = new StringContent(
     "application/json"
 );
 
-var response = await client.${methodName}("${fullUrl}", content);
+var request = new HttpRequestMessage(HttpMethod.${httpMethod}, "${fullUrl}")
+{
+    Content = content
+};
+
+var response = await client.SendAsync(request);
 var data = await response.Content.ReadAsStringAsync();`;
 }
 

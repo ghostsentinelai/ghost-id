@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import { usePlaygroundStore } from "../hooks/usePlaygroundStore";
 import { CodeGenConfig } from "../utils/codeGenerators";
 import { CodeExamples } from "./CodeExamples";
+import { BACKEND_URL } from "../../../../lib/const";
 
 export function ResponsePanel() {
   const params = useParams();
@@ -94,7 +95,7 @@ export function ResponsePanel() {
 
     return {
       method: selectedEndpoint.method,
-      url: `https://api.rybbit.io${path}`,
+      url: `${BACKEND_URL}${path}`,
       queryParams,
       body: parsedBody,
     };

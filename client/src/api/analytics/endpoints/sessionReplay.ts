@@ -85,7 +85,7 @@ export interface SessionReplaysParams extends CommonApiParams {
 
 /**
  * Fetch session replays list
- * GET /api/session-replay/:site
+ * GET /api/session-replay/list/:site
  */
 export async function fetchSessionReplays(
   site: string | number,

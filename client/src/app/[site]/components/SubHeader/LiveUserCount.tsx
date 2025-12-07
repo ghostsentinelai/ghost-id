@@ -1,9 +1,9 @@
-import { useGetLiveUsercount } from "../../../../api/analytics/hooks/useGetLiveUserCount";
+import { useGetLiveUserCount } from "../../../../api/analytics/hooks/useGetLiveUserCount";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../../../components/ui/tooltip";
 import NumberFlow from "@number-flow/react";
 
 export function LiveUserCount() {
-  const { data } = useGetLiveUsercount(5);
+  const { data } = useGetLiveUserCount(5);
 
   return (
     <div className="flex items-center gap-1 text-base text-neutral-700 dark:text-neutral-200 mr-1">

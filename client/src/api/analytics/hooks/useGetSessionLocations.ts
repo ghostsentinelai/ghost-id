@@ -19,7 +19,7 @@ export function useGetSessionLocations() {
   const params = buildApiParams(time, { filters: locationExcludedFilters });
 
   return useQuery<LiveSessionLocation[]>({
-    queryKey: ["session-locations", site, time, filters],
+    queryKey: ["session-locations", site, time, locationExcludedFilters],
     queryFn: () => {
       return fetchSessionLocations(site, params);
     },

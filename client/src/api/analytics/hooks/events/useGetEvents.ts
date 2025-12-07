@@ -25,6 +25,7 @@ export function useGetEvents(count = 10) {
         timeZone,
         limit: count,
       }).then(res => res.data),
+    enabled: !!site,
   });
 }
 
@@ -55,5 +56,6 @@ export function useGetEventsInfinite(options: GetEventsOptions = {}) {
       return undefined;
     },
     refetchInterval: options.isRealtime ? 5000 : undefined,
+    enabled: !!site,
   });
 }

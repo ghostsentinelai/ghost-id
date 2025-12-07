@@ -25,7 +25,7 @@ export function useGetErrorNamesPaginated({
   const { startDate, endDate } = getStartAndEndDate(time);
 
   return useQuery({
-    queryKey: ["error-names", time, site, filters, limit, page],
+    queryKey: ["error-names", time, site, filters, limit, page, useFilters],
     queryFn: async () => {
       const data = await fetchErrorNames(site, {
         startDate: startDate ?? "",

@@ -20,7 +20,7 @@ export function useGetPageTitlesPaginated({
   const params = buildApiParams(time, { filters: useFilters ? filters : undefined });
 
   return useQuery({
-    queryKey: ["page-titles", time, site, filters, limit, page],
+    queryKey: ["page-titles", time, site, filters, limit, page, useFilters],
     queryFn: async () => {
       const data = await fetchPageTitles(site, {
         ...params,
