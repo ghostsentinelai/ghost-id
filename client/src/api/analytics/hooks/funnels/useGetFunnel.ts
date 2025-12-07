@@ -18,21 +18,17 @@ export function useGetFunnel(config?: FunnelRequest, debounce?: boolean) {
   const configToUse = debounce ? debouncedConfig : config;
 
   return useQuery<FunnelResponse[], Error>({
-    queryKey: ["funnel", site, time, filteredFilters, configToUse?.steps.map(s => s.value + s.type)],
+    queryKey: ["funnel", site, time, filteredFilters, configToUse?.steps],
     queryFn: async () => {
       if (!configToUse) {
         throw new Error("Funnel configuration is required");
       }
 
-      try {
-        return analyzeFunnel(site, {
-          ...params,
-          steps: configToUse.steps,
-          name: configToUse.name,
-        });
-      } catch (error) {
-        throw new Error("Failed to analyze funnel");
-      }
+      return analyzeFunnel(site, {
+        ...params,
+        steps: configToUse.steps,
+        name: configToUse.name,
+      });
     },
     enabled: !!site && !!configToUse,
   });
