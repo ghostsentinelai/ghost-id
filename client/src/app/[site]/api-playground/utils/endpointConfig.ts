@@ -321,14 +321,6 @@ export const endpointCategories: EndpointCategory[] = [
       },
       {
         method: "GET",
-        path: "/users/:userId/sessions/:site",
-        name: "Get User Sessions",
-        description: "Returns all sessions for a specific user",
-        hasCommonParams: true,
-        pathParams: ["userId"],
-      },
-      {
-        method: "GET",
         path: "/users/session-count/:site",
         name: "Get User Session Count",
         description: "Returns daily session counts for a specific user",

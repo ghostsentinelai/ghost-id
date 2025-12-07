@@ -340,7 +340,6 @@ server.get("/api/sessions/:site", getSessions);
 server.get("/api/sessions/:sessionId/:site", getSession);
 server.get("/api/events/:site", getEvents);
 server.get("/api/users/:site", getUsers);
-server.get("/api/users/:userId/sessions/:site", getUserSessions);
 server.get("/api/users/session-count/:site", getUserSessionCount);
 server.get("/api/users/:userId/:site", getUserInfo);
 server.get("/api/session-locations/:site", getSessionLocations);

@@ -86,10 +86,7 @@ export interface UsersListResponse {
  * Fetch users list with pagination
  * GET /api/users/:site
  */
-export async function fetchUsers(
-  site: string | number,
-  params: UsersParams
-): Promise<UsersListResponse> {
+export async function fetchUsers(site: string | number, params: UsersParams): Promise<UsersListResponse> {
   const queryParams = {
     ...toQueryParams(params),
     page: params.page,
@@ -99,25 +96,7 @@ export async function fetchUsers(
     identified_only: params.identifiedOnly,
   };
 
-  const response = await authedFetch<UsersListResponse>(
-    `/users/${site}`,
-    queryParams
-  );
-  return response;
-}
-
-/**
- * Fetch sessions for a specific user
- * GET /api/users/:userId/sessions/:site
- */
-export async function fetchUserSessions(
-  site: string | number,
-  params: UserSessionsParams
-): Promise<{ data: GetSessionsResponse }> {
-  const response = await authedFetch<{ data: GetSessionsResponse }>(
-    `/users/${params.userId}/sessions/${site}`,
-    toQueryParams(params)
-  );
+  const response = await authedFetch<UsersListResponse>(`/users/${site}`, queryParams);
   return response;
 }
 
@@ -129,13 +108,10 @@ export async function fetchUserSessionCount(
   site: string | number,
   params: UserSessionCountParams
 ): Promise<{ data: UserSessionCountResponse[] }> {
-  const response = await authedFetch<{ data: UserSessionCountResponse[] }>(
-    `/users/session-count/${site}`,
-    {
-      user_id: params.userId,
-      time_zone: params.timeZone,
-    }
-  );
+  const response = await authedFetch<{ data: UserSessionCountResponse[] }>(`/users/session-count/${site}`, {
+    user_id: params.userId,
+    time_zone: params.timeZone,
+  });
   return response;
 }
 
@@ -143,12 +119,7 @@ export async function fetchUserSessionCount(
  * Fetch detailed user information
  * GET /api/users/:userId/:site
  */
-export async function fetchUserInfo(
-  site: string | number,
-  userId: string
-): Promise<UserInfo> {
-  const response = await authedFetch<{ data: UserInfo }>(
-    `/users/${userId}/${site}`
-  );
+export async function fetchUserInfo(site: string | number, userId: string): Promise<UserInfo> {
+  const response = await authedFetch<{ data: UserInfo }>(`/users/${userId}/${site}`);
   return response.data;
 }
