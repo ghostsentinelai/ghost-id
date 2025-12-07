@@ -1,9 +1,9 @@
 import { Filter, TimeBucket } from "@rybbit/shared";
-import { UseQueryOptions, UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { usePerformanceStore } from "../../../../app/[site]/performance/performanceStore";
 import { useStore } from "../../../../lib/store";
 import { APIResponse } from "../../../types";
-import { getStartAndEndDate, timeZone } from "../../../utils";
+import { buildApiParams } from "../../../utils";
 import { fetchPerformanceTimeSeries, GetPerformanceTimeSeriesResponse } from "../../endpoints";
 
 type PeriodTime = "current" | "previous";
@@ -28,32 +28,12 @@ export function useGetPerformanceTimeSeries({
   const bucketToUse = bucket || storeBucket;
   const combinedFilters = [...globalFilters, ...dynamicFilters];
 
-  const { startDate, endDate } = getStartAndEndDate(timeToUse);
+  const params = buildApiParams(timeToUse, { filters: combinedFilters });
 
   return useQuery({
     queryKey: ["performance-time-series", timeToUse, bucketToUse, site, combinedFilters, selectedPerformanceMetric],
     queryFn: () => {
-      // Build params based on time mode
-      const params =
-        timeToUse.mode === "past-minutes"
-          ? {
-              startDate: "",
-              endDate: "",
-              timeZone,
-              bucket: bucketToUse,
-              filters: combinedFilters,
-              pastMinutesStart: timeToUse.pastMinutesStart,
-              pastMinutesEnd: timeToUse.pastMinutesEnd,
-            }
-          : {
-              startDate: startDate ?? "",
-              endDate: endDate ?? "",
-              timeZone,
-              bucket: bucketToUse,
-              filters: combinedFilters,
-            };
-
-      return fetchPerformanceTimeSeries(site, params).then(data => ({ data }));
+      return fetchPerformanceTimeSeries(site, { ...params, bucket: bucketToUse }).then(data => ({ data }));
     },
     placeholderData: (_, query: any) => {
       if (!query?.queryKey) return undefined;

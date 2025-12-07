@@ -1,16 +1,12 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getFilteredFilters, useStore } from "../../../lib/store";
 import { SESSION_PAGE_FILTERS } from "../../../lib/filterGroups";
-import { APIResponse } from "../../types";
-import { getStartAndEndDate, timeZone } from "../../utils";
+import { getFilteredFilters, useStore } from "../../../lib/store";
+import { buildApiParams, timeZone } from "../../utils";
 import {
-  fetchSessions,
   fetchSession,
+  fetchSessions,
   fetchUserSessionCount,
   GetSessionsResponse,
-  SessionDetails,
-  SessionEventProps,
-  SessionEvent,
   SessionPageviewsAndEvents,
   UserSessionCountResponse,
 } from "../endpoints";
@@ -24,20 +20,18 @@ export function useGetSessions(
   const { time, site } = useStore();
 
   const filteredFilters = getFilteredFilters(SESSION_PAGE_FILTERS);
-  const { startDate, endDate } = getStartAndEndDate(time);
+
+  // When filtering by userId, we fetch all sessions for that user (no time filter)
+  // Otherwise use buildApiParams which handles past-minutes mode
+  const params = userId
+    ? { startDate: "", endDate: "", timeZone, filters: filteredFilters }
+    : buildApiParams(time, { filters: filteredFilters });
 
   return useQuery<{ data: GetSessionsResponse }>({
     queryKey: ["sessions", time, site, filteredFilters, userId, page, limit, identifiedOnly],
     queryFn: () => {
-      // For past-minutes mode or when filtering by userId, handle time differently
-      const effectiveStartDate = time.mode === "past-minutes" || userId ? "" : (startDate ?? "");
-      const effectiveEndDate = time.mode === "past-minutes" || userId ? "" : (endDate ?? "");
-
       return fetchSessions(site, {
-        startDate: effectiveStartDate,
-        endDate: effectiveEndDate,
-        timeZone,
-        filters: filteredFilters,
+        ...params,
         page,
         limit,
         userId,
@@ -52,20 +46,18 @@ export function useGetSessionsInfinite(userId?: string) {
   const { time, site } = useStore();
 
   const filteredFilters = getFilteredFilters(SESSION_PAGE_FILTERS);
-  const { startDate, endDate } = getStartAndEndDate(time);
+
+  // When filtering by userId, we fetch all sessions for that user (no time filter)
+  // Otherwise use buildApiParams which handles past-minutes mode
+  const params = userId
+    ? { startDate: "", endDate: "", timeZone, filters: filteredFilters }
+    : buildApiParams(time, { filters: filteredFilters });
 
   return useInfiniteQuery<{ data: GetSessionsResponse }>({
     queryKey: ["sessions-infinite", time, site, filteredFilters, userId],
     queryFn: ({ pageParam = 1 }) => {
-      // For past-minutes mode or when filtering by userId, handle time differently
-      const effectiveStartDate = time.mode === "past-minutes" || userId ? "" : (startDate ?? "");
-      const effectiveEndDate = time.mode === "past-minutes" || userId ? "" : (endDate ?? "");
-
       return fetchSessions(site, {
-        startDate: effectiveStartDate,
-        endDate: effectiveEndDate,
-        timeZone,
-        filters: filteredFilters,
+        ...params,
         page: pageParam as number,
         userId,
       });

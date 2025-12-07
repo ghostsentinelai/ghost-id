@@ -2,7 +2,7 @@ import { Filter, TimeBucket } from "@rybbit/shared";
 import { UseQueryOptions, UseQueryResult, useQuery } from "@tanstack/react-query";
 import { useStore } from "../../../lib/store";
 import { APIResponse } from "../../types";
-import { getStartAndEndDate, timeZone } from "../../utils";
+import { buildApiParams } from "../../utils";
 import { fetchOverviewBucketed, GetOverviewBucketedResponse } from "../endpoints";
 
 type PeriodTime = "current" | "previous";
@@ -46,32 +46,12 @@ export function useGetOverviewBucketed({
         ]
       : ["overview-bucketed", timeToUse, bucket, site, combinedFilters];
 
-  const { startDate, endDate } = getStartAndEndDate(timeToUse);
+  const params = buildApiParams(timeToUse, { filters: combinedFilters });
 
   return useQuery({
     queryKey,
     queryFn: () => {
-      // Build params based on time mode
-      const params =
-        timeToUse.mode === "past-minutes"
-          ? {
-              startDate: "",
-              endDate: "",
-              timeZone,
-              bucket,
-              filters: combinedFilters,
-              pastMinutesStart: timeToUse.pastMinutesStart,
-              pastMinutesEnd: timeToUse.pastMinutesEnd,
-            }
-          : {
-              startDate: startDate ?? "",
-              endDate: endDate ?? "",
-              timeZone,
-              bucket,
-              filters: combinedFilters,
-            };
-
-      return fetchOverviewBucketed(site, params).then(data => ({ data }));
+      return fetchOverviewBucketed(site, { ...params, bucket }).then(data => ({ data }));
     },
     refetchInterval,
     placeholderData: (_, query: any) => {

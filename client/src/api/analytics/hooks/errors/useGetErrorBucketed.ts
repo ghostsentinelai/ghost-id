@@ -1,6 +1,6 @@
 import { useStore } from "@/lib/store";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { getStartAndEndDate, timeZone } from "../../../utils";
+import { buildApiParams } from "../../../utils";
 import { fetchErrorBucketed, GetErrorBucketedResponse } from "../../endpoints";
 
 type UseGetErrorBucketedOptions = {
@@ -12,16 +12,13 @@ export function useGetErrorBucketed({
 }: UseGetErrorBucketedOptions): UseQueryResult<GetErrorBucketedResponse> {
   const { time, site, filters, bucket } = useStore();
 
-  const { startDate, endDate } = getStartAndEndDate(time);
+  const params = buildApiParams(time, { filters });
 
   return useQuery({
     queryKey: ["error-bucketed", time, site, filters, bucket, errorMessage],
     queryFn: () => {
       return fetchErrorBucketed(site, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
-        filters,
+        ...params,
         errorMessage,
         bucket,
       });

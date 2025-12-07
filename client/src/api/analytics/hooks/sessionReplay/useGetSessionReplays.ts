@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useStore } from "../../../../lib/store";
-import { getStartAndEndDate, timeZone } from "../../../utils";
+import { buildApiParams } from "../../../utils";
 import { fetchSessionReplays } from "../../endpoints";
 
 type UseGetSessionReplaysOptions = {
@@ -10,16 +10,13 @@ type UseGetSessionReplaysOptions = {
 
 export function useGetSessionReplays({ limit = 20, minDuration = 30 }: UseGetSessionReplaysOptions = {}) {
   const { time, site, filters } = useStore();
-  const { startDate, endDate } = getStartAndEndDate(time);
+  const params = buildApiParams(time, { filters });
 
   return useInfiniteQuery({
     queryKey: ["session-replays", site, time, filters, limit, minDuration],
     queryFn: async ({ pageParam = 0 }) => {
       return fetchSessionReplays(site, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
-        filters,
+        ...params,
         limit,
         offset: pageParam,
         minDuration,

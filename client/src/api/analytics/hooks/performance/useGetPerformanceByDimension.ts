@@ -2,7 +2,7 @@ import { Filter } from "@rybbit/shared";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { usePerformanceStore } from "../../../../app/[site]/performance/performanceStore";
 import { useStore } from "../../../../lib/store";
-import { getStartAndEndDate, timeZone } from "../../../utils";
+import { buildApiParams } from "../../../utils";
 import { fetchPerformanceByDimension, PaginatedPerformanceResponse, PerformanceByDimensionItem } from "../../endpoints";
 
 // Keep the old type for backward compatibility
@@ -34,8 +34,8 @@ export function useGetPerformanceByDimension({
   const { time, filters } = useStore();
   const { selectedPercentile } = usePerformanceStore();
 
-  const { startDate, endDate } = getStartAndEndDate(time);
   const combinedFilters = useFilters ? [...filters, ...additionalFilters] : undefined;
+  const params = buildApiParams(time, { filters: combinedFilters });
 
   return useQuery({
     queryKey: [
@@ -53,10 +53,7 @@ export function useGetPerformanceByDimension({
     ],
     queryFn: () => {
       return fetchPerformanceByDimension(site, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
-        filters: combinedFilters,
+        ...params,
         dimension,
         limit,
         page,

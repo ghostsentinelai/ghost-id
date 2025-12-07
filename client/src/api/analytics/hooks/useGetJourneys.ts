@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Time } from "../../../components/DateSelector/types";
 import { JOURNEY_PAGE_FILTERS } from "../../../lib/filterGroups";
 import { getFilteredFilters } from "../../../lib/store";
-import { getStartAndEndDate, timeZone } from "../../utils";
+import { buildApiParams } from "../../utils";
 import { fetchJourneys, Journey, JourneysResponse } from "../endpoints";
 
 export interface JourneyParams {
@@ -16,18 +16,15 @@ export interface JourneyParams {
 
 export const useJourneys = ({ siteId, steps = 3, time, limit = 100, stepFilters }: JourneyParams) => {
   const filteredFilters = getFilteredFilters(JOURNEY_PAGE_FILTERS);
-  const { startDate, endDate } = getStartAndEndDate(time);
+  const params = buildApiParams(time, { filters: filteredFilters });
 
   return useQuery<JourneysResponse>({
     queryKey: ["journeys", siteId, steps, time, limit, filteredFilters, stepFilters],
     queryFn: () =>
       fetchJourneys(siteId!, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
+        ...params,
         steps,
         limit,
-        filters: filteredFilters,
         stepFilters,
       }),
     enabled: !!siteId,

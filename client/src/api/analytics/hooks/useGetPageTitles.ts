@@ -1,7 +1,7 @@
 import { useStore } from "@/lib/store";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { getStartAndEndDate, timeZone } from "../../utils";
-import { fetchPageTitles, PageTitleItem, PageTitlesPaginatedResponse, PageTitlesStandardResponse } from "../endpoints";
+import { buildApiParams } from "../../utils";
+import { fetchPageTitles, PageTitlesPaginatedResponse } from "../endpoints";
 
 type UseGetPageTitlesOptions = {
   limit?: number;
@@ -17,16 +17,13 @@ export function useGetPageTitlesPaginated({
 }: UseGetPageTitlesOptions): UseQueryResult<{ data: PageTitlesPaginatedResponse }> {
   const { time, site, filters } = useStore();
 
-  const { startDate, endDate } = getStartAndEndDate(time);
+  const params = buildApiParams(time, { filters: useFilters ? filters : undefined });
 
   return useQuery({
     queryKey: ["page-titles", time, site, filters, limit, page],
     queryFn: async () => {
       const data = await fetchPageTitles(site, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
-        filters: useFilters ? filters : undefined,
+        ...params,
         limit,
         page,
       });

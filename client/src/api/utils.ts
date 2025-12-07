@@ -1,9 +1,11 @@
+import { Filter } from "@rybbit/shared";
 import { DateTime } from "luxon";
 import { Time } from "../components/DateSelector/types";
 import axios, { AxiosRequestConfig } from "axios";
 import { BACKEND_URL } from "../lib/const";
 import { timeZone } from "../lib/dateTimeUtils";
 import { useStore } from "../lib/store";
+import { CommonApiParams } from "./analytics/endpoints/types";
 
 export function getStartAndEndDate(time: Time): { startDate: string | null; endDate: string | null } {
   if (time.mode === "range") {
@@ -59,6 +61,34 @@ export function getQueryParams(time: Time, additionalParams: Record<string, any>
 
 // Re-export timeZone for convenience
 export { timeZone };
+
+/**
+ * Build CommonApiParams from a Time object, handling all time modes including past-minutes.
+ * This centralizes the logic for converting Time to API params across all hooks.
+ */
+export function buildApiParams(
+  time: Time,
+  options: { filters?: Filter[] } = {}
+): CommonApiParams {
+  if (time.mode === "past-minutes") {
+    return {
+      startDate: "",
+      endDate: "",
+      timeZone,
+      filters: options.filters,
+      pastMinutesStart: time.pastMinutesStart,
+      pastMinutesEnd: time.pastMinutesEnd,
+    };
+  }
+
+  const { startDate, endDate } = getStartAndEndDate(time);
+  return {
+    startDate: startDate ?? "",
+    endDate: endDate ?? "",
+    timeZone,
+    filters: options.filters,
+  };
+}
 
 export async function authedFetch<T>(
   url: string,

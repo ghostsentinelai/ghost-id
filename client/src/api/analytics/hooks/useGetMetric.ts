@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-query";
 import { useStore } from "../../../lib/store";
 import { APIResponse } from "../../types";
-import { getStartAndEndDate, timeZone } from "../../utils";
+import { buildApiParams } from "../../utils";
 import { Time } from "../../../components/DateSelector/types";
 import { fetchMetric, MetricResponse } from "../endpoints";
 
@@ -30,28 +30,25 @@ export function useMetric({
 
   // For "previous" periods in past-minutes mode, we need to modify the time object
   // to use doubled duration for the start and the original start as the end
-  const timeForQuery =
+  const timeForQuery: Time =
     timeToUse.mode === "past-minutes" && periodTime === "previous"
       ? {
           ...timeToUse,
-          past_minutes_start: timeToUse.pastMinutesStart * 2,
-          past_minutes_end: timeToUse.pastMinutesStart,
+          pastMinutesStart: timeToUse.pastMinutesStart * 2,
+          pastMinutesEnd: timeToUse.pastMinutesStart,
         }
       : timeToUse;
 
-  const { startDate, endDate } = getStartAndEndDate(timeForQuery);
+  const params = buildApiParams(timeForQuery, { filters: useFilters ? filters : undefined });
   const queryKey = [parameter, timeForQuery, site, filters, limit, useFilters];
 
   return useQuery({
     queryKey,
     queryFn: async () => {
       const result = await fetchMetric(site, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
+        ...params,
         parameter,
         limit,
-        filters: useFilters ? filters : undefined,
       });
       return { data: result.data };
     },
@@ -95,24 +92,22 @@ export function usePaginatedMetric({
 }): UseQueryResult<PaginatedResponse> {
   const { time, site, filters } = useStore();
   const timeToUse = customTime ?? time;
-  const { startDate, endDate } = getStartAndEndDate(timeToUse);
   const combinedFilters = useFilters
     ? customFilters.length > 0
       ? customFilters
       : [...filters, ...additionalFilters]
     : undefined;
 
+  const params = buildApiParams(timeToUse, { filters: combinedFilters });
+
   return useQuery({
     queryKey: [parameter, customTime, time, site, filters, limit, page, additionalFilters, customFilters],
     queryFn: async () => {
       return fetchMetric(site, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
+        ...params,
         parameter,
         limit,
         page,
-        filters: combinedFilters,
       });
     },
     staleTime: 60_000,
@@ -140,19 +135,16 @@ export function useInfiniteMetric({
   useFilters?: boolean;
 }): UseInfiniteQueryResult<InfiniteData<PaginatedResponse>> {
   const { time, site, filters } = useStore();
-  const { startDate, endDate } = getStartAndEndDate(time);
+  const params = buildApiParams(time, { filters: useFilters ? filters : undefined });
 
   return useInfiniteQuery({
     queryKey: [parameter, time, site, filters, limit, "infinite-metric"],
     queryFn: async ({ pageParam = 1 }) => {
       return fetchMetric(site, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
+        ...params,
         parameter,
         limit,
         page: pageParam,
-        filters: useFilters ? filters : undefined,
       });
     },
     initialPageParam: 1,

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { usePerformanceStore } from "../../../../app/[site]/performance/performanceStore";
 import { useStore } from "../../../../lib/store";
-import { getStartAndEndDate, timeZone } from "../../../utils";
-import { fetchPerformanceOverview, GetPerformanceOverviewResponse } from "../../endpoints";
+import { buildApiParams } from "../../../utils";
+import { fetchPerformanceOverview } from "../../endpoints";
 
 type PeriodTime = "current" | "previous";
 
@@ -11,16 +11,13 @@ export function useGetPerformanceOverview({ periodTime, site }: { periodTime?: P
   const { selectedPercentile } = usePerformanceStore();
   const timeToUse = periodTime === "previous" ? previousTime : time;
 
-  const { startDate, endDate } = getStartAndEndDate(timeToUse);
+  const params = buildApiParams(timeToUse, { filters });
 
   return useQuery({
     queryKey: ["performance-overview", timeToUse, site, filters, selectedPercentile],
     queryFn: () => {
       return fetchPerformanceOverview(site!, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
-        filters,
+        ...params,
         percentile: selectedPercentile,
       }).then(data => ({ data }));
     },

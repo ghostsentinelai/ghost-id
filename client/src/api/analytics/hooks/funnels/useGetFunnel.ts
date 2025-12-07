@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useDebounce } from "@uidotdev/usehooks";
 import { FUNNEL_PAGE_FILTERS } from "../../../../lib/filterGroups";
 import { getFilteredFilters, useStore } from "../../../../lib/store";
-import { getStartAndEndDate, timeZone } from "../../../utils";
+import { buildApiParams } from "../../../utils";
 import { analyzeFunnel, FunnelRequest, FunnelResponse, saveFunnel, SaveFunnelRequest } from "../../endpoints";
 
 /**
@@ -13,7 +13,7 @@ export function useGetFunnel(config?: FunnelRequest, debounce?: boolean) {
 
   const debouncedConfig = useDebounce(config, 500);
   const filteredFilters = getFilteredFilters(FUNNEL_PAGE_FILTERS);
-  const { startDate, endDate } = getStartAndEndDate(time);
+  const params = buildApiParams(time, { filters: filteredFilters });
 
   const configToUse = debounce ? debouncedConfig : config;
 
@@ -26,10 +26,7 @@ export function useGetFunnel(config?: FunnelRequest, debounce?: boolean) {
 
       try {
         return analyzeFunnel(site, {
-          startDate: startDate ?? "",
-          endDate: endDate ?? "",
-          timeZone,
-          filters: filteredFilters,
+          ...params,
           steps: configToUse.steps,
           name: configToUse.name,
         });

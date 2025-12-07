@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useStore } from "../../../lib/store";
-import { getStartAndEndDate, timeZone } from "../../utils";
+import { buildApiParams } from "../../utils";
 import { fetchSessionLocations, LiveSessionLocation } from "../endpoints";
 
 export function useGetSessionLocations() {
   const { time, site, filters } = useStore();
-
-  const { startDate, endDate } = getStartAndEndDate(time);
 
   // Filter out location-related filters to avoid circular dependencies
   const locationExcludedFilters = filters.filter(
@@ -18,15 +16,12 @@ export function useGetSessionLocations() {
       f.parameter !== "region"
   );
 
+  const params = buildApiParams(time, { filters: locationExcludedFilters });
+
   return useQuery<LiveSessionLocation[]>({
     queryKey: ["session-locations", site, time, filters],
     queryFn: () => {
-      return fetchSessionLocations(site, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
-        filters: locationExcludedFilters,
-      });
+      return fetchSessionLocations(site, params);
     },
     enabled: !!site,
   });

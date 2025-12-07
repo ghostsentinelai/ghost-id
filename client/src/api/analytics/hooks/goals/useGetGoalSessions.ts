@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Time } from "../../../../components/DateSelector/types";
-import { getStartAndEndDate, timeZone } from "../../../utils";
+import { buildApiParams } from "../../../utils";
 import { fetchGoalSessions } from "../../endpoints";
 
 export function useGetGoalSessions({
@@ -18,15 +18,13 @@ export function useGetGoalSessions({
   limit?: number;
   enabled?: boolean;
 }) {
-  const { startDate, endDate } = getStartAndEndDate(time);
+  const params = buildApiParams(time);
 
   return useQuery({
     queryKey: ["goal-sessions", goalId, siteId, time, page, limit],
     queryFn: async () => {
       return fetchGoalSessions(siteId, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
+        ...params,
         goalId,
         page,
         limit,

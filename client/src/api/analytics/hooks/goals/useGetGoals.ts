@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { GOALS_PAGE_FILTERS } from "../../../../lib/filterGroups";
 import { getFilteredFilters, useStore } from "../../../../lib/store";
-import { getStartAndEndDate, timeZone } from "../../../utils";
+import { buildApiParams } from "../../../utils";
 import { fetchGoals } from "../../endpoints";
 
 export function useGetGoals({
@@ -18,16 +18,13 @@ export function useGetGoals({
   const { site, time } = useStore();
   const filteredFilters = getFilteredFilters(GOALS_PAGE_FILTERS);
 
-  const { startDate, endDate } = getStartAndEndDate(time);
+  const params = buildApiParams(time, { filters: filteredFilters });
 
   return useQuery({
     queryKey: ["goals", site, time, filteredFilters, page, pageSize, sort, order],
     queryFn: async () => {
       return fetchGoals(site, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
-        filters: filteredFilters,
+        ...params,
         page,
         pageSize,
         sort,

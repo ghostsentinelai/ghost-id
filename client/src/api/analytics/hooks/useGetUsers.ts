@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getFilteredFilters, useStore } from "../../../lib/store";
 import { USER_PAGE_FILTERS } from "../../../lib/filterGroups";
 import { APIResponse } from "../../types";
-import { getStartAndEndDate, timeZone } from "../../utils";
+import { buildApiParams } from "../../utils";
 import { fetchUsers, UsersResponse } from "../endpoints";
 
 export interface GetUsersOptions {
@@ -17,10 +17,10 @@ export interface GetUsersOptions {
 
 export function useGetUsers(options: GetUsersOptions) {
   const { time, site } = useStore();
-  const { startDate, endDate } = getStartAndEndDate(time);
 
   const { page, pageSize, sortBy, sortOrder, identifiedOnly = false } = options;
   const filteredFilters = getFilteredFilters(USER_PAGE_FILTERS);
+  const params = buildApiParams(time, { filters: filteredFilters });
 
   return useQuery<
     APIResponse<UsersResponse[]> & {
@@ -32,10 +32,7 @@ export function useGetUsers(options: GetUsersOptions) {
     queryKey: ["users", site, time, page, pageSize, sortBy, sortOrder, filteredFilters, identifiedOnly],
     queryFn: async () => {
       const result = await fetchUsers(site, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
-        filters: filteredFilters,
+        ...params,
         page,
         pageSize,
         sortBy,

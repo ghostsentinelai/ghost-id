@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Time } from "../../../../components/DateSelector/types";
 import { FUNNEL_PAGE_FILTERS } from "../../../../lib/filterGroups";
 import { getFilteredFilters } from "../../../../lib/store";
-import { getStartAndEndDate, timeZone } from "../../../utils";
-import { fetchFunnelStepSessions, FunnelStep, GetSessionsResponse } from "../../endpoints";
+import { buildApiParams } from "../../../utils";
+import { fetchFunnelStepSessions, FunnelStep } from "../../endpoints";
 
 export function useGetFunnelStepSessions({
   steps,
@@ -25,16 +25,13 @@ export function useGetFunnelStepSessions({
   enabled?: boolean;
 }) {
   const filteredFilters = getFilteredFilters(FUNNEL_PAGE_FILTERS);
-  const { startDate, endDate } = getStartAndEndDate(time);
+  const params = buildApiParams(time, { filters: filteredFilters });
 
   return useQuery({
     queryKey: ["funnel-step-sessions", steps, stepNumber, siteId, time, mode, page, limit, filteredFilters],
     queryFn: async () => {
       return fetchFunnelStepSessions(siteId, {
-        startDate: startDate ?? "",
-        endDate: endDate ?? "",
-        timeZone,
-        filters: filteredFilters,
+        ...params,
         steps,
         stepNumber,
         mode,
