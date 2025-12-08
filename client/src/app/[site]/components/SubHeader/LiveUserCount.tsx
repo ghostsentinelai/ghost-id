@@ -1,36 +1,54 @@
 import NumberFlow from "@number-flow/react";
+import { useIntersectionObserver } from "@uidotdev/usehooks";
+import { Rewind } from "lucide-react";
+import { useEffect, useMemo } from "react";
 import { useGetLiveUserCount } from "../../../../api/analytics/hooks/useGetLiveUserCount";
-import { useGetSessions } from "../../../../api/analytics/hooks/useGetUserSessions";
+import { useGetSessionsInfinite } from "../../../../api/analytics/hooks/useGetUserSessions";
+import { NothingFound } from "../../../../components/NothingFound";
+import { SessionCard, SessionCardSkeleton } from "../../../../components/Sessions/SessionCard";
 import { Button } from "../../../../components/ui/button";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../../../../components/ui/drawer";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../../../components/ui/drawer";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../../../components/ui/tooltip";
-import { SessionsList } from "../../../../components/Sessions/SessionsList";
-import { useState } from "react";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { ScrollArea } from "../../../../components/ui/scroll-area";
 
 export function LiveUserCount() {
   const { data } = useGetLiveUserCount(5);
-  const [page, setPage] = useState(1);
 
-  const { data: sessions, isLoading: isLoadingSessions } = useGetSessions({
+  const {
+    data: sessionsData,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetSessionsInfinite({
     timeOverride: {
       mode: "past-minutes",
       pastMinutesStart: 5,
       pastMinutesEnd: 0,
     },
-    page: page,
-    limit: 10,
+    limit: 25,
   });
 
-  console.log(sessions);
+  // Use the intersection observer hook
+  const [ref, entry] = useIntersectionObserver({
+    threshold: 0,
+    root: null,
+    rootMargin: "0px 0px 200px 0px",
+  });
+
+  const sessions = useMemo(() => {
+    if (!sessionsData) return [];
+    return sessionsData.pages.flatMap(page => page.data || []);
+  }, [sessionsData]);
+
+  // Fetch next page when intersection observer detects the target is visible
+  useEffect(() => {
+    if (entry?.isIntersecting && hasNextPage && !isFetchingNextPage && !isLoading) {
+      fetchNextPage();
+    }
+  }, [entry?.isIntersecting, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading]);
+
   return (
     <Drawer>
       <DrawerTrigger>
@@ -54,21 +72,37 @@ export function LiveUserCount() {
         </Tooltip>
       </DrawerTrigger>
       <DrawerContent>
-        {/* <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
-        </DrawerHeader> */}
-        <div className="p-2 md:p-4  overflow-y-auto">
-          <SessionsList
-            sessions={sessions?.data || []}
-            isLoading={isLoadingSessions}
-            page={page}
-            onPageChange={setPage}
-            hasNextPage={sessions?.data?.length === 10}
-            hasPrevPage={page > 1}
-            pageSize={10}
-          />
-        </div>
+        <VisuallyHidden>
+          <DrawerHeader>
+            <DrawerTitle>Users online in past 5 minutes</DrawerTitle>
+          </DrawerHeader>
+        </VisuallyHidden>
+        <ScrollArea
+          className="h-[75vh]"
+          maskClassName="before:from-white dark:before:from-neutral-950 after:from-white dark:after:from-neutral-950"
+        >
+          <div className="space-y-3 p-2 md:p-4 ">
+            {isLoading ? (
+              <SessionCardSkeleton count={5} />
+            ) : sessions.length === 0 ? (
+              <NothingFound
+                icon={<Rewind className="w-10 h-10" />}
+                title="No sessions found"
+                description="No users online in the past 5 minutes"
+              />
+            ) : (
+              <>
+                {sessions.map((session, index) => (
+                  <SessionCard key={`${session.session_id}-${index}`} session={session} />
+                ))}
+                {/* Infinite scroll sentinel */}
+                <div ref={ref} className="space-y-3">
+                  {isFetchingNextPage && <SessionCardSkeleton count={3} />}
+                </div>
+              </>
+            )}
+          </div>
+        </ScrollArea>
       </DrawerContent>
     </Drawer>
   );

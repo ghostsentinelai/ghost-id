@@ -50,7 +50,15 @@ export function useGetSessions({
   });
 }
 
-export function useGetSessionsInfinite(userId?: string, timeOverride?: Time) {
+export function useGetSessionsInfinite({
+  userId,
+  timeOverride,
+  limit = 100,
+}: {
+  userId?: string;
+  timeOverride?: Time;
+  limit?: number;
+}) {
   const { time, site } = useStore();
 
   const filteredFilters = getFilteredFilters(SESSION_PAGE_FILTERS);
@@ -68,12 +76,13 @@ export function useGetSessionsInfinite(userId?: string, timeOverride?: Time) {
         ...params,
         page: pageParam as number,
         userId,
+        limit,
       });
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage: { data: GetSessionsResponse }, allPages) => {
       // If we have data and it's a full page (100 items), there might be more
-      if (lastPage?.data && lastPage.data.length === 100) {
+      if (lastPage?.data && lastPage.data.length === limit) {
         return allPages.length + 1;
       }
       return undefined;
