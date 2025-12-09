@@ -64,27 +64,24 @@ export function PreviousChart({
         ]
       : [{ id: selectedStat, dataKey: selectedStat, color: previousColors[0] }];
 
-  const size = (data?.data.length ?? 0) / 2 + 1;
   const chartData = seriesConfig.map(series => {
-    const points =
-      data?.data
-        ?.map(e => {
-          const timestamp = DateTime.fromSQL(e.time).toUTC();
-          if (timestamp > DateTime.now()) {
-            return null;
-          }
+    const points = data?.data
+      ?.map(e => {
+        const timestamp = DateTime.fromSQL(e.time).toUTC();
+        if (timestamp > DateTime.now()) {
+          return null;
+        }
 
-          return {
-            x: timestamp.toFormat("yyyy-MM-dd HH:mm:ss"),
-            y: (e as any)[series.dataKey] ?? 0,
-          };
-        })
-        ?.filter(point => point !== null)
-        ?.slice(0, size) ?? [];
+        return {
+          x: timestamp.toFormat("yyyy-MM-dd HH:mm:ss"),
+          y: (e as any)[series.dataKey] ?? 0,
+        };
+      })
+      ?.filter(point => point !== null);
 
     return {
       id: series.id,
-      data: points,
+      data: points ?? [],
     };
   });
 

@@ -147,21 +147,20 @@ const createDashedOverlay =
     });
   };
 
-export function Chart({
+const useChartData = ({
   data,
   previousData,
-  max,
 }: {
   data: APIResponse<GetOverviewBucketedResponse> | undefined;
   previousData: APIResponse<GetOverviewBucketedResponse> | undefined;
-  max: number;
-}) {
+}) => {
   const { time, bucket, selectedStat, showUsersSplit } = useStore();
-  const { width } = useWindowSize();
-  const nivoTheme = useNivoTheme();
-  const { resolvedTheme } = useTheme();
 
   const showUserBreakdown = selectedStat === "users" && showUsersSplit;
+
+  // When the current period has more datapoints than the previous period,
+  // we need to shift the previous datapoints to the right by the difference in length
+  const lengthDiff = Math.max((data?.data?.length ?? 0) - (previousData?.data?.length ?? 0), 0);
 
   const seriesConfig: SeriesConfig[] = showUserBreakdown
     ? [
@@ -187,22 +186,6 @@ export function Chart({
         },
       ];
 
-  const maxTicks = Math.round((width ?? Infinity) / 75);
-
-  // When the current period has more datapoints than the previous period,
-  // we need to shift the previous datapoints to the right by the difference in length
-  const lengthDiff = Math.max((data?.data?.length ?? 0) - (previousData?.data?.length ?? 0), 0);
-
-  const currentDayStr = DateTime.now().toISODate();
-  const currentMonthStr = DateTime.now().toFormat("yyyy-MM-01");
-  const shouldNotDisplay =
-    time.mode === "all-time" || // do not display in all-time mode
-    time.mode === "year" || // do not display in year mode
-    (time.mode === "month" && time.month !== currentMonthStr) || // do not display in month mode if month is not current
-    (time.mode === "day" && time.day !== currentDayStr) || // do not display in day mode if day is not current
-    (time.mode === "range" && time.endDate !== currentDayStr) || // do not display in range mode if end date is not current day
-    (time.mode === "day" && (bucket === "minute" || bucket === "five_minutes")) || // do not display in day mode if bucket is minute or five_minutes
-    (time.mode === "past-minutes" && (bucket === "minute" || bucket === "five_minutes")); // do not display in 24-hour mode if bucket is minute or five_minutes
   const seriesData = seriesConfig.map(config => {
     const points =
       data?.data
@@ -230,6 +213,17 @@ export function Chart({
 
     return { ...config, points };
   });
+
+  const currentDayStr = DateTime.now().toISODate();
+  const currentMonthStr = DateTime.now().toFormat("yyyy-MM-01");
+  const shouldNotDisplay =
+    time.mode === "all-time" || // do not display in all-time mode
+    time.mode === "year" || // do not display in year mode
+    (time.mode === "month" && time.month !== currentMonthStr) || // do not display in month mode if month is not current
+    (time.mode === "day" && time.day !== currentDayStr) || // do not display in day mode if day is not current
+    (time.mode === "range" && time.endDate !== currentDayStr) || // do not display in range mode if end date is not current day
+    (time.mode === "day" && (bucket === "minute" || bucket === "five_minutes")) || // do not display in day mode if bucket is minute or five_minutes
+    (time.mode === "past-minutes" && (bucket === "minute" || bucket === "five_minutes")); // do not display in 24-hour mode if bucket is minute or five_minutes
 
   const displayDashed = (seriesData[0]?.points.length ?? 0) >= 2 && !shouldNotDisplay;
 
@@ -263,6 +257,39 @@ export function Chart({
       },
     });
   });
+  return {
+    seriesData,
+    displayDashed,
+    chartPropsData,
+    chartPropsDefs,
+    chartPropsFill,
+    colorMap,
+    seriesConfig,
+  };
+};
+
+export function Chart({
+  data,
+  previousData,
+  max,
+}: {
+  data: APIResponse<GetOverviewBucketedResponse> | undefined;
+  previousData: APIResponse<GetOverviewBucketedResponse> | undefined;
+  max: number;
+}) {
+  const { time, bucket, selectedStat, showUsersSplit } = useStore();
+  const { width } = useWindowSize();
+  const maxTicks = Math.round((width ?? Infinity) / 75);
+  const nivoTheme = useNivoTheme();
+  const { resolvedTheme } = useTheme();
+
+  const showUserBreakdown = selectedStat === "users" && showUsersSplit;
+
+  const { displayDashed, chartPropsData, chartPropsDefs, chartPropsFill, colorMap, seriesConfig, seriesData } =
+    useChartData({
+      data,
+      previousData,
+    });
 
   const StackedLines = createStackedLines(displayDashed);
   const DashedOverlay = createDashedOverlay(displayDashed);
