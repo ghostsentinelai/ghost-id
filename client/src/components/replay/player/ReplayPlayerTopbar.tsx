@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
-import { useGetSessionReplayEvents } from "../../../../../api/analytics/hooks/sessionReplay/useGetSessionReplayEvents";
+import { useGetSessionReplayEvents } from "@/api/analytics/hooks/sessionReplay/useGetSessionReplayEvents";
 import {
   BrowserTooltipIcon,
   CountryFlagTooltipIcon,
   DeviceTypeTooltipIcon,
   OperatingSystemTooltipIcon,
-} from "../../../../../components/TooltipIcons/TooltipIcons";
+} from "@/components/TooltipIcons/TooltipIcons";
 import { useReplayStore } from "../replayStore";
 
 export function ReplayPlayerTopbar() {

@@ -8,10 +8,10 @@ import { SESSION_REPLAY_PAGE_FILTERS } from "../../../lib/filterGroups";
 import { SubHeader } from "../components/SubHeader/SubHeader";
 import { EnableSessionReplay } from "./components/EnableSessionReplay";
 import { ReplayList } from "./components/ReplayList";
-import { ReplayPlayer } from "./components/player/ReplayPlayer";
+import { ReplayPlayer } from "@/components/replay/player/ReplayPlayer";
 import { NothingFound } from "../../../components/NothingFound";
-import { ReplayBreadcrumbs } from "./components/ReplayBreadcrumbs";
-import { useReplayStore } from "./components/replayStore";
+import { ReplayBreadcrumbs } from "@/components/replay/ReplayBreadcrumbs";
+import { useReplayStore } from "@/components/replay/replayStore";
 import { Video } from "lucide-react";
 
 export default function SessionReplayPage() {

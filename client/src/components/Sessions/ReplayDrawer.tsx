@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { ReplayPlayer } from "@/app/[site]/replay/components/player/ReplayPlayer";
-import { useReplayStore } from "@/app/[site]/replay/components/replayStore";
-import { ReplayTimeline } from "./ReplayTimeline";
+import { ReplayPlayer } from "@/components/replay/player/ReplayPlayer";
+import { useReplayStore } from "@/components/replay/replayStore";
+import { ReplayBreadcrumbs } from "@/components/replay/ReplayBreadcrumbs";
 
 interface ReplayDrawerProps {
   sessionId: string;
@@ -68,17 +68,17 @@ export function ReplayDrawer({ sessionId, open, onOpenChange }: ReplayDrawerProp
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="h-[90vh]">
-        <div className="flex h-full gap-2 p-2">
+        <div className="flex gap-2 p-2 h-[97%]">
           {/* Player */}
-          <div ref={containerRef} className="relative flex-1" style={{ height: "calc(80vh - 40px)" }}>
+          <div ref={containerRef} className="relative flex-1" style={{ height: "calc(90vh - 40px)" }}>
             {dimensions.width > 0 && dimensions.height > 0 && (
               <ReplayPlayer width={dimensions.width} height={dimensions.height} />
             )}
           </div>
 
           {/* Timeline sidebar */}
-          <div className="w-[300px] shrink-0 hidden lg:block">
-            <ReplayTimeline drawerHeight="80vh" />
+          <div className="w-[300px] hidden lg:block h-[calc(90vh - 40px)]">
+            <ReplayBreadcrumbs />
           </div>
         </div>
       </DrawerContent>

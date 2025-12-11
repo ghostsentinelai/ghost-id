@@ -25,7 +25,7 @@ import { Badge } from "../../../../components/ui/badge";
 import { Button } from "../../../../components/ui/button";
 import { Skeleton } from "../../../../components/ui/skeleton";
 import { cn, formatter, getUserDisplayName } from "../../../../lib/utils";
-import { useReplayStore } from "./replayStore";
+import { useReplayStore } from "@/components/replay/replayStore";
 
 interface SessionReplayListItem {
   session_id: string;

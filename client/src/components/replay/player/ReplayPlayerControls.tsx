@@ -1,7 +1,7 @@
 import { Pause, Play } from "lucide-react";
-import { ActivitySlider } from "../../../../../components/ui/activity-slider";
-import { Button } from "../../../../../components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../../../components/ui/select";
+import { ActivitySlider } from "@/components/ui/activity-slider";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { formatTime, PLAYBACK_SPEEDS } from "./utils/replayUtils";
 
 interface ReplayPlayerControlsProps {
