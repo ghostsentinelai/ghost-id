@@ -95,19 +95,23 @@ export function ReplayPlayer({ width, height, isDrawer }: { width: number; heigh
     );
   }
 
-  if (isLoading || !data) {
-    return (
-      <div className="bg-black h-full flex items-center justify-center">
-        <ThreeDotLoader className="w-full" />
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col overflow-hidden" style={{ width: width, height: height }}>
+    <div
+      className="bg-black flex flex-col justify-between overflow-hidden rounded-lg"
+      style={{ width: width, height: height }}
+    >
       <ReplayPlayerTopbar />
-      <ReplayPlayerCore data={data} width={width} height={height} onPlayPause={handlePlayPause} isPlaying={isPlaying} />
-
+      {isLoading || !data ? (
+        <ThreeDotLoader className="w-full" />
+      ) : (
+        <ReplayPlayerCore
+          data={data}
+          width={width}
+          height={height}
+          onPlayPause={handlePlayPause}
+          isPlaying={isPlaying}
+        />
+      )}
       <ReplayPlayerControls
         events={data?.events || []}
         onPlayPause={handlePlayPause}
