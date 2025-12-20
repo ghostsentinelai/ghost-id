@@ -1,7 +1,7 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { SESSION_PAGE_FILTERS } from "../../../lib/filterGroups";
 import { getFilteredFilters, useStore } from "../../../lib/store";
-import { buildApiParams, timeZone } from "../../utils";
+import { buildApiParams } from "../../utils";
 import {
   fetchSession,
   fetchSessions,
@@ -11,6 +11,7 @@ import {
   UserSessionCountResponse,
 } from "../endpoints";
 import { Time } from "../../../components/DateSelector/types";
+import { timeZone } from "../../../lib/dateTimeUtils";
 
 export function useGetSessions({
   userId,

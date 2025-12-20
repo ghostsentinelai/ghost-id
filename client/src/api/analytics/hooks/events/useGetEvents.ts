@@ -1,8 +1,9 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Time } from "../../../../components/DateSelector/types";
 import { useStore } from "../../../../lib/store";
-import { buildApiParams, timeZone } from "../../../utils";
+import { buildApiParams } from "../../../utils";
 import { EventsResponse, fetchEvents } from "../../endpoints";
+import { timeZone } from "../../../../lib/dateTimeUtils";
 
 export interface GetEventsOptions {
   time?: Time;

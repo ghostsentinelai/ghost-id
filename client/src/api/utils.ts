@@ -59,17 +59,11 @@ export function getQueryParams(time: Time, additionalParams: Record<string, any>
   };
 }
 
-// Re-export timeZone for convenience
-export { timeZone };
-
 /**
  * Build CommonApiParams from a Time object, handling all time modes including past-minutes.
  * This centralizes the logic for converting Time to API params across all hooks.
  */
-export function buildApiParams(
-  time: Time,
-  options: { filters?: Filter[] } = {}
-): CommonApiParams {
+export function buildApiParams(time: Time, options: { filters?: Filter[] } = {}): CommonApiParams {
   if (time.mode === "past-minutes") {
     return {
       startDate: "",

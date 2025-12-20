@@ -10,7 +10,7 @@ import {
   fetchOutboundLinks,
   fetchOverviewBucketed,
 } from "../../../../api/analytics/endpoints";
-import { getStartAndEndDate, timeZone } from "../../../../api/utils";
+import { getStartAndEndDate } from "../../../../api/utils";
 import { fetchGSCConnectionStatus } from "../../../../api/gsc/useGSCConnection";
 import { fetchGSCData, GSCDimension } from "../../../../api/gsc/useGSCData";
 import { Button } from "../../../../components/ui/button";
@@ -18,6 +18,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../../../../components/
 import { IS_CLOUD } from "../../../../lib/const";
 import { CSVFile, downloadZip, formatDateForFilename } from "../../../../lib/export";
 import { useStore } from "../../../../lib/store";
+import { timeZone } from "../../../../lib/dateTimeUtils";
 
 // Metric parameters for each section
 const REFERRER_METRICS: { param: FilterParameter; filename: string }[] = [

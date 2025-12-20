@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getFilteredFilters, useStore } from "../../../../lib/store";
+import { timeZone } from "../../../../lib/dateTimeUtils";
 import { EVENT_FILTERS } from "../../../../lib/filterGroups";
-import { getStartAndEndDate, timeZone } from "../../../utils";
-import { fetchEventProperties, EventProperty } from "../../endpoints";
+import { getFilteredFilters, useStore } from "../../../../lib/store";
+import { getStartAndEndDate } from "../../../utils";
+import { fetchEventProperties } from "../../endpoints";
 
 export function useGetEventProperties(eventName: string | null) {
   const { site, time } = useStore();
