@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Used for disabled signup view
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -24,12 +23,6 @@ import { useConfigs } from "../../lib/configs";
 import { IS_CLOUD } from "../../lib/const";
 import { userStore } from "../../lib/userStore";
 import { cn, isValidDomain, normalizeDomain } from "../../lib/utils";
-
-// Animation variants for step transitions
-const contentVariants = {
-  hidden: { opacity: 0, x: 20 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
-};
 
 function SignupPageContent() {
   const { configs, isLoading: isLoadingConfigs } = useConfigs();
@@ -189,7 +182,7 @@ function SignupPageContent() {
     switch (currentStep) {
       case 1:
         return (
-          <motion.div initial="hidden" animate="visible" variants={contentVariants}>
+          <div>
             <h2 className="text-2xl font-semibold mb-4">Signup</h2>
             <div className="space-y-4">
               <SocialButtons onError={setError} callbackURL="/signup?step=2" mode="signup" />
@@ -240,11 +233,11 @@ function SignupPageContent() {
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </div>
         );
       case 2:
         return (
-          <motion.div initial="hidden" animate="visible" variants={contentVariants}>
+          <div>
             <h2 className="text-2xl font-semibold mb-4">Create your organization</h2>
             <div className="space-y-4">
               <div className="space-y-2">
@@ -295,11 +288,11 @@ function SignupPageContent() {
                 </Button>
               </div>
             </div>
-          </motion.div>
+          </div>
         );
       case 3:
         return (
-          <motion.div initial="hidden" animate="visible" variants={contentVariants}>
+          <div>
             <h2 className="text-2xl font-semibold mb-4">Add your site</h2>
             <div className="space-y-4">
               <div className="space-y-2">
@@ -328,7 +321,7 @@ function SignupPageContent() {
                 </Button>
               </div>
             </div>
-          </motion.div>
+          </div>
         );
       default:
         return null;
