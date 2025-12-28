@@ -10,7 +10,7 @@ import {
 export const useGetExcludedCountries = (siteId: number) => {
   return useQuery({
     queryKey: ["excludedCountries", siteId],
-    queryFn: () => fetchExcludedCountries(siteId.toString()),
+    queryFn: () => fetchExcludedCountries(siteId),
     enabled: !!siteId,
   });
 };

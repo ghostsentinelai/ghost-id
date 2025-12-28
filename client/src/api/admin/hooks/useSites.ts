@@ -52,7 +52,7 @@ export function useGetSite(siteId?: string | number) {
       return data;
     },
     staleTime: 60000,
-    enabled: !!siteId,
+    enabled: !!siteIdToUse,
   });
 }
 

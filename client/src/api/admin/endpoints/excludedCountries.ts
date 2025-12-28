@@ -20,7 +20,7 @@ export interface UpdateExcludedCountriesResponse {
   details?: string[];
 }
 
-export const fetchExcludedCountries = async (siteId: string): Promise<ExcludedCountriesResponse> => {
+export const fetchExcludedCountries = async (siteId: number): Promise<ExcludedCountriesResponse> => {
   return await authedFetch<ExcludedCountriesResponse>(`/sites/${siteId}/excluded-countries`);
 };
 
@@ -28,11 +28,16 @@ export const updateExcludedCountries = async (
   siteId: number,
   excludedCountries: string[]
 ): Promise<UpdateExcludedCountriesResponse> => {
-  await updateSiteConfig(siteId, { excludedCountries });
-
-  return {
-    success: true,
-    message: "Excluded countries updated successfully",
-    excludedCountries: excludedCountries,
-  };
+  try {
+    await updateSiteConfig(siteId, { excludedCountries });
+    return {
+      success: true,
+      message: "Excluded countries updated successfully",
+      excludedCountries: excludedCountries,
+    };
+  } catch (error) {
+    throw new Error(
+      `Failed to update excluded countries: ${error instanceof Error ? error.message : "Unknown error"}`
+    );
+  }
 };

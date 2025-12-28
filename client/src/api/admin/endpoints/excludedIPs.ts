@@ -27,11 +27,16 @@ export const fetchExcludedIPs = async (siteId: string): Promise<ExcludedIPsRespo
 
 // Update excluded IPs for a site using the consolidated endpoint
 export const updateExcludedIPs = async (siteId: number, excludedIPs: string[]): Promise<UpdateExcludedIPsResponse> => {
-  await updateSiteConfig(siteId, { excludedIPs });
-  // Map the response to match the expected interface
-  return {
-    success: true,
-    message: "Excluded IPs updated successfully",
-    excludedIPs: excludedIPs,
-  };
+  try {
+    await updateSiteConfig(siteId, { excludedIPs });
+    return {
+      success: true,
+      message: "Excluded IPs updated successfully",
+      excludedIPs: excludedIPs,
+    };
+  } catch (error) {
+    throw new Error(
+      `Failed to update excluded IPs: ${error instanceof Error ? error.message : "Unknown error"}`
+    );
+  }
 };
