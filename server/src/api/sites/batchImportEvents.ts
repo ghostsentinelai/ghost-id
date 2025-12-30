@@ -1,6 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { getUserHasAdminAccessToSite } from "../../lib/auth-utils.js";
 import { clickhouse } from "../../db/clickhouse/clickhouse.js";
 import { updateImportProgress, completeImport, getImportById } from "../../services/import/importStatusManager.js";
 import { UmamiEvent, UmamiImportMapper } from "../../services/import/mappings/umami.js";
@@ -46,11 +45,6 @@ export async function batchImportEvents(request: FastifyRequest<BatchImportReque
 
     const { site, importId } = parsed.data.params;
     const { events, isLastBatch } = parsed.data.body;
-
-    const userHasAccess = await getUserHasAdminAccessToSite(request, site);
-    if (!userHasAccess) {
-      return reply.status(403).send({ error: "Forbidden" });
-    }
 
     const importRecord = await getImportById(importId);
     if (!importRecord) {

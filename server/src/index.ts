@@ -277,17 +277,17 @@ server.delete("/api/session-replay/:sessionId/:site", authSite, deleteSessionRep
 
 // Sites
 server.get("/api/sites/:id", publicSite, getSite);
-server.post("/api/sites/:orgId", orgAdminParams, addSite);
+server.post("/api/sites/:organizationId", orgAdminParams, addSite);
 server.put("/api/sites/:id/config", adminSite, updateSiteConfig);
 server.delete("/api/sites/:id", adminSite, deleteSite);
-server.get("/api/sites/:siteId/private-link-config", authSite, getSitePrivateLinkConfig);
+server.get("/api/sites/:siteId/private-link-config", adminSite, getSitePrivateLinkConfig);
 server.post("/api/sites/:siteId/private-link-config", adminSite, updateSitePrivateLinkConfig);
 server.get("/api/site/tracking-config/:siteId", getTrackingConfig); // Public - used by tracking script
 server.get("/api/sites/:siteId/excluded-ips", authSite, getSiteExcludedIPs);
 server.get("/api/sites/:siteId/excluded-countries", authSite, getSiteExcludedCountries);
 
 // Site Imports
-server.get("/api/sites/:site/imports", authSite, getSiteImports);
+server.get("/api/sites/:site/imports", adminSite, getSiteImports);
 server.post("/api/sites/:site/imports", adminSite, createSiteImport);
 server.post("/api/sites/:site/imports/:importId/events", adminSite, batchImportEvents);
 server.delete("/api/sites/:site/imports/:importId", adminSite, deleteSiteImport);
@@ -375,10 +375,7 @@ if (IS_CLOUD) {
   server.post("/api/as/webhook", handleAppSumoWebhook); // Public - AppSumo webhook
 }
 
-server.post("/track", trackEvent);
 server.post("/api/track", trackEvent);
-
-server.post("/identify", handleIdentify);
 server.post("/api/identify", handleIdentify);
 
 server.get("/api/health", { logLevel: "silent" }, (_, reply) => reply.send("OK"));

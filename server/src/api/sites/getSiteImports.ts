@@ -1,5 +1,4 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { getUserHasAdminAccessToSite } from "../../lib/auth-utils.js";
 import { getImportsForSite } from "../../services/import/importStatusManager.js";
 import { z } from "zod";
 import { db } from "../../db/postgres/postgres.js";
@@ -31,11 +30,6 @@ export async function getSiteImports(request: FastifyRequest<GetSiteImportsReque
     }
 
     const { site } = parsed.data.params;
-
-    const userHasAccess = await getUserHasAdminAccessToSite(request, site);
-    if (!userHasAccess) {
-      return reply.status(403).send({ error: "Forbidden" });
-    }
 
     if (IS_CLOUD) {
       const [siteRecord] = await db

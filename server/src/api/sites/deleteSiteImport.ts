@@ -1,6 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { getUserHasAdminAccessToSite } from "../../lib/auth-utils.js";
 import { getImportById, deleteImport } from "../../services/import/importStatusManager.js";
 import { clickhouse } from "../../db/clickhouse/clickhouse.js";
 import { importQuotaManager } from "../../services/import/importQuotaManager.js";
@@ -34,11 +33,6 @@ export async function deleteSiteImport(request: FastifyRequest<DeleteImportReque
     }
 
     const { site, importId } = parsed.data.params;
-
-    const userHasAccess = await getUserHasAdminAccessToSite(request, site);
-    if (!userHasAccess) {
-      return reply.status(403).send({ error: "Forbidden" });
-    }
 
     const importRecord = await getImportById(importId);
     if (!importRecord) {

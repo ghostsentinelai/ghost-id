@@ -1,5 +1,4 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { getUserHasAdminAccessToSite } from "../../lib/auth-utils.js";
 import { importQuotaManager } from "../../services/import/importQuotaManager.js";
 import { createImport } from "../../services/import/importStatusManager.js";
 import { DateTime } from "luxon";
@@ -39,11 +38,6 @@ export async function createSiteImport(request: FastifyRequest<CreateSiteImportR
 
     const { site } = parsed.data.params;
     const { platform } = parsed.data.body;
-
-    const userHasAccess = await getUserHasAdminAccessToSite(request, site);
-    if (!userHasAccess) {
-      return reply.status(403).send({ error: "Forbidden" });
-    }
 
     const [siteRecord] = await db
       .select({

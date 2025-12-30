@@ -1,5 +1,4 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { getUserHasAccessToSite } from "../../lib/auth-utils.js";
 import { SessionReplayQueryService } from "../../services/replay/sessionReplayQueryService.js";
 
 export async function deleteSessionReplay(
@@ -14,19 +13,11 @@ export async function deleteSessionReplay(
   const { sessionId, site } = request.params;
 
   try {
-    // Parse site ID
     const siteId = parseInt(site);
     if (isNaN(siteId)) {
       return reply.status(400).send({ error: "Invalid site ID" });
     }
 
-    // Check user access to site
-    const userHasAccessToSite = await getUserHasAccessToSite(request, site);
-    if (!userHasAccessToSite) {
-      return reply.status(403).send({ error: "Forbidden" });
-    }
-
-    // Check if session replay exists
     const sessionReplayQueryService = new SessionReplayQueryService();
     const metadata = await sessionReplayQueryService.getSessionReplayMetadata(siteId, sessionId);
 

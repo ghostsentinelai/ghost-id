@@ -151,6 +151,11 @@ export const requireOrgMember: AuthMiddleware = async (request, reply) => {
   const params = request.params as Record<string, string>;
   const organizationId = params.organizationId;
 
+  const apiKeyResult = await checkApiKey(request, { organizationId });
+  if (apiKeyResult.valid) {
+    return;
+  }
+
   if (!organizationId) {
     return reply.status(400).send({ error: "Organization ID required" });
   }
@@ -171,7 +176,7 @@ export const requireOrgMember: AuthMiddleware = async (request, reply) => {
  */
 export const requireOrgAdminFromParams: AuthMiddleware = async (request, reply) => {
   const params = request.params as Record<string, string>;
-  const organizationId = params.orgId;
+  const organizationId = params.organizationId;
 
   if (!organizationId) {
     return reply.status(400).send({ error: "Organization ID required in path" });
@@ -179,10 +184,7 @@ export const requireOrgAdminFromParams: AuthMiddleware = async (request, reply) 
 
   // Check API key first - must have admin/owner role
   const apiKeyResult = await checkApiKey(request, { organizationId });
-  if (
-    apiKeyResult.valid &&
-    (apiKeyResult.role === "admin" || apiKeyResult.role === "owner")
-  ) {
+  if (apiKeyResult.valid && (apiKeyResult.role === "admin" || apiKeyResult.role === "owner")) {
     return;
   }
 
@@ -194,17 +196,11 @@ export const requireOrgAdminFromParams: AuthMiddleware = async (request, reply) 
 
   // Check org membership and role
   const member = await db.query.member.findFirst({
-    where: (member, { and, eq }) =>
-      and(
-        eq(member.userId, session.user.id),
-        eq(member.organizationId, organizationId)
-      ),
+    where: (member, { and, eq }) => and(eq(member.userId, session.user.id), eq(member.organizationId, organizationId)),
   });
 
   if (!member) {
-    return reply
-      .status(403)
-      .send({ error: "You are not a member of this organization" });
+    return reply.status(403).send({ error: "You are not a member of this organization" });
   }
 
   if (member.role !== "admin" && member.role !== "owner") {
