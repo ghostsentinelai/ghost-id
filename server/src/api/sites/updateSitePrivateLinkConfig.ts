@@ -1,7 +1,6 @@
 import crypto from "crypto";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { checkApiKey, getUserHasAdminAccessToSite } from "../../lib/auth-utils.js";
 import { siteConfig } from "../../lib/siteConfig.js";
 
 // Schema for updating API configuration
@@ -16,18 +15,6 @@ export async function updateSitePrivateLinkConfig(request: FastifyRequest, reply
 
     if (isNaN(parsedSiteId)) {
       return reply.status(400).send({ success: false, error: "Invalid site ID" });
-    }
-
-    const apiKeyResult = await checkApiKey(request, { siteId: parsedSiteId });
-    const validApiKey = apiKeyResult.valid && (apiKeyResult.role === "admin" || apiKeyResult.role === "owner");
-
-    if (!request.user && !validApiKey) {
-      return reply.status(401).send({ success: false, error: "Unauthorized" });
-    }
-
-    const userHasAdminAccessToSite = await getUserHasAdminAccessToSite(request, String(parsedSiteId));
-    if (!userHasAdminAccessToSite && !validApiKey) {
-      return reply.status(403).send({ error: "Forbidden" });
     }
 
     // Validate request body

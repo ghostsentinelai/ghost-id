@@ -3,7 +3,6 @@ import { z } from "zod";
 import { db } from "../../db/postgres/postgres.js";
 import { sites } from "../../db/postgres/schema.js";
 import { eq } from "drizzle-orm";
-import { checkApiKey, getUserHasAdminAccessToSite } from "../../lib/auth-utils.js";
 import { siteConfig } from "../../lib/siteConfig.js";
 import { validateIPPattern } from "../../lib/ipUtils.js";
 
@@ -70,15 +69,6 @@ export async function updateSiteConfig(
     }
 
     const updateData = validationResult.data;
-
-    // Check user permissions
-    const apiKeyResult = await checkApiKey(request, { siteId });
-    const validApiKey = apiKeyResult.valid && (apiKeyResult.role === "admin" || apiKeyResult.role === "owner");
-
-    const userHasAdminAccessToSite = await getUserHasAdminAccessToSite(request, String(siteId));
-    if (!userHasAdminAccessToSite && !validApiKey) {
-      return reply.status(403).send({ error: "Forbidden" });
-    }
 
     // Check if site exists
     const site = await db.query.sites.findFirst({
