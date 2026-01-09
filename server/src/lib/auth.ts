@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { createAuthMiddleware } from "better-auth/api";
 import { admin, captcha, emailOTP, organization, apiKey } from "better-auth/plugins";
 import dotenv from "dotenv";
-import { asc, eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import pg from "pg";
 
 import { db } from "../db/postgres/postgres.js";
@@ -29,52 +29,6 @@ const pluginList = [
         invitationData.organization.name,
         inviteLink
       );
-    },
-    // Copy site access restrictions from invitation to member when invitation is accepted
-    async afterAcceptInvitation({
-      invitation: invitationData,
-      member: memberData,
-    }: {
-      invitation: { id: string };
-      member: { id: string };
-    }) {
-      try {
-        // Query the invitation to get custom fields (hasRestrictedSiteAccess, siteIds)
-        const invitationRecord = await db
-          .select({
-            hasRestrictedSiteAccess: invitation.hasRestrictedSiteAccess,
-            siteIds: invitation.siteIds,
-          })
-          .from(invitation)
-          .where(eq(invitation.id, invitationData.id))
-          .limit(1);
-
-        if (invitationRecord.length > 0) {
-          const { hasRestrictedSiteAccess, siteIds } = invitationRecord[0];
-
-          // Update member with hasRestrictedSiteAccess
-          if (hasRestrictedSiteAccess) {
-            await db
-              .update(member)
-              .set({ hasRestrictedSiteAccess: true })
-              .where(eq(member.id, memberData.id));
-
-            // Insert site access entries if there are any
-            const siteIdArray = (siteIds || []) as number[];
-            if (siteIdArray.length > 0) {
-              await db.insert(memberSiteAccess).values(
-                siteIdArray.map(siteId => ({
-                  memberId: memberData.id,
-                  siteId: siteId,
-                }))
-              );
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error copying site access from invitation to member:", error);
-        // Don't throw - invitation acceptance should still succeed
-      }
     },
     schema: {
       organization: {
@@ -247,10 +201,77 @@ export const auth = betterAuth({
   },
   hooks: {
     after: createAuthMiddleware(async ctx => {
+      // Handle sign-up welcome email
       if (ctx.path.startsWith("/sign-up") && IS_CLOUD) {
         const newSession = ctx.context.newSession;
         if (newSession) {
           sendWelcomeEmail(newSession.user.email, newSession.user.name);
+        }
+      }
+
+      // Handle invitation acceptance - copy site access from invitation to member
+      if (ctx.path === "/organization/accept-invitation") {
+        try {
+          const body = ctx.body as { invitationId?: string } | null;
+          const invitationId = body?.invitationId;
+
+          if (invitationId) {
+            // Query the invitation to get site access settings and org/email info
+            const invitationRecord = await db
+              .select({
+                organizationId: invitation.organizationId,
+                email: invitation.email,
+                hasRestrictedSiteAccess: invitation.hasRestrictedSiteAccess,
+                siteIds: invitation.siteIds,
+              })
+              .from(invitation)
+              .where(eq(invitation.id, invitationId))
+              .limit(1);
+
+            if (invitationRecord.length > 0) {
+              const { organizationId, email, hasRestrictedSiteAccess, siteIds } = invitationRecord[0];
+
+              if (hasRestrictedSiteAccess) {
+                // Find the user by email
+                const userRecord = await db
+                  .select({ id: user.id })
+                  .from(user)
+                  .where(eq(user.email, email))
+                  .limit(1);
+
+                if (userRecord.length > 0) {
+                  // Find the member by organizationId + userId
+                  const memberRecord = await db
+                    .select({ id: member.id })
+                    .from(member)
+                    .where(
+                      and(eq(member.organizationId, organizationId), eq(member.userId, userRecord[0].id))
+                    )
+                    .limit(1);
+
+                  if (memberRecord.length > 0) {
+                    const memberId = memberRecord[0].id;
+
+                    // Update member with hasRestrictedSiteAccess
+                    await db.update(member).set({ hasRestrictedSiteAccess: true }).where(eq(member.id, memberId));
+
+                    // Insert site access entries
+                    const siteIdArray = (siteIds || []) as number[];
+                    if (siteIdArray.length > 0) {
+                      await db.insert(memberSiteAccess).values(
+                        siteIdArray.map(siteId => ({
+                          memberId: memberId,
+                          siteId: siteId,
+                        }))
+                      );
+                    }
+                  }
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Error copying site access from invitation to member:", error);
         }
       }
     }),
