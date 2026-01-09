@@ -7,7 +7,7 @@ import pg from "pg";
 
 import { db } from "../db/postgres/postgres.js";
 import * as schema from "../db/postgres/schema.js";
-import { user } from "../db/postgres/schema.js";
+import { invitation, member, memberSiteAccess, user } from "../db/postgres/schema.js";
 import { DISABLE_SIGNUP, IS_CLOUD } from "./const.js";
 import { sendEmail, sendInvitationEmail, sendWelcomeEmail } from "./email/email.js";
 
@@ -21,14 +21,60 @@ const pluginList = [
     allowUserToCreateOrganization: true,
     // Set the creator role to owner
     creatorRole: "owner",
-    sendInvitationEmail: async invitation => {
-      const inviteLink = `${process.env.BASE_URL}/invitation?invitationId=${invitation.invitation.id}&organization=${invitation.organization.name}&inviterEmail=${invitation.inviter.user.email}`;
+    sendInvitationEmail: async invitationData => {
+      const inviteLink = `${process.env.BASE_URL}/invitation?invitationId=${invitationData.invitation.id}&organization=${invitationData.organization.name}&inviterEmail=${invitationData.inviter.user.email}`;
       await sendInvitationEmail(
-        invitation.email,
-        invitation.inviter.user.email,
-        invitation.organization.name,
+        invitationData.email,
+        invitationData.inviter.user.email,
+        invitationData.organization.name,
         inviteLink
       );
+    },
+    // Copy site access restrictions from invitation to member when invitation is accepted
+    async afterAcceptInvitation({
+      invitation: invitationData,
+      member: memberData,
+    }: {
+      invitation: { id: string };
+      member: { id: string };
+    }) {
+      try {
+        // Query the invitation to get custom fields (hasRestrictedSiteAccess, siteIds)
+        const invitationRecord = await db
+          .select({
+            hasRestrictedSiteAccess: invitation.hasRestrictedSiteAccess,
+            siteIds: invitation.siteIds,
+          })
+          .from(invitation)
+          .where(eq(invitation.id, invitationData.id))
+          .limit(1);
+
+        if (invitationRecord.length > 0) {
+          const { hasRestrictedSiteAccess, siteIds } = invitationRecord[0];
+
+          // Update member with hasRestrictedSiteAccess
+          if (hasRestrictedSiteAccess) {
+            await db
+              .update(member)
+              .set({ hasRestrictedSiteAccess: true })
+              .where(eq(member.id, memberData.id));
+
+            // Insert site access entries if there are any
+            const siteIdArray = (siteIds || []) as number[];
+            if (siteIdArray.length > 0) {
+              await db.insert(memberSiteAccess).values(
+                siteIdArray.map(siteId => ({
+                  memberId: memberData.id,
+                  siteId: siteId,
+                }))
+              );
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Error copying site access from invitation to member:", error);
+        // Don't throw - invitation acceptance should still succeed
+      }
     },
     schema: {
       organization: {

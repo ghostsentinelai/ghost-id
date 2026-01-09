@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +22,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../../../../../componen
 import { authClient } from "../../../../../lib/auth";
 import { IS_CLOUD, STANDARD_TEAM_LIMIT } from "../../../../../lib/const";
 import { SubscriptionData, useStripeSubscription } from "../../../../../lib/subscription/useStripeSubscription";
+import { SiteAccessMultiSelect } from "./SiteAccessMultiSelect";
+import { authedFetch } from "../../../../../api/utils";
 
 interface InviteMemberDialogProps {
   organizationId: string;
@@ -52,6 +55,8 @@ export function InviteMemberDialog({ organizationId, onSuccess, memberCount }: I
 
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<"admin" | "member" | "owner">("member");
+  const [restrictSiteAccess, setRestrictSiteAccess] = useState(false);
+  const [selectedSiteIds, setSelectedSiteIds] = useState<number[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -63,20 +68,45 @@ export function InviteMemberDialog({ organizationId, onSuccess, memberCount }: I
       return;
     }
 
+    // Validate site selection when restricting access
+    if (role === "member" && restrictSiteAccess && selectedSiteIds.length === 0) {
+      setError("Please select at least one site or disable site restrictions");
+      return;
+    }
+
     setIsLoading(true);
     try {
-      await authClient.organization.inviteMember({
+      // Create the invitation via BetterAuth
+      const result = await authClient.organization.inviteMember({
         email,
         role,
         organizationId,
         resend: true,
       });
 
+      // If role is "member" and site access is restricted, update the invitation
+      if (role === "member" && restrictSiteAccess && result.data?.id) {
+        try {
+          await authedFetch(`/organizations/${organizationId}/invitations/${result.data.id}/sites`, undefined, {
+            method: "PUT",
+            data: {
+              hasRestrictedSiteAccess: true,
+              siteIds: selectedSiteIds,
+            },
+          });
+        } catch (siteAccessError) {
+          console.error("Failed to set site access for invitation:", siteAccessError);
+          // Continue anyway - the invitation was created successfully
+        }
+      }
+
       toast.success(`Invitation sent to ${email}`);
       setOpen(false);
       onSuccess();
       setEmail("");
       setRole("member");
+      setRestrictSiteAccess(false);
+      setSelectedSiteIds([]);
     } catch (error: any) {
       setError(error.message || "Failed to send invitation");
     } finally {
@@ -128,7 +158,17 @@ export function InviteMemberDialog({ organizationId, onSuccess, memberCount }: I
           </div>
           <div className="grid gap-2">
             <Label htmlFor="role">Role</Label>
-            <Select value={role} onValueChange={value => setRole(value as "admin" | "member")}>
+            <Select
+              value={role}
+              onValueChange={value => {
+                setRole(value as "admin" | "member" | "owner");
+                // Reset site access when switching away from member role
+                if (value !== "member") {
+                  setRestrictSiteAccess(false);
+                  setSelectedSiteIds([]);
+                }
+              }}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
@@ -139,6 +179,39 @@ export function InviteMemberDialog({ organizationId, onSuccess, memberCount }: I
               </SelectContent>
             </Select>
           </div>
+
+          {/* Site access restriction - only for member role */}
+          {role === "member" && (
+            <div className="grid gap-3">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="restrict-site-access"
+                  checked={restrictSiteAccess}
+                  onCheckedChange={checked => {
+                    setRestrictSiteAccess(!!checked);
+                    if (!checked) {
+                      setSelectedSiteIds([]);
+                    }
+                  }}
+                />
+                <Label htmlFor="restrict-site-access" className="cursor-pointer">
+                  Restrict access to specific sites
+                </Label>
+              </div>
+              {restrictSiteAccess && (
+                <div className="pl-6">
+                  <SiteAccessMultiSelect
+                    selectedSiteIds={selectedSiteIds}
+                    onChange={setSelectedSiteIds}
+                  />
+                  <p className="text-xs text-muted-foreground mt-2">
+                    This member will only have access to the selected sites.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
           {error && <Alert variant="destructive">{error}</Alert>}
         </div>
         <DialogFooter>
