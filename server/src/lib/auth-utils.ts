@@ -120,35 +120,15 @@ export async function getSitesUserHasAccessTo(req: FastifyRequest, adminOnly = f
           : Promise.resolve([]),
         // Get specific sites for restricted members
         restrictedMemberIds.length > 0
-          ? db
-              .select({
-                siteId: sites.siteId,
-                id: sites.id,
-                name: sites.name,
-                domain: sites.domain,
-                createdAt: sites.createdAt,
-                updatedAt: sites.updatedAt,
-                createdBy: sites.createdBy,
-                organizationId: sites.organizationId,
-                public: sites.public,
-                saltUserIds: sites.saltUserIds,
-                blockBots: sites.blockBots,
-                excludedIPs: sites.excludedIPs,
-                excludedCountries: sites.excludedCountries,
-                sessionReplay: sites.sessionReplay,
-                webVitals: sites.webVitals,
-                trackErrors: sites.trackErrors,
-                trackOutbound: sites.trackOutbound,
-                trackUrlParams: sites.trackUrlParams,
-                trackInitialPageView: sites.trackInitialPageView,
-                trackSpaNavigation: sites.trackSpaNavigation,
-                trackIp: sites.trackIp,
-                apiKey: sites.apiKey,
-                privateLinkKey: sites.privateLinkKey,
-              })
-              .from(memberSiteAccess)
-              .innerJoin(sites, eq(memberSiteAccess.siteId, sites.siteId))
-              .where(inArray(memberSiteAccess.memberId, restrictedMemberIds))
+          ? (async () => {
+              const siteAccess = await db
+                .select({ siteId: memberSiteAccess.siteId })
+                .from(memberSiteAccess)
+                .where(inArray(memberSiteAccess.memberId, restrictedMemberIds));
+              const siteIds = siteAccess.map(s => s.siteId);
+              if (siteIds.length === 0) return [];
+              return db.select().from(sites).where(inArray(sites.siteId, siteIds));
+            })()
           : Promise.resolve([]),
       ]);
 
