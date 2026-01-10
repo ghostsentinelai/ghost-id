@@ -21,13 +21,7 @@ interface OnboardingTipEmailProps {
   unsubscribeUrl: string;
 }
 
-export const OnboardingTipEmail = ({
-  userName,
-  body,
-  linkText,
-  linkUrl,
-  unsubscribeUrl,
-}: OnboardingTipEmailProps) => {
+export const OnboardingTipEmail = ({ userName, body, linkText, linkUrl, unsubscribeUrl }: OnboardingTipEmailProps) => {
   const currentYear = new Date().getFullYear();
   const greeting = userName ? `Hi ${userName}` : "Hi there";
 
@@ -55,7 +49,13 @@ export const OnboardingTipEmail = ({
       >
         <Body className="bg-white font-sans">
           <Container className="mx-auto py-8 px-6 max-w-[600px]">
-            <Img src="https://app.rybbit.io/rybbit-text-black.png" alt="Rybbit" width="100" height="28" className="mb-8" />
+            <Img
+              src="https://app.rybbit.io/rybbit-text-black.png"
+              alt="Rybbit"
+              width="120"
+              height="28"
+              className="mb-8"
+            />
 
             <Text className="text-darkText text-base leading-relaxed mb-4">{greeting},</Text>
 

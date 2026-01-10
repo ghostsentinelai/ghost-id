@@ -218,8 +218,6 @@ export const scheduleOnboardingTipEmail = async (
       },
     });
 
-    console.log("Scheduled email response:", response);
-
     return response.data?.id ?? null;
   } catch (error) {
     console.error("Failed to schedule onboarding tip email:", error);

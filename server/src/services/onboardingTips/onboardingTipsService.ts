@@ -15,11 +15,9 @@ class OnboardingTipsService {
       // Schedule email for day N at 9am UTC
       const scheduledAt = now.plus({ minutes: 1 }).toISO();
 
-      console.log("Scheduled at:", scheduledAt);
       if (!scheduledAt) continue;
 
       const emailId = await scheduleOnboardingTipEmail(email, name || "", tip, scheduledAt);
-      console.log("Scheduled email ID:", emailId);
 
       if (emailId) {
         emailIds.push(emailId);
