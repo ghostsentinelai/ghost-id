@@ -117,7 +117,7 @@ class ReengagementService {
         }
 
         // Check if contact is unsubscribed
-        const unsubscribed = await isContactUnsubscribed(userData.email);
+        const unsubscribed = await isContactUnsubscribed("hello@rybbit.com");
         if (unsubscribed) {
           this.logger.debug({ userId: userData.id }, "User is unsubscribed, skipping");
           continue;
@@ -125,7 +125,6 @@ class ReengagementService {
 
         // Send re-engagement email
         await sendReengagementEmail("hello@rybbit.com", userData.name, content, siteId, domain);
-        // await sendReengagementEmail(userData.email, userData.name, content, siteId, domain);
         this.logger.info({ userId: userData.id, day: targetDay, siteId, domain }, "Sent re-engagement email");
         break;
       }
