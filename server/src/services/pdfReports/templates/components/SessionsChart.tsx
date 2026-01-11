@@ -1,4 +1,5 @@
 import * as React from "react";
+import { DateTime } from "luxon";
 import type { ChartDataPoint } from "../../pdfReportTypes.js";
 import { formatNumber } from "./utils.js";
 
@@ -6,31 +7,32 @@ export interface SessionsChartProps {
   data: ChartDataPoint[];
   startDate: string;
   endDate: string;
+  timeZone: string;
 }
 
-const formatChartDate = (time: string, useHours: boolean): string => {
-  const date = new Date(time);
+const formatChartDate = (time: string, useHours: boolean, timeZone: string): string => {
+  // ClickHouse returns format like "2024-01-15 14:00:00", need to use SQL format
+  const dt = DateTime.fromSQL(time, { zone: timeZone });
   if (useHours) {
-    return date.toLocaleTimeString("en-US", { hour: "numeric", hour12: true });
+    return dt.toFormat("ha").toLowerCase();
   }
-  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  return dt.toFormat("MMM d");
 };
 
-const isOneDayOrLess = (startDate: string, endDate: string): boolean => {
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-  const diffMs = end.getTime() - start.getTime();
-  const oneDayMs = 24 * 60 * 60 * 1000;
-  return diffMs <= oneDayMs;
+const isOneDayOrLess = (startDate: string, endDate: string, timeZone: string): boolean => {
+  const start = DateTime.fromISO(startDate, { zone: timeZone });
+  const end = DateTime.fromISO(endDate, { zone: timeZone });
+  const diffDays = end.diff(start, "days").days;
+  return diffDays <= 1;
 };
 
-export const SessionsChart = ({ data, startDate, endDate }: SessionsChartProps) => {
+export const SessionsChart = ({ data, startDate, endDate, timeZone }: SessionsChartProps) => {
   if (data.length === 0) return null;
 
-  const useHours = isOneDayOrLess(startDate, endDate);
+  const useHours = isOneDayOrLess(startDate, endDate, timeZone);
 
   const width = 680;
-  const height = 180;
+  const height = 220;
   const margin = { top: 10, right: 15, bottom: 30, left: 45 };
   const chartWidth = width - margin.left - margin.right;
   const chartHeight = height - margin.top - margin.bottom;
@@ -76,7 +78,7 @@ export const SessionsChart = ({ data, startDate, endDate }: SessionsChartProps) 
   const xTickCount = Math.min(data.length, 8);
   const xTickInterval = Math.max(1, Math.floor(data.length / xTickCount));
   const xTicks = data
-    .map((d, i) => ({ label: formatChartDate(d.time, useHours), x: xScale(i), index: i }))
+    .map((d, i) => ({ label: formatChartDate(d.time, useHours, timeZone), x: xScale(i), index: i }))
     .filter((_, i) => i % xTickInterval === 0 || i === data.length - 1);
 
   // Generate horizontal grid lines

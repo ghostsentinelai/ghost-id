@@ -15,9 +15,9 @@ const TopListItem = ({ value, percentage, count, barWidth, favicon }: TopListIte
     style={{
       display: "flex",
       alignItems: "center",
-      padding: "4px 8px",
+      padding: "5px 8px",
       marginBottom: "4px",
-      borderRadius: "6px",
+      borderRadius: "4px",
       position: "relative",
     }}
   >

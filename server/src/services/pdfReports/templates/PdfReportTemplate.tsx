@@ -158,7 +158,7 @@ export const PdfReportTemplate = ({ reportData }: PdfReportTemplateProps): React
           </div>
 
           {/* Sessions Chart */}
-          <SessionsChart data={chartData} startDate={startDate} endDate={endDate} />
+          <SessionsChart data={chartData} startDate={startDate} endDate={endDate} timeZone={timeZone} />
 
           {/* Footer for page 1 */}
           <div

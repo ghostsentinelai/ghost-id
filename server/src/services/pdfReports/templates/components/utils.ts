@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 export const calculateGrowth = (
   current: number | null | undefined,
   previous: number | null | undefined
@@ -60,13 +62,8 @@ export const getCountryDisplay = (countryCode: string): string => {
 };
 
 export const formatDateRange = (startDate: string, endDate: string, timeZone: string): string => {
-  const options: Intl.DateTimeFormatOptions = {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone,
-  };
-  const start = new Date(startDate + "T00:00:00");
-  const end = new Date(endDate + "T00:00:00");
-  return `${start.toLocaleDateString("en-US", options)} - ${end.toLocaleDateString("en-US", options)}`;
+  const start = DateTime.fromISO(startDate, { zone: timeZone });
+  const end = DateTime.fromISO(endDate, { zone: timeZone });
+  const format = "MMMM d, yyyy";
+  return `${start.toFormat(format)} - ${end.toFormat(format)}`;
 };
