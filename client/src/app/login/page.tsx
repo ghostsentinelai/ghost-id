@@ -13,7 +13,7 @@ import { SpinningGlobe } from "../../components/SpinningGlobe";
 import { useSetPageTitle } from "../../hooks/useSetPageTitle";
 import { authClient } from "../../lib/auth";
 import { useConfigs } from "../../lib/configs";
-import { IS_CLOUD } from "../../lib/const";
+import { IS_CLOUD, IS_WHITE_LABEL } from "../../lib/const";
 import { userStore } from "../../lib/userStore";
 
 export default function Page() {
@@ -147,7 +147,7 @@ export default function Page() {
           </div>
         </div>
 
-        {!IS_CLOUD && (
+        {!IS_CLOUD && !IS_WHITE_LABEL && (
           <div className="text-xs text-muted-foreground mt-8">
             <a
               href="https://rybbit.com"
