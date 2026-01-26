@@ -27,6 +27,14 @@ export class MatomoImportMapper {
     "avg secure browser": "AVG Secure Browser",
   };
 
+  private static readonly browserSchema = z
+    .string()
+    .max(30)
+    .transform(browser => {
+      const key = browser.toLowerCase();
+      return MatomoImportMapper.browserMap[key] ?? browser;
+    });
+
   private static readonly osMap: Record<string, string> = {
     mac: "macOS",
     "gnu/linux": "Linux",
@@ -34,26 +42,28 @@ export class MatomoImportMapper {
     "windows mobile": "Windows Phone",
   };
 
+  private static readonly osSchema = z
+    .string()
+    .max(25)
+    .transform(os => {
+      const key = os.toLowerCase();
+      return MatomoImportMapper.osMap[key] ?? os;
+    });
+
   private static readonly deviceMap: Record<string, string> = {
-    smartphone: "Mobile",
     desktop: "Desktop",
-    tablet: "Mobile",
+    smartphone: "Mobile",
+    phablet: "Mobile",
+    tablet: "Tablet",
   };
 
-  private static normalizeBrowserName(browser: string): string {
-    const key = browser.toLowerCase();
-    return this.browserMap[key] ?? browser;
-  }
-
-  private static normalizeOSName(os: string): string {
-    const key = os.toLowerCase();
-    return this.osMap[key] ?? os;
-  }
-
-  private static normalizeDeviceType(deviceType: string): string {
-    const key = deviceType.toLowerCase();
-    return this.deviceMap[key] ?? deviceType;
-  }
+  private static readonly deviceSchema = z
+    .string()
+    .max(20)
+    .transform(device => {
+      const key = device.toLowerCase();
+      return MatomoImportMapper.deviceMap[key] ?? device;
+    });
 
   private static parseUrl(url: string): { hostname: string; pathname: string; querystring: string } {
     try {
@@ -84,11 +94,11 @@ export class MatomoImportMapper {
     referrerType: z.string().max(10),
 
     // Browser/OS data
-    browserName: z.string().max(100),
+    browserName: MatomoImportMapper.browserSchema,
     browserVersion: z.string().max(20),
-    operatingSystemName: z.string().max(100),
+    operatingSystemName: MatomoImportMapper.osSchema,
     operatingSystemVersion: z.string().max(20),
-    deviceType: z.string().max(30),
+    deviceType: MatomoImportMapper.deviceSchema,
 
     // Language and geo
     languageCode: z.string().max(10),
@@ -142,11 +152,6 @@ export class MatomoImportMapper {
       const lat = data.latitude ? parseFloat(data.latitude) : 0;
       const lon = data.longitude ? parseFloat(data.longitude) : 0;
 
-      // Normalize browser/OS/device
-      const browser = MatomoImportMapper.normalizeBrowserName(data.browserName);
-      const os = MatomoImportMapper.normalizeOSName(data.operatingSystemName);
-      const deviceType = MatomoImportMapper.normalizeDeviceType(data.deviceType);
-
       // Convert Unix timestamp to "yyyy-MM-dd HH:mm:ss"
       let timestamp: string;
       try {
@@ -178,9 +183,9 @@ export class MatomoImportMapper {
         page_title: data.pageTitle || "",
         referrer,
         channel: getChannel(referrer, querystring, hostname),
-        browser,
+        browser: data.browserName,
         browser_version: data.browserVersion,
-        operating_system: os,
+        operating_system: data.operatingSystemName,
         operating_system_version: data.operatingSystemVersion,
         language: data.languageCode,
         country: data.countryCode,
@@ -190,7 +195,7 @@ export class MatomoImportMapper {
         lon,
         screen_width: screenWidth,
         screen_height: screenHeight,
-        device_type: deviceType,
+        device_type: data.deviceType,
         type: eventType,
         event_name: eventName,
         props: {},
