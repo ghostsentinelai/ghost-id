@@ -9,36 +9,29 @@ export type MatomoEvent = z.input<typeof MatomoImportMapper.matomoEventKeyOnlySc
 
 export class MatomoImportMapper {
   private static readonly browserMap: Record<string, string> = {
-    "samsung browser": "Samsung Internet",
-    chrome: "Chrome",
     "chrome mobile": "Mobile Chrome",
     "chrome mobile ios": "Mobile Chrome",
-    "headless chrome": "Chrome",
-    "chrome webview": "Chrome",
-    firefox: "Firefox",
+    "chrome webview": "Chrome WebView",
+    "headless chrome": "Chrome Headless",
     "firefox mobile": "Mobile Firefox",
     "firefox mobile ios": "Mobile Firefox",
-    safari: "Safari",
-    "mobile safari": "Mobile Safari",
     "microsoft edge": "Edge",
-    edge: "Edge",
-    opera: "Opera",
-    "opera gx": "Opera",
+    "opera mobile": "Opera",
+    "opera gx": "Opera GX",
+    "google search app": "GSA",
+    "samsung browser": "Samsung Internet",
     "yandex browser": "Yandex",
-    brave: "Brave",
+    "qq browser": "QQBrowser",
+    "whale browser": "Whale",
+    "mi browser": "MIUI Browser",
+    "avg secure browser": "AVG Secure Browser",
   };
 
   private static readonly osMap: Record<string, string> = {
     mac: "macOS",
-    android: "Android",
-    ios: "iOS",
-    windows: "Windows",
-    "windows mobile": "Windows",
-    linux: "Linux",
     "gnu/linux": "Linux",
-    ubuntu: "Linux",
-    "chrome os": "Chrome OS",
     "chromium os": "Chrome OS",
+    "windows mobile": "Windows Phone",
   };
 
   private static readonly deviceMap: Record<string, string> = {
