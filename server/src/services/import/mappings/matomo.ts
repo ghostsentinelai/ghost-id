@@ -5,54 +5,36 @@ import { z } from "zod";
 import { DateTime } from "luxon";
 import { deriveKeyOnlySchema } from "./utils.js";
 
-interface MatomoActionDetails {
-  type?: string;
-  url?: string;
-  pageTitle?: string;
-  timestamp?: string;
-}
-
 export interface MatomoEvent {
-  // Visit identifiers
-  idVisit: string;
+  // Session/user identifiers
   visitorId: string;
-  firstActionTimestamp: string;
+  fingerprint: string; // Used as session_id
+
+  // Action data (single action, not indexed)
+  type: string;
+  url: string;
+  pageTitle: string;
+  timestamp: string;
 
   // Referrer data
   referrerUrl: string;
   referrerType: string;
-  referrerTypeName: string;
 
   // Browser/OS data (pre-processed by Matomo)
-  browser: string;
+  browserName: string;
   browserVersion: string;
-  operatingSystem: string;
+  operatingSystemName: string;
   operatingSystemVersion: string;
   deviceType: string;
 
   // Language and geo
   languageCode: string;
-  country: string;
   countryCode: string;
-  region: string;
   regionCode: string;
   city: string;
   latitude: string;
   longitude: string;
   resolution: string;
-
-  // Campaign data (optional)
-  campaignName: string;
-  campaignSource: string;
-  campaignMedium: string;
-  campaignContent: string;
-  campaignKeyword: string;
-
-  // Dynamic action details (indexed 0-101)
-  [key: `actionDetails_${number}_type`]: string;
-  [key: `actionDetails_${number}_url`]: string;
-  [key: `actionDetails_${number}_pageTitle`]: string;
-  [key: `actionDetails_${number}_timestamp`]: string;
 }
 
 export class MatomoImportMapper {
@@ -106,31 +88,6 @@ export class MatomoImportMapper {
     return this.deviceMap[key] ?? deviceType;
   }
 
-  private static extractActionDetails(visit: any): MatomoActionDetails[] {
-    const actionMap = new Map<number, MatomoActionDetails>();
-
-    for (const [key, value] of Object.entries(visit)) {
-      const match = key.match(/^actionDetails_(\d+)_(\w+)$/);
-      if (!match) continue;
-
-      const index = parseInt(match[1], 10);
-      const field = match[2];
-
-      if (!actionMap.has(index)) {
-        actionMap.set(index, {});
-      }
-
-      const action = actionMap.get(index)!;
-      (action as any)[field] = value;
-    }
-
-    // Convert map to sorted array (import all action types, not just pageviews)
-    return Array.from(actionMap.entries())
-      .sort(([a], [b]) => a - b)
-      .map(([_, action]) => action)
-      .filter(action => action.type); // Only filter out actions without a type
-  }
-
   private static parseUrl(url: string): { hostname: string; pathname: string; querystring: string } {
     try {
       const urlObj = new URL(url);
@@ -144,167 +101,134 @@ export class MatomoImportMapper {
     }
   }
 
-  private static readonly matomoEventSchema = z
-    .object({
-      // Visit identifiers
-      idVisit: z.string().max(50),
-      visitorId: z.string().max(64),
-      firstActionTimestamp: z.string().regex(/^\d+$/),
+  private static readonly matomoEventSchema = z.object({
+    // Session/user identifiers
+    visitorId: z.string().max(64),
+    fingerprint: z.string().max(64),
 
-      // Referrer data
-      referrerUrl: z.string().max(2048),
-      referrerType: z.string().max(10),
-      referrerTypeName: z.string().max(50),
+    // Action data (single action, not indexed)
+    type: z.string().max(50),
+    url: z.string().max(2048),
+    pageTitle: z.string().max(512),
+    timestamp: z.string().regex(/^\d+$/),
 
-      // Browser/OS data
-      browser: z.string().max(100),
-      browserVersion: z.string().max(20),
-      operatingSystem: z.string().max(100),
-      operatingSystemVersion: z.string().max(20),
-      deviceType: z.string().max(30),
+    // Referrer data
+    referrerUrl: z.string().max(2048),
+    referrerType: z.string().max(10),
 
-      // Language and geo
-      languageCode: z.string().max(10),
-      country: z.string().max(100),
-      countryCode: z
-        .string()
-        .regex(/^[A-Za-z]{2}$/)
-        .or(z.literal(""))
-        .transform(code => code.toUpperCase()),
-      region: z.string().max(100),
-      regionCode: z.string().max(10),
-      city: z.string().max(100),
-      latitude: z
-        .string()
-        .regex(/^-?\d+(\.\d+)?$/)
-        .or(z.literal("")),
-      longitude: z
-        .string()
-        .regex(/^-?\d+(\.\d+)?$/)
-        .or(z.literal("")),
-      resolution: z
-        .string()
-        .regex(/^\d{1,5}x\d{1,5}$/)
-        .or(z.literal("")),
+    // Browser/OS data
+    browserName: z.string().max(100),
+    browserVersion: z.string().max(20),
+    operatingSystemName: z.string().max(100),
+    operatingSystemVersion: z.string().max(20),
+    deviceType: z.string().max(30),
 
-      // Campaign data (all optional, can be empty)
-      campaignName: z.string().max(256),
-      campaignSource: z.string().max(256),
-      campaignMedium: z.string().max(256),
-      campaignContent: z.string().max(256),
-      campaignKeyword: z.string().max(256),
-    })
-    .passthrough(); // Allow additional properties for actionDetails_N_*
+    // Language and geo
+    languageCode: z.string().max(10),
+    countryCode: z
+      .string()
+      .regex(/^[A-Za-z]{2}$/)
+      .or(z.literal(""))
+      .transform(code => code.toUpperCase()),
+    regionCode: z.string().max(10),
+    city: z.string().max(100),
+    latitude: z
+      .string()
+      .regex(/^-?\d+(\.\d+)?$/)
+      .or(z.literal("")),
+    longitude: z
+      .string()
+      .regex(/^-?\d+(\.\d+)?$/)
+      .or(z.literal("")),
+    resolution: z
+      .string()
+      .regex(/^\d{1,5}x\d{1,5}$/)
+      .or(z.literal("")),
+  });
 
   static readonly matomoEventKeyOnlySchema = deriveKeyOnlySchema(MatomoImportMapper.matomoEventSchema);
 
-  static transform(visits: any[], site: number, importId: string): RybbitEvent[] {
-    return visits.reduce<RybbitEvent[]>((acc, visit) => {
-      // Step 1: Validate visit structure
-      const parsed = MatomoImportMapper.matomoEventSchema.safeParse(visit);
+  static transform(events: any[], site: number, importId: string): RybbitEvent[] {
+    return events.reduce<RybbitEvent[]>((acc, event) => {
+      // Validate event structure
+      const parsed = MatomoImportMapper.matomoEventSchema.safeParse(event);
       if (!parsed.success) {
-        return acc; // Skip invalid visits gracefully
+        return acc; // Skip invalid events gracefully
       }
 
       const data = parsed.data;
 
-      // Step 2: Extract all action details from the visit
-      const actions = MatomoImportMapper.extractActionDetails(visit);
-
-      // Step 3: Transform each action into a RybbitEvent
-      for (const action of actions) {
-        // Validate action has required fields
-        if (!action.url || !action.timestamp) {
-          continue; // Skip incomplete actions
-        }
-
-        // Parse URL components
-        const { hostname, pathname, querystring } = MatomoImportMapper.parseUrl(action.url);
-
-        // Parse screen dimensions
-        const [screenWidth, screenHeight] = data.resolution
-          ? data.resolution.split("x").map(d => parseInt(d, 10))
-          : [0, 0];
-
-        // Parse geo coordinates
-        const lat = data.latitude ? parseFloat(data.latitude) : 0;
-        const lon = data.longitude ? parseFloat(data.longitude) : 0;
-
-        // Normalize browser/OS/device
-        const browser = MatomoImportMapper.normalizeBrowserName(data.browser);
-        const os = MatomoImportMapper.normalizeOSName(data.operatingSystem);
-        const deviceType = MatomoImportMapper.normalizeDeviceType(data.deviceType);
-
-        // Convert Unix timestamp to "yyyy-MM-dd HH:mm:ss"
-        let timestamp: string;
-        try {
-          timestamp = DateTime.fromSeconds(parseInt(action.timestamp, 10)).toFormat("yyyy-MM-dd HH:mm:ss");
-        } catch {
-          continue; // Skip action with invalid timestamp
-        }
-
-        // Build referrer URL
-        const referrer = clearSelfReferrer(data.referrerUrl, hostname.replace(/^www\./, ""));
-
-        // Use Matomo visit ID as session ID (all actions in same visit = same session)
-        const sessionId = data.idVisit;
-
-        // Determine event type and name based on action type
-        const isPageview = action.type === "action";
-        const eventType = isPageview ? "pageview" : "custom_event";
-        const eventName = isPageview ? "" : action.type || "unknown";
-
-        // Build campaign querystring if present
-        let campaignQuery = "";
-        if (data.campaignSource || data.campaignMedium || data.campaignName) {
-          const params = new URLSearchParams();
-          if (data.campaignSource) params.set("utm_source", data.campaignSource);
-          if (data.campaignMedium) params.set("utm_medium", data.campaignMedium);
-          if (data.campaignName) params.set("utm_campaign", data.campaignName);
-          if (data.campaignContent) params.set("utm_content", data.campaignContent);
-          if (data.campaignKeyword) params.set("utm_term", data.campaignKeyword);
-          campaignQuery = params.toString();
-        }
-
-        // Merge campaign params with URL querystring
-        const urlQuery = querystring.replace(/^\?/, "");
-        const mergedQuery =
-          urlQuery && campaignQuery
-            ? `${urlQuery}&${campaignQuery}`
-            : urlQuery || campaignQuery;
-        const finalQuerystring = mergedQuery ? `?${mergedQuery}` : "";
-
-        acc.push({
-          site_id: site,
-          timestamp,
-          session_id: sessionId,
-          user_id: data.visitorId,
-          hostname,
-          pathname,
-          querystring: finalQuerystring,
-          url_parameters: getAllUrlParams(finalQuerystring),
-          page_title: action.pageTitle || "",
-          referrer,
-          channel: getChannel(referrer, finalQuerystring, hostname),
-          browser,
-          browser_version: data.browserVersion,
-          operating_system: os,
-          operating_system_version: data.operatingSystemVersion,
-          language: data.languageCode,
-          country: data.countryCode,
-          region: data.regionCode,
-          city: data.city,
-          lat,
-          lon,
-          screen_width: screenWidth,
-          screen_height: screenHeight,
-          device_type: deviceType,
-          type: eventType,
-          event_name: eventName,
-          props: {},
-          import_id: importId,
-        });
+      // Validate action has required fields
+      if (!data.url || !data.timestamp) {
+        return acc; // Skip incomplete events
       }
+
+      // Parse URL components
+      const { hostname, pathname, querystring } = MatomoImportMapper.parseUrl(data.url);
+
+      // Parse screen dimensions
+      const [screenWidth, screenHeight] = data.resolution
+        ? data.resolution.split("x").map(d => parseInt(d, 10))
+        : [0, 0];
+
+      // Parse geo coordinates
+      const lat = data.latitude ? parseFloat(data.latitude) : 0;
+      const lon = data.longitude ? parseFloat(data.longitude) : 0;
+
+      // Normalize browser/OS/device
+      const browser = MatomoImportMapper.normalizeBrowserName(data.browserName);
+      const os = MatomoImportMapper.normalizeOSName(data.operatingSystemName);
+      const deviceType = MatomoImportMapper.normalizeDeviceType(data.deviceType);
+
+      // Convert Unix timestamp to "yyyy-MM-dd HH:mm:ss"
+      let timestamp: string;
+      try {
+        timestamp = DateTime.fromSeconds(parseInt(data.timestamp, 10)).toFormat("yyyy-MM-dd HH:mm:ss");
+      } catch {
+        return acc; // Skip event with invalid timestamp
+      }
+
+      // Build referrer URL
+      const referrer = clearSelfReferrer(data.referrerUrl, hostname.replace(/^www\./, ""));
+
+      // Use fingerprint as session ID
+      const sessionId = data.fingerprint;
+
+      // Determine event type and name based on action type
+      const isPageview = data.type === "action";
+      const eventType = isPageview ? "pageview" : "custom_event";
+      const eventName = isPageview ? "" : data.type || "unknown";
+
+      acc.push({
+        site_id: site,
+        timestamp,
+        session_id: sessionId,
+        user_id: data.visitorId,
+        hostname,
+        pathname,
+        querystring: querystring,
+        url_parameters: getAllUrlParams(querystring),
+        page_title: data.pageTitle || "",
+        referrer,
+        channel: getChannel(referrer, querystring, hostname),
+        browser,
+        browser_version: data.browserVersion,
+        operating_system: os,
+        operating_system_version: data.operatingSystemVersion,
+        language: data.languageCode,
+        country: data.countryCode,
+        region: data.regionCode,
+        city: data.city,
+        lat,
+        lon,
+        screen_width: screenWidth,
+        screen_height: screenHeight,
+        device_type: deviceType,
+        type: eventType,
+        event_name: eventName,
+        props: {},
+        import_id: importId,
+      });
 
       return acc;
     }, []);

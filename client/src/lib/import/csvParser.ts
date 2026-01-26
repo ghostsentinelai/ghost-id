@@ -43,32 +43,31 @@ interface SimpleAnalyticsEvent {
 }
 
 interface MatomoEvent {
-  idVisit: string;
+  // Session/user identifiers
   visitorId: string;
-  firstActionTimestamp: string;
-  referrerUrl: string;
+  fingerprint: string; // Use as session_id
+
+  // Action data (single action, not indexed)
+  type: string;      // action type
+  url: string;       // action URL
+  pageTitle: string; // page title
+  timestamp: string; // Unix timestamp
+
+  // Visit metadata
   referrerType: string;
-  referrerTypeName: string;
-  browser: string;
-  browserVersion: string;
-  operatingSystem: string;
-  operatingSystemVersion: string;
-  deviceType: string;
+  referrerUrl: string;
   languageCode: string;
-  country: string;
+  deviceType: string;
+  operatingSystemName: string;
+  operatingSystemVersion: string;
+  browserName: string;
+  browserVersion: string;
   countryCode: string;
-  region: string;
   regionCode: string;
   city: string;
   latitude: string;
   longitude: string;
   resolution: string;
-  campaignName: string;
-  campaignSource: string;
-  campaignMedium: string;
-  campaignContent: string;
-  campaignKeyword: string;
-  [key: string]: string; // Allow dynamic actionDetails_N_* fields
 }
 
 export class CsvParser {
@@ -140,9 +139,12 @@ export class CsvParser {
           } else if (this.platform === "matomo") {
             const validEvents: MatomoEvent[] = [];
             for (const row of results.data) {
-              const event = this.transformRow(row);
-              if (event && this.isDateInRange((event as MatomoEvent).firstActionTimestamp, true)) {
-                validEvents.push(event as MatomoEvent);
+              // Unroll visit into individual events
+              const events = this.unrollMatomoVisit(row as Record<string, string>);
+              for (const event of events) {
+                if (this.isDateInRange(event.timestamp, true)) {
+                  validEvents.push(event);
+                }
               }
             }
             if (validEvents.length > 0) {
@@ -254,51 +256,65 @@ export class CsvParser {
       }
 
       return simpleAnalyticsEvent;
-    } else if (this.platform === "matomo") {
-      // For Matomo, pass through all fields including dynamic actionDetails_N_* columns
-      const matomoEvent: MatomoEvent = {
-        idVisit: rawEvent.idVisit || "",
-        visitorId: rawEvent.visitorId || "",
-        firstActionTimestamp: rawEvent.firstActionTimestamp || "",
-        referrerUrl: rawEvent.referrerUrl || "",
-        referrerType: rawEvent.referrerType || "",
-        referrerTypeName: rawEvent.referrerTypeName || "",
-        browser: rawEvent.browser || "",
-        browserVersion: rawEvent.browserVersion || "",
-        operatingSystem: rawEvent.operatingSystem || "",
-        operatingSystemVersion: rawEvent.operatingSystemVersion || "",
-        deviceType: rawEvent.deviceType || "",
-        languageCode: rawEvent.languageCode || "",
-        country: rawEvent.country || "",
-        countryCode: rawEvent.countryCode || "",
-        region: rawEvent.region || "",
-        regionCode: rawEvent.regionCode || "",
-        city: rawEvent.city || "",
-        latitude: rawEvent.latitude || "",
-        longitude: rawEvent.longitude || "",
-        resolution: rawEvent.resolution || "",
-        campaignName: rawEvent.campaignName || "",
-        campaignSource: rawEvent.campaignSource || "",
-        campaignMedium: rawEvent.campaignMedium || "",
-        campaignContent: rawEvent.campaignContent || "",
-        campaignKeyword: rawEvent.campaignKeyword || "",
-      };
-
-      // Add all other fields (including actionDetails_N_* fields)
-      for (const [key, value] of Object.entries(rawEvent)) {
-        if (!(key in matomoEvent)) {
-          matomoEvent[key] = value || "";
-        }
-      }
-
-      if (!matomoEvent.firstActionTimestamp || !matomoEvent.idVisit) {
-        return null;
-      }
-
-      return matomoEvent;
     }
 
     return null;
+  }
+
+  private unrollMatomoVisit(rawEvent: Record<string, string>): MatomoEvent[] {
+    const events: MatomoEvent[] = [];
+
+    // Extract visit-level metadata
+    const visitMetadata = {
+      visitorId: rawEvent.visitorId || "",
+      fingerprint: rawEvent.fingerprint || "",
+      referrerType: rawEvent.referrerType || "",
+      referrerUrl: rawEvent.referrerUrl || "",
+      languageCode: rawEvent.languageCode || "",
+      deviceType: rawEvent.deviceType || "",
+      operatingSystemName: rawEvent.operatingSystemName || "",
+      operatingSystemVersion: rawEvent.operatingSystemVersion || "",
+      browserName: rawEvent.browserName || "",
+      browserVersion: rawEvent.browserVersion || "",
+      countryCode: rawEvent.countryCode || "",
+      regionCode: rawEvent.regionCode || "",
+      city: rawEvent.city || "",
+      latitude: rawEvent.latitude || "",
+      longitude: rawEvent.longitude || "",
+      resolution: rawEvent.resolution || "",
+    };
+
+    // Find all action indices by scanning for actionDetails_N_* columns
+    const actionIndices = new Set<number>();
+    for (const key of Object.keys(rawEvent)) {
+      const match = key.match(/^actionDetails_(\d+)_/);
+      if (match) {
+        actionIndices.add(parseInt(match[1], 10));
+      }
+    }
+
+    // Create one MatomoEvent per action
+    for (const index of Array.from(actionIndices).sort((a, b) => a - b)) {
+      const type = rawEvent[`actionDetails_${index}_type`] || "";
+      const timestamp = rawEvent[`actionDetails_${index}_timestamp`] || "";
+
+      // Skip actions without type or timestamp
+      if (!type || !timestamp) {
+        continue;
+      }
+
+      const event: MatomoEvent = {
+        ...visitMetadata,
+        type,
+        url: rawEvent[`actionDetails_${index}_url`] || "",
+        pageTitle: rawEvent[`actionDetails_${index}_pageTitle`] || "",
+        timestamp,
+      };
+
+      events.push(event);
+    }
+
+    return events;
   }
 
   private async uploadChunk(
