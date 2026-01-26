@@ -11,24 +11,34 @@ export class MatomoImportMapper {
   private static readonly browserMap: Record<string, string> = {
     "samsung browser": "Samsung Internet",
     chrome: "Chrome",
-    "mobile chrome": "Mobile Chrome",
+    "chrome mobile": "Mobile Chrome",
+    "chrome mobile ios": "Mobile Chrome",
+    "headless chrome": "Chrome",
+    "chrome webview": "Chrome",
     firefox: "Firefox",
-    "mobile firefox": "Mobile Firefox",
+    "firefox mobile": "Mobile Firefox",
+    "firefox mobile ios": "Mobile Firefox",
     safari: "Safari",
     "mobile safari": "Mobile Safari",
+    "microsoft edge": "Edge",
     edge: "Edge",
     opera: "Opera",
+    "opera gx": "Opera",
     "yandex browser": "Yandex",
+    brave: "Brave",
   };
 
   private static readonly osMap: Record<string, string> = {
-    "mac os x": "macOS",
-    "mac os": "macOS",
+    mac: "macOS",
     android: "Android",
     ios: "iOS",
     windows: "Windows",
+    "windows mobile": "Windows",
     linux: "Linux",
+    "gnu/linux": "Linux",
+    ubuntu: "Linux",
     "chrome os": "Chrome OS",
+    "chromium os": "Chrome OS",
   };
 
   private static readonly deviceMap: Record<string, string> = {
@@ -38,19 +48,13 @@ export class MatomoImportMapper {
   };
 
   private static normalizeBrowserName(browser: string): string {
-    // Remove version numbers from browser string
-    // "Samsung Browser 29.0" -> "Samsung Browser"
-    const browserName = browser.replace(/\s+[\d.]+$/i, "").trim();
-    const key = browserName.toLowerCase();
-    return this.browserMap[key] ?? browserName;
+    const key = browser.toLowerCase();
+    return this.browserMap[key] ?? browser;
   }
 
   private static normalizeOSName(os: string): string {
-    // Remove version numbers from OS string
-    // "Android 15.0" -> "Android"
-    const osName = os.replace(/\s+[\d.]+$/i, "").trim();
-    const key = osName.toLowerCase();
-    return this.osMap[key] ?? osName;
+    const key = os.toLowerCase();
+    return this.osMap[key] ?? os;
   }
 
   private static normalizeDeviceType(deviceType: string): string {
