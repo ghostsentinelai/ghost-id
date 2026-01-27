@@ -159,14 +159,13 @@ export const trackingPayloadSchema = z.discriminatedUnion("type", [
             try {
               const parsed = JSON.parse(val);
               if (typeof parsed.element !== "string") return false;
-              if (typeof parsed.pathname !== "string") return false;
               return true;
             } catch {
               return false;
             }
           },
           {
-            message: "Properties must be valid JSON with button_click fields (element, pathname required)",
+            message: "Properties must be valid JSON with button_click fields (element required)",
           }
         ),
     })
@@ -185,7 +184,6 @@ export const trackingPayloadSchema = z.discriminatedUnion("type", [
               const parsed = JSON.parse(val);
               if (typeof parsed.clickCount !== "number" || parsed.clickCount < 3) return false;
               if (typeof parsed.element !== "string") return false;
-              if (typeof parsed.pathname !== "string") return false;
               return true;
             } catch {
               return false;
@@ -193,7 +191,7 @@ export const trackingPayloadSchema = z.discriminatedUnion("type", [
           },
           {
             message:
-              "Properties must be valid JSON with rage_click fields (clickCount>=3, element, pathname required)",
+              "Properties must be valid JSON with rage_click fields (clickCount>=3, element required)",
           }
         ),
     })
@@ -211,14 +209,13 @@ export const trackingPayloadSchema = z.discriminatedUnion("type", [
             try {
               const parsed = JSON.parse(val);
               if (typeof parsed.element !== "string") return false;
-              if (typeof parsed.pathname !== "string") return false;
               return true;
             } catch {
               return false;
             }
           },
           {
-            message: "Properties must be valid JSON with dead_click fields (element, pathname required)",
+            message: "Properties must be valid JSON with dead_click fields (element required)",
           }
         ),
     })
@@ -237,14 +234,13 @@ export const trackingPayloadSchema = z.discriminatedUnion("type", [
               const parsed = JSON.parse(val);
               if (typeof parsed.textLength !== "number" || parsed.textLength < 0) return false;
               if (typeof parsed.sourceElement !== "string") return false;
-              if (typeof parsed.pathname !== "string") return false;
               return true;
             } catch {
               return false;
             }
           },
           {
-            message: "Properties must be valid JSON with copy fields (textLength>=0, sourceElement, pathname required)",
+            message: "Properties must be valid JSON with copy fields (textLength>=0, sourceElement required)",
           }
         ),
     })

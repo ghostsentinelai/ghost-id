@@ -1026,7 +1026,6 @@
       if (!buttonElement) return;
       const properties = {
         element: buttonElement.tagName.toLowerCase(),
-        pathname: window.location.pathname,
         text: this.getElementText(buttonElement)
       };
       this.tracker.trackButtonClick(properties);
@@ -1064,7 +1063,6 @@
           const properties = {
             clickCount: nearbyClicks.length,
             element: target.tagName.toLowerCase(),
-            pathname: window.location.pathname,
             text: this.getElementText(target)
           };
           this.tracker.trackRageClick(properties);
@@ -1088,7 +1086,6 @@
         if (!domChanged) {
           const properties = {
             element: element.tagName.toLowerCase(),
-            pathname: window.location.pathname,
             text: this.getElementText(element)
           };
           this.tracker.trackDeadClick(properties);
@@ -1124,8 +1121,7 @@
       if (!sourceElement) return;
       const properties = {
         textLength,
-        sourceElement: sourceElement.tagName.toLowerCase(),
-        pathname: window.location.pathname
+        sourceElement: sourceElement.tagName.toLowerCase()
       };
       this.tracker.trackCopy(properties);
     }

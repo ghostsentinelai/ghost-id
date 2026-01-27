@@ -60,27 +60,23 @@ export interface TrackingPayload extends BasePayload {
 
 export interface ButtonClickProperties {
   element: string;
-  pathname: string;
   text?: string;
 }
 
 export interface RageClickProperties {
   clickCount: number;
   element: string;
-  pathname: string;
   text?: string;
 }
 
 export interface DeadClickProperties {
   element: string;
-  pathname: string;
   text?: string;
 }
 
 export interface CopyProperties {
   textLength: number;
   sourceElement: string;
-  pathname: string;
 }
 
 export interface WebVitalsData {

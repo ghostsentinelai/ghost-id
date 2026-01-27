@@ -32,7 +32,6 @@ export class CopyTrackingManager {
     const properties: CopyProperties = {
       textLength,
       sourceElement: sourceElement.tagName.toLowerCase(),
-      pathname: window.location.pathname,
     };
 
     this.tracker.trackCopy(properties);

@@ -111,7 +111,6 @@ export class ClickTrackingManager {
 
     const properties: ButtonClickProperties = {
       element: buttonElement.tagName.toLowerCase(),
-      pathname: window.location.pathname,
       text: this.getElementText(buttonElement),
     };
 
@@ -161,7 +160,6 @@ export class ClickTrackingManager {
         const properties: RageClickProperties = {
           clickCount: nearbyClicks.length,
           element: target.tagName.toLowerCase(),
-          pathname: window.location.pathname,
           text: this.getElementText(target),
         };
 
@@ -194,7 +192,6 @@ export class ClickTrackingManager {
       if (!domChanged) {
         const properties: DeadClickProperties = {
           element: element.tagName.toLowerCase(),
-          pathname: window.location.pathname,
           text: this.getElementText(element),
         };
 
