@@ -59,6 +59,7 @@ export interface TrackingPayload extends BasePayload {
 
 export interface ButtonClickProperties {
   text?: string;
+  [key: string]: string | undefined; // Additional data-rybbit-* attributes
 }
 
 export interface CopyProperties {
@@ -73,6 +74,7 @@ export interface FormSubmitProperties {
   formAction: string;
   method: string;
   fieldCount: number;
+  [key: string]: string | number | undefined;
 }
 
 export interface InputChangeProperties {
@@ -80,6 +82,7 @@ export interface InputChangeProperties {
   inputType?: string; // For inputs: "text", "email", "checkbox", etc.
   inputName: string; // Name or id attribute
   formId?: string; // Parent form id if within a form
+  [key: string]: string | undefined;
 }
 
 export interface WebVitalsData {

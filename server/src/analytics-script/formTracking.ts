@@ -28,6 +28,7 @@ export class FormTrackingManager {
       formAction: form.action || "",
       method: (form.method || "get").toUpperCase(),
       fieldCount: form.elements.length,
+      ...this.extractDataAttributes(form),
     };
 
     this.tracker.trackFormSubmit(properties);
@@ -50,8 +51,20 @@ export class FormTrackingManager {
       inputType: tagName === "INPUT" ? (target as HTMLInputElement).type?.toLowerCase() : undefined,
       inputName: (target as HTMLInputElement).name || target.id || "",
       formId: (target as HTMLInputElement).form?.id || undefined,
+      ...this.extractDataAttributes(target),
     };
 
     this.tracker.trackInputChange(properties);
+  }
+
+  private extractDataAttributes(element: HTMLElement): Record<string, string> {
+    const attrs: Record<string, string> = {};
+    for (const attr of element.attributes) {
+      if (attr.name.startsWith("data-rybbit-prop-")) {
+        const key = attr.name.replace("data-rybbit-prop-", "");
+        attrs[key] = attr.value;
+      }
+    }
+    return attrs;
   }
 }

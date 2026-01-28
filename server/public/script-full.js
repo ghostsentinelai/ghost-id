@@ -981,9 +981,20 @@
       if (!buttonElement) return;
       if (buttonElement.hasAttribute("data-rybbit-event")) return;
       const properties = {
-        text: this.getElementText(buttonElement)
+        text: this.getElementText(buttonElement),
+        ...this.extractDataAttributes(buttonElement)
       };
       this.tracker.trackButtonClick(properties);
+    }
+    extractDataAttributes(element) {
+      const attrs = {};
+      for (const attr of element.attributes) {
+        if (attr.name.startsWith("data-rybbit-prop-")) {
+          const key = attr.name.replace("data-rybbit-prop-", "");
+          attrs[key] = attr.value;
+        }
+      }
+      return attrs;
     }
     findButton(element) {
       if (element.tagName === "BUTTON") return element;
@@ -1058,7 +1069,8 @@
         formName: form.name || "",
         formAction: form.action || "",
         method: (form.method || "get").toUpperCase(),
-        fieldCount: form.elements.length
+        fieldCount: form.elements.length,
+        ...this.extractDataAttributes(form)
       };
       this.tracker.trackFormSubmit(properties);
     }
@@ -1074,9 +1086,20 @@
         element: tagName.toLowerCase(),
         inputType: tagName === "INPUT" ? target.type?.toLowerCase() : void 0,
         inputName: target.name || target.id || "",
-        formId: target.form?.id || void 0
+        formId: target.form?.id || void 0,
+        ...this.extractDataAttributes(target)
       };
       this.tracker.trackInputChange(properties);
+    }
+    extractDataAttributes(element) {
+      const attrs = {};
+      for (const attr of element.attributes) {
+        if (attr.name.startsWith("data-rybbit-prop-")) {
+          const key = attr.name.replace("data-rybbit-prop-", "");
+          attrs[key] = attr.value;
+        }
+      }
+      return attrs;
     }
   };
 

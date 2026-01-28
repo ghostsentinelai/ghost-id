@@ -54,9 +54,21 @@ export class ClickTrackingManager {
 
     const properties: ButtonClickProperties = {
       text: this.getElementText(buttonElement),
+      ...this.extractDataAttributes(buttonElement),
     };
 
     this.tracker.trackButtonClick(properties);
+  }
+
+  private extractDataAttributes(element: HTMLElement): Record<string, string> {
+    const attrs: Record<string, string> = {};
+    for (const attr of element.attributes) {
+      if (attr.name.startsWith("data-rybbit-prop-")) {
+        const key = attr.name.replace("data-rybbit-prop-", "");
+        attrs[key] = attr.value;
+      }
+    }
+    return attrs;
   }
 
   private findButton(element: HTMLElement): HTMLElement | null {
