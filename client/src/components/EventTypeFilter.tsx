@@ -26,7 +26,7 @@ export function EventTypeFilter({
   }, [events]);
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2 overflow-x-auto">
       {EVENT_TYPE_CONFIG.map((option) => {
         const isSelected = visibleTypes.has(option.value);
         const count = counts[option.value] || 0;
@@ -36,7 +36,7 @@ export function EventTypeFilter({
             key={option.value}
             onClick={() => onToggle(option.value)}
             className={cn(
-              "flex items-center space-x-1.5 px-2 py-1 rounded text-xs font-medium transition-all",
+              "flex items-center space-x-1.5 px-2 py-1 rounded text-xs font-medium transition-all whitespace-nowrap",
               isSelected
                 ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white"
                 : "bg-neutral-50 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-400"

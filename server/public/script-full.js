@@ -1123,16 +1123,19 @@
       });
       webVitalsCollector.initialize();
     }
+    let clickManager = null;
+    let copyManager = null;
+    let formManager = null;
     if (config.trackButtonClicks) {
-      const clickManager = new ClickTrackingManager(tracker, config);
+      clickManager = new ClickTrackingManager(tracker, config);
       clickManager.initialize();
     }
     if (config.trackCopy) {
-      const copyManager = new CopyTrackingManager(tracker);
+      copyManager = new CopyTrackingManager(tracker);
       copyManager.initialize();
     }
     if (config.trackFormInteractions) {
-      const formManager = new FormTrackingManager(tracker, config);
+      formManager = new FormTrackingManager(tracker, config);
       formManager.initialize();
     }
     if (config.trackErrors) {
@@ -1217,6 +1220,8 @@
     };
     setupEventListeners();
     window.addEventListener("beforeunload", () => {
+      clickManager?.cleanup();
+      copyManager?.cleanup();
       tracker.cleanup();
     });
     if (config.autoTrackPageview) {

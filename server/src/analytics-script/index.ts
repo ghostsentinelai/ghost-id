@@ -62,21 +62,26 @@ declare global {
     webVitalsCollector.initialize();
   }
 
+  // Declare managers in outer scope so cleanup can access them
+  let clickManager: ClickTrackingManager | null = null;
+  let copyManager: CopyTrackingManager | null = null;
+  let formManager: FormTrackingManager | null = null;
+
   // Initialize click tracking if enabled
   if (config.trackButtonClicks) {
-    const clickManager = new ClickTrackingManager(tracker, config);
+    clickManager = new ClickTrackingManager(tracker, config);
     clickManager.initialize();
   }
 
   // Initialize copy tracking if enabled
   if (config.trackCopy) {
-    const copyManager = new CopyTrackingManager(tracker);
+    copyManager = new CopyTrackingManager(tracker);
     copyManager.initialize();
   }
 
   // Initialize form interaction tracking if enabled
   if (config.trackFormInteractions) {
-    const formManager = new FormTrackingManager(tracker, config);
+    formManager = new FormTrackingManager(tracker, config);
     formManager.initialize();
   }
 
@@ -188,6 +193,8 @@ declare global {
 
   // Setup cleanup on page unload
   window.addEventListener("beforeunload", () => {
+    clickManager?.cleanup();
+    copyManager?.cleanup();
     tracker.cleanup();
   });
 
