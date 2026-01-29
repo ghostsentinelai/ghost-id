@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/responsive-dialog";
 import { Input } from "@/components/ui/input";
 import { TableSortIndicator } from "@/components/ui/table";
-import { FilterParameter } from "@rybbit/shared";
+import { FilterParameter } from "@ghost-id/shared";
 import {
   ColumnDef,
   ColumnHelper,

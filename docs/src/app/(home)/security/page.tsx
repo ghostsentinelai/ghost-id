@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Security",
-  description: "Rybbit security practices and data protection",
+  description: "GHOST ID security practices and data protection",
 };
 
 export default function Security() {
@@ -10,7 +10,7 @@ export default function Security() {
 
       <div className="prose prose-invert max-w-none">
         <p className="text-lg mb-8">
-          Security and privacy are at the core of everything we do at Rybbit. Here's how we protect your data and
+          Security and privacy are at the core of everything we do at GHOST ID. Here's how we protect your data and
           maintain a secure analytics platform.
         </p>
 
@@ -26,7 +26,7 @@ export default function Security() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">Infrastructure Security</h2>
         <h3 className="text-xl font-semibold mt-6 mb-3">Hosting</h3>
         <p>
-          Rybbit is hosted on Hetzner servers located in Germany, within the European Union. Hetzner is ISO 27001
+          GHOST ID is hosted on Hetzner servers located in Germany, within the European Union. Hetzner is ISO 27001
           certified and provides:
         </p>
         <ul className="list-disc pl-6 space-y-2">
@@ -84,7 +84,7 @@ export default function Security() {
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Open Source & Transparency</h2>
-        <p>Rybbit is fully open source, which means:</p>
+        <p>GHOST ID is fully open source, which means:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Our entire codebase is publicly available on GitHub</li>
           <li>Security researchers can audit our code</li>
@@ -104,7 +104,7 @@ export default function Security() {
         </ul>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Compliance</h2>
-        <p>Rybbit is designed to help you comply with privacy regulations:</p>
+        <p>GHOST ID is designed to help you comply with privacy regulations:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>GDPR compliant (no personal data collection)</li>
           <li>CCPA compliant</li>
@@ -113,12 +113,12 @@ export default function Security() {
         </ul>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Vulnerability Disclosure</h2>
-        <p>If you discover a security vulnerability in Rybbit, please report it responsibly:</p>
+        <p>If you discover a security vulnerability in GHOST ID, please report it responsibly:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>
             Email us at{" "}
-            <a href="mailto:hello@rybbit.com" className="text-emerald-400 hover:text-emerald-300">
-              hello@rybbit.com
+            <a href="mailto:hello@ghost-id.com" className="text-emerald-400 hover:text-emerald-300">
+              hello@ghost-id.com
             </a>
           </li>
           <li>Provide detailed information about the vulnerability</li>
@@ -129,8 +129,8 @@ export default function Security() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">Questions?</h2>
         <p>
           If you have any questions about our security practices, please contact us at{" "}
-          <a href="mailto:hello@rybbit.com" className="text-emerald-400 hover:text-emerald-300">
-            hello@rybbit.com
+          <a href="mailto:hello@ghost-id.com" className="text-emerald-400 hover:text-emerald-300">
+            hello@ghost-id.com
           </a>
           .
         </p>

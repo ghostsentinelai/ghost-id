@@ -44,57 +44,57 @@ const faqSchema = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "Is Rybbit GDPR and CCPA compliant?",
+      name: "Is GHOST ID GDPR and CCPA compliant?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes, Rybbit is fully compliant with GDPR, CCPA, and other privacy regulations. We don't use cookies or collect any personal data that could identify your users. We salt user IDs daily to ensure users are not fingerprinted. You will not need to display a cookie consent banner to your users.",
+        text: "Yes, GHOST ID is fully compliant with GDPR, CCPA, and other privacy regulations. We don't use cookies or collect any personal data that could identify your users. We salt user IDs daily to ensure users are not fingerprinted. You will not need to display a cookie consent banner to your users.",
       },
     },
     {
       "@type": "Question",
-      name: "How does Rybbit compare to Google Analytics?",
+      name: "How does GHOST ID compare to Google Analytics?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Rybbit is much less bloated than Google Analytics, both in terms of our tracking script and the UX of the dashboard. We show you exactly what you need to see. The difference in usability is night and day.",
+        text: "GHOST ID is much less bloated than Google Analytics, both in terms of our tracking script and the UX of the dashboard. We show you exactly what you need to see. The difference in usability is night and day.",
       },
     },
     {
       "@type": "Question",
-      name: "Can I self-host Rybbit?",
+      name: "Can I self-host GHOST ID?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Absolutely! Rybbit is available as a self-hosted option. You can install it on your own server and have complete control over your data. We also offer a cloud version if you prefer a managed solution.",
+        text: "Absolutely! GHOST ID is available as a self-hosted option. You can install it on your own server and have complete control over your data. We also offer a cloud version if you prefer a managed solution.",
       },
     },
     {
       "@type": "Question",
-      name: "How easy is it to set up Rybbit?",
+      name: "How easy is it to set up GHOST ID?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Setting up Rybbit is incredibly simple. Just add a small script to your website or install @rybbit/js from npm, and you're good to go. Most users are up and running in less than 5 minutes.",
+        text: "Setting up GHOST ID is incredibly simple. Just add a small script to your website or install @ghost-id/js from npm, and you're good to go. Most users are up and running in less than 5 minutes.",
       },
     },
     {
       "@type": "Question",
-      name: "What platforms does Rybbit support?",
+      name: "What platforms does GHOST ID support?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Rybbit works with virtually any website platform. Whether you're using WordPress, Shopify, Next.js, React, Vue, or any other framework, our simple tracking snippet integrates seamlessly.",
+        text: "GHOST ID works with virtually any website platform. Whether you're using WordPress, Shopify, Next.js, React, Vue, or any other framework, our simple tracking snippet integrates seamlessly.",
       },
     },
     {
       "@type": "Question",
-      name: "Is Rybbit truly open source?",
+      name: "Is GHOST ID truly open source?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes, Rybbit is 100% open source. Every single line of code, including for our cloud/enterprise offerings, is available on GitHub under the AGPL 3.0 license.",
+        text: "Yes, GHOST ID is 100% open source. Every single line of code, including for our cloud/enterprise offerings, is available on GitHub under the AGPL 3.0 license.",
       },
     },
   ],
 };
 
 export const metadata = {
-  title: "Rybbit - Cookieless Google Analytics Replacement",
+  title: "GHOST ID - Cookieless Google Analytics Replacement",
   description:
     "Next-gen, open source, lightweight, cookieless web & product analytics for everyone — GDPR/CCPA compliant.",
 };
@@ -198,7 +198,7 @@ export default function HomePage() {
           The Modern Google Analytics Replacement
         </h1>
         <h2 className="text-base md:text-xl pt-4 md:pt-6 px-4 tracking-tight max-w-4xl text-center text-neutral-600 dark:text-neutral-300 font-light">
-          Rybbit is powerful, lightweight, and super easy to use analytics. Cookieless and GDPR compliant. Hosted on EU
+          GHOST ID is powerful, lightweight, and super easy to use analytics. Cookieless and GDPR compliant. Hosted on EU
           infrastructure in Germany{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -220,7 +220,7 @@ export default function HomePage() {
         <div className="flex flex-col items-center my-8 md:my-10">
           <div className="flex flex-row items-center justify-center gap-4 md:gap-6 text-base md:text-lg">
             <TrackedButton
-              href="https://app.rybbit.io/signup"
+              href="https://app.ghost-id.io/signup"
               eventName="signup"
               eventProps={{ location: "hero", button_text: "get started" }}
               className="w-full whitespace-nowrap sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-6 py-3 rounded-lg shadow-lg shadow-emerald-900/20 transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50 cursor-pointer"
@@ -228,7 +228,7 @@ export default function HomePage() {
               Get started
             </TrackedButton>
             <TrackedButton
-              href="https://demo.rybbit.com/81"
+              href="https://demo.ghost-id.com/81"
               eventName="demo"
               target="_blank"
               rel="noopener noreferrer"
@@ -264,12 +264,12 @@ export default function HomePage() {
           <div className="relative z-10 rounded-2xl overflow-hidden bg-neutral-400/10 dark:bg-neutral-100/5 border-8 shadow-2xl shadow-neutral-900/20 dark:shadow-emerald-900/10">
             {/* Remove mobile message and show iframe on all devices */}
             <iframe
-              src="https://demo.rybbit.com/81/main"
+              src="https://demo.ghost-id.com/81/main"
               width="1300"
               height="750"
               className="w-full h-[600px] md:h-[700px] lg:h-[750px] rounded-xl"
               style={{ border: "none" }}
-              title="Rybbit Analytics Demo"
+              title="GHOST ID Analytics Demo"
             ></iframe>
           </div>
         </div>
@@ -374,7 +374,7 @@ export default function HomePage() {
         </section>
         <section className="py-14 md:py-20 w-full max-w-[1200px] px-4">
           <div className="text-center mb-10 md:mb-12">
-            <SectionBadge className="mb-4">Why Rybbit</SectionBadge>
+            <SectionBadge className="mb-4">Why GHOST ID</SectionBadge>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Everything you need</h2>
             <p className="mt-4 text-base md:text-xl text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto font-light">
               Powerful analytics without the complexity. Privacy-friendly tools that just work.
@@ -439,7 +439,7 @@ export default function HomePage() {
                 <SectionBadge className="mb-4">Seamless Integration</SectionBadge>
                 <h2 className="text-3xl md:text-4xl font-bold">Works with all your favorite platforms</h2>
                 <p className="mt-4 text-neutral-600 dark:text-neutral-300 font-light">
-                  Integrate Rybbit with any platform in minutes
+                  Integrate GHOST ID with any platform in minutes
                 </p>
               </div>
               <IntegrationsGrid />
@@ -451,9 +451,9 @@ export default function HomePage() {
           <div className="max-w-[1200px] mx-auto px-4">
             <div className="text-center mb-10 md:mb-16">
               <SectionBadge className="mb-4">User Testimonials</SectionBadge>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">People love Rybbit</h2>
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">People love GHOST ID</h2>
               <p className="mt-4 text-base md:text-xl text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto font-light">
-                See what others think about Rybbit Analytics
+                See what others think about GHOST ID Analytics
               </p>
             </div>
             <div className="relative bg-neutral-100/50 dark:bg-neutral-800/20 backdrop-blur-sm border border-neutral-300/50 dark:border-neutral-800/50 rounded-3xl overflow-hidden">
@@ -503,7 +503,7 @@ export default function HomePage() {
               <div className="md:sticky md:top-24 md:self-start">
                 <h2 className="text-3xl md:text-4xl font-bold">Frequently Asked Questions</h2>
                 <p className="mt-4 text-neutral-600 dark:text-neutral-300 font-light">
-                  Everything you need to know about Rybbit Analytics
+                  Everything you need to know about GHOST ID Analytics
                 </p>
               </div>
               <FAQAccordion />

@@ -82,8 +82,8 @@ export function PricingCard({
                   }
                   onClick?.();
                 }}
-                data-rybbit-event={eventLocation ? "signup" : undefined}
-                data-rybbit-prop-location={eventLocation}
+                data-ghost-id-event={eventLocation ? "signup" : undefined}
+                data-ghost-id-prop-location={eventLocation}
                 className={cn(
                   "w-full font-medium px-5 py-3 rounded-lg transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-opacity-50 cursor-pointer",
                   isPrimary

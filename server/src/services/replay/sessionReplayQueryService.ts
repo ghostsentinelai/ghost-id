@@ -5,7 +5,7 @@ import {
   GetSessionReplayEventsResponse,
 } from "../../types/sessionReplay.js";
 import { processResults, getTimeStatement } from "../../api/analytics/utils/utils.js";
-import { FilterParams } from "@rybbit/shared";
+import { FilterParams } from "@ghost-id/shared";
 import { r2Storage } from "../storage/r2StorageService.js";
 import { getFilterStatement } from "../../api/analytics/utils/getFilterStatement.js";
 

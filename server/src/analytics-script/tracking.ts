@@ -5,11 +5,13 @@ import { SessionReplayRecorder } from "./sessionReplay.js";
 export class Tracker {
   private config: ScriptConfig;
   private customUserId: string | null = null;
+  private ghostVisitorId: string;
   private sessionReplayRecorder?: SessionReplayRecorder;
 
   constructor(config: ScriptConfig) {
     this.config = config;
     this.loadUserId();
+    this.ghostVisitorId = this.initVisitorId();
 
     if (config.enableSessionReplay) {
       this.initializeSessionReplay();
@@ -25,6 +27,80 @@ export class Tracker {
     } catch (e) {
       // localStorage not available
     }
+  }
+
+  /**
+   * Initialize GHOST Visitor ID using 4-layer system:
+   * Layer 1: User has identified themselves (form fill, login) → use user_id
+   * Layer 2: Check localStorage for existing ghost_vid → persistent across tabs
+   * Layer 3: Check first-party cookie for ghost_vid → survives browser restart (400 days)
+   * Layer 4: Generate new ghost_vid → UUID v4, store in both localStorage AND cookie
+   */
+  private initVisitorId(): string {
+    const VISITOR_ID_KEY = "ghost-visitor-id";
+    const COOKIE_NAME = "_ghost_vid";
+    const COOKIE_MAX_AGE = 400 * 24 * 60 * 60; // 400 days in seconds
+
+    try {
+      // Layer 1: If user has identified themselves, use their user_id as visitor_id
+      // (This creates continuity between anonymous and identified states)
+      if (this.customUserId) {
+        return this.customUserId;
+      }
+
+      // Layer 2: Check localStorage for existing visitor ID
+      const storedVisitorId = localStorage.getItem(VISITOR_ID_KEY);
+      if (storedVisitorId) {
+        // Ensure cookie is also set (in case it was cleared)
+        this.setVisitorCookie(COOKIE_NAME, storedVisitorId, COOKIE_MAX_AGE);
+        return storedVisitorId;
+      }
+
+      // Layer 3: Check first-party cookie for visitor ID
+      const cookieVisitorId = this.getVisitorCookie(COOKIE_NAME);
+      if (cookieVisitorId) {
+        // Restore to localStorage
+        localStorage.setItem(VISITOR_ID_KEY, cookieVisitorId);
+        return cookieVisitorId;
+      }
+
+      // Layer 4: Generate new visitor ID (UUID v4)
+      const newVisitorId = this.generateUUID();
+      
+      // Store in both localStorage and cookie
+      localStorage.setItem(VISITOR_ID_KEY, newVisitorId);
+      this.setVisitorCookie(COOKIE_NAME, newVisitorId, COOKIE_MAX_AGE);
+
+      return newVisitorId;
+    } catch (e) {
+      // Fallback: if localStorage/cookies are blocked, generate ephemeral ID
+      return this.generateUUID();
+    }
+  }
+
+  private getVisitorCookie(name: string): string | null {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      const cookieValue = parts.pop()?.split(';').shift();
+      return cookieValue || null;
+    }
+    return null;
+  }
+
+  private setVisitorCookie(name: string, value: string, maxAge: number): void {
+    const domain = window.location.hostname;
+    // Set cookie on the current domain (first-party)
+    document.cookie = `${name}=${value}; max-age=${maxAge}; path=/; domain=${domain}; SameSite=Lax; Secure`;
+  }
+
+  private generateUUID(): string {
+    // UUID v4 generator
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+      const r = (Math.random() * 16) | 0;
+      const v = c === "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 
   private async initializeSessionReplay(): Promise<void> {
@@ -85,6 +161,7 @@ export class Tracker {
       language: navigator.language,
       page_title: document.title,
       referrer: document.referrer,
+      visitor_id: this.ghostVisitorId, // Persistent GHOST Visitor ID
     };
 
     if (this.customUserId) {

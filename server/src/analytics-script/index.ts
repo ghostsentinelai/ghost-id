@@ -5,12 +5,12 @@ import { ClickTrackingManager } from "./clickTracking.js";
 import { CopyTrackingManager } from "./copyTracking.js";
 import { FormTrackingManager } from "./formTracking.js";
 import { debounce, isOutboundLink } from "./utils.js";
-import { RybbitAPI, WebVitalsData, ErrorProperties } from "./types.js";
+import { GHOST IDAPI, WebVitalsData, ErrorProperties } from "./types.js";
 
 declare global {
   interface Window {
     __RYBBIT_OPTOUT__?: boolean;
-    rybbit: RybbitAPI;
+    ghost-id: GHOST IDAPI;
     [key: string]: any;
   }
 }
@@ -23,7 +23,7 @@ declare global {
   }
 
   // Parse namespace early for opt-out check
-  const namespace = scriptTag.getAttribute("data-namespace") || "rybbit";
+  const namespace = scriptTag.getAttribute("data-namespace") || "ghost-id";
   const optOutKey = `disable-${namespace}`;
 
   // Check if user has opted out
@@ -118,13 +118,13 @@ declare global {
 
       // Check for custom events via data attributes
       while (target && target !== document.documentElement) {
-        if (target.hasAttribute("data-rybbit-event")) {
-          const eventName = target.getAttribute("data-rybbit-event");
+        if (target.hasAttribute("data-ghost-id-event")) {
+          const eventName = target.getAttribute("data-ghost-id-event");
           if (eventName) {
             const properties: Record<string, string> = {};
             for (const attr of target.attributes) {
-              if (attr.name.startsWith("data-rybbit-prop-")) {
-                const propName = attr.name.replace("data-rybbit-prop-", "");
+              if (attr.name.startsWith("data-ghost-id-prop-")) {
+                const propName = attr.name.replace("data-ghost-id-prop-", "");
                 properties[propName] = attr.value;
               }
             }

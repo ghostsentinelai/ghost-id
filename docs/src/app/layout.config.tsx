@@ -13,8 +13,8 @@ export const baseOptions: BaseLayoutProps = {
     title: (
       <>
         <Image
-          src="/rybbit-text.svg"
-          alt="Rybbit"
+          src="/ghost-id-text.svg"
+          alt="GHOST ID"
           width={90}
           height={0}
           style={{ height: "auto" }}
@@ -35,12 +35,12 @@ export const baseOptions: BaseLayoutProps = {
     //   },
     {
       text: "Demo",
-      url: "https://demo.rybbit.com/1",
+      url: "https://demo.ghost-id.com/1",
       external: true,
     },
     //   {
     //     text: "GitHub",
-    //     url: "https://github.com/rybbit-io/rybbit",
+    //     url: "https://github.com/ghost-id-io/ghost-id",
     //     external: true,
     //   },
   ],

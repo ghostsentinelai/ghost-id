@@ -12,14 +12,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the documentation and marketing website for Rybbit, built with Next.js 16 and Fumadocs. The site includes:
+This is the documentation and marketing website for GHOST ID, built with Next.js 16 and Fumadocs. The site includes:
 
 - Documentation pages (using Fumadocs MDX)
 - Blog (separate content collection)
 - Marketing pages (home, pricing, features, comparison pages)
 - Analytics tools (SEO, ROI calculators, privacy policy builder, etc.)
 - LLM-friendly documentation endpoints
-- The domain is rybbit.com
+- The domain is ghost-id.com
 
 ## Code Architecture
 

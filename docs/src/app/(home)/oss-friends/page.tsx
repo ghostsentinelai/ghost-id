@@ -103,6 +103,6 @@ export default async function OSSFriendsPage() {
 }
 
 export const metadata = {
-  title: "OSS Friends | Rybbit",
+  title: "OSS Friends | GHOST ID",
   description: "Open source projects we love and support. Join our OSS Friends community.",
 };

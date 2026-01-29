@@ -6,52 +6,52 @@ export const cloudflareAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Web analytics dashboard",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Real-time data",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Live visitors counter",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Real-time globe view",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Visit duration metrics",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Bounce rate tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Entry/exit pages",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "UTM campaign tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Custom events with attributes",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Conversion goals",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
     ],
@@ -61,42 +61,42 @@ export const cloudflareAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Session Replay",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Funnels",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "User journeys (Sankey)",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "User profiles",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Sessions tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Web Vitals dashboard",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Error tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Public dashboards",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
     ],
@@ -106,32 +106,32 @@ export const cloudflareAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Data sampling",
-        rybbitValue: "No sampling",
+        ghost-idValue: "No sampling",
         competitorValue: "10% sample",
       },
       {
         name: "Data retention",
-        rybbitValue: "2-5+ years",
+        ghost-idValue: "2-5+ years",
         competitorValue: "6 months",
       },
       {
         name: "Unique visitor tracking",
-        rybbitValue: "Accurate",
+        ghost-idValue: "Accurate",
         competitorValue: "Overcounts",
       },
       {
         name: "Bot filtering",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: "Minimal",
       },
       {
         name: "Dashboard item limits",
-        rybbitValue: "Unlimited",
+        ghost-idValue: "Unlimited",
         competitorValue: "Top 15 only",
       },
       {
         name: "Geolocation detail",
-        rybbitValue: "City-level",
+        ghost-idValue: "City-level",
         competitorValue: "Country-level",
       },
     ],
@@ -141,22 +141,22 @@ export const cloudflareAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "One-line installation",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Works without CDN",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Self-hostable",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Multiple domain tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: "Limited",
       },
     ],
@@ -166,27 +166,27 @@ export const cloudflareAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Cookie-free tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       // {
       //   name: "GDPR compliant",
-      //   rybbitValue: true,
+      //   ghost-idValue: true,
       //   competitorValue: true,
       // },
       {
         name: "Daily rotating salt option",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "100% data ownership",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Open source",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
     ],
@@ -196,32 +196,32 @@ export const cloudflareAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Customer support",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Dedicated product focus",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "API access",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Team collaboration",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Organization support",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Live demo available",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
     ],

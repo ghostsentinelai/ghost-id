@@ -4,22 +4,22 @@ import { SimpleAnalyticsComparisonContent } from "./ComparisonContent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Rybbit vs Simple Analytics: Feature Comparison 2025",
+  title: "GHOST ID vs Simple Analytics: Feature Comparison 2025",
   description:
-    "Compare Rybbit and Simple Analytics. Both are privacy-focused, but Rybbit offers more advanced features like session replay, funnels, and user journeys.",
+    "Compare GHOST ID and Simple Analytics. Both are privacy-focused, but GHOST ID offers more advanced features like session replay, funnels, and user journeys.",
   openGraph: {
-    title: "Rybbit vs Simple Analytics: Simple AND Powerful",
-    description: "Simple Analytics keeps it basic. Rybbit adds power without complexity. Compare features.",
+    title: "GHOST ID vs Simple Analytics: Simple AND Powerful",
+    description: "Simple Analytics keeps it basic. GHOST ID adds power without complexity. Compare features.",
     type: "website",
-    url: "https://rybbit.com/compare/simpleanalytics",
+    url: "https://ghost-id.com/compare/simpleanalytics",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rybbit vs Simple Analytics",
+    title: "GHOST ID vs Simple Analytics",
     description: "Privacy-first analytics compared. See which offers the best value.",
   },
   alternates: {
-    canonical: "https://rybbit.com/compare/simpleanalytics",
+    canonical: "https://ghost-id.com/compare/simpleanalytics",
   },
 };
 
@@ -28,14 +28,14 @@ const structuredData = {
   "@graph": [
     {
       "@type": "WebPage",
-      "@id": "https://rybbit.com/compare/simpleanalytics",
-      name: "Rybbit vs Simple Analytics Comparison",
-      description: "Compare Rybbit and Simple Analytics platforms",
-      url: "https://rybbit.com/compare/simpleanalytics",
+      "@id": "https://ghost-id.com/compare/simpleanalytics",
+      name: "GHOST ID vs Simple Analytics Comparison",
+      description: "Compare GHOST ID and Simple Analytics platforms",
+      url: "https://ghost-id.com/compare/simpleanalytics",
       isPartOf: {
         "@type": "WebSite",
-        name: "Rybbit",
-        url: "https://rybbit.com",
+        name: "GHOST ID",
+        url: "https://ghost-id.com",
       },
     },
     {
@@ -43,26 +43,26 @@ const structuredData = {
       mainEntity: [
         {
           "@type": "Question",
-          name: "How does Rybbit compare to Simple Analytics?",
+          name: "How does GHOST ID compare to Simple Analytics?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Both are privacy-first analytics platforms, but Rybbit offers more advanced features like session replay, funnels, user journeys, and error tracking while maintaining a simple, intuitive interface.",
+            text: "Both are privacy-first analytics platforms, but GHOST ID offers more advanced features like session replay, funnels, user journeys, and error tracking while maintaining a simple, intuitive interface.",
           },
         },
         {
           "@type": "Question",
-          name: "Is Rybbit more feature-rich than Simple Analytics?",
+          name: "Is GHOST ID more feature-rich than Simple Analytics?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes. Rybbit includes session replay, funnel analysis, user journey visualization, Web Vitals monitoring, error tracking, and public dashboards. Simple Analytics focuses on basic metrics and simplicity.",
+            text: "Yes. GHOST ID includes session replay, funnel analysis, user journey visualization, Web Vitals monitoring, error tracking, and public dashboards. Simple Analytics focuses on basic metrics and simplicity.",
           },
         },
         {
           "@type": "Question",
-          name: "Which is better value, Rybbit or Simple Analytics?",
+          name: "Which is better value, GHOST ID or Simple Analytics?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Rybbit offers more features at competitive pricing, plus a generous free tier and open-source self-hosting option. Simple Analytics has fixed pricing without a free tier.",
+            text: "GHOST ID offers more features at competitive pricing, plus a generous free tier and open-source self-hosting option. Simple Analytics has fixed pricing without a free tier.",
           },
         },
       ],

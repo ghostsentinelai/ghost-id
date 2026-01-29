@@ -1,4 +1,4 @@
-import type { Filter } from "@rybbit/shared";
+import type { Filter } from "@ghost-id/shared";
 
 export interface OverviewData {
   sessions: number;

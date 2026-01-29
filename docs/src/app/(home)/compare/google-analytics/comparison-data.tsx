@@ -6,32 +6,32 @@ export const googleAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "GDPR compliant without cookie banner",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "CCPA compliant",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "No personal data collection",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Cookie-free tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "100% data ownership",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Daily rotating salt option",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
     ],
@@ -41,32 +41,32 @@ export const googleAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Script size",
-        rybbitValue: "18KB",
+        ghost-idValue: "18KB",
         competitorValue: "371KB",
       },
       {
         name: "Real-time data",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "No data sampling",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Bot filtering",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Bypasses ad blockers",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Data retention",
-        rybbitValue: "2-5+ years",
+        ghost-idValue: "2-5+ years",
         competitorValue: "2-14 months",
       },
     ],
@@ -76,52 +76,52 @@ export const googleAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Web analytics dashboard",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Simple, intuitive interface",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Real-time globe view",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Web Vitals dashboard",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Custom events with attributes",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Conversion goals",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Funnels",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "User journeys (Sankey)",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "UTM tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Public dashboards",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
     ],
@@ -131,42 +131,42 @@ export const googleAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Session Replay",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "User profiles",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Sessions page",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Error tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Organization support",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Team collaboration",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Geolocation (city-level)",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Device & browser tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
     ],
@@ -176,27 +176,27 @@ export const googleAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "No training required",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "One-line installation",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Self-hostable",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Modern tech stack",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Custom dashboards",
-        rybbitValue: false,
+        ghost-idValue: false,
         competitorValue: true,
       },
     ],
@@ -206,17 +206,17 @@ export const googleAnalyticsComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Human customer support",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Open source (AGPL v3)",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Live demo available",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
     ],

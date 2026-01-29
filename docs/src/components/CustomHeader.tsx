@@ -19,8 +19,8 @@ export function CustomHeader() {
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
             <Image
-              src="/rybbit-text.svg"
-              alt="Rybbit"
+              src="/ghost-id-text.svg"
+              alt="GHOST ID"
               width={80}
               height={0}
               style={{ height: "auto" }}
@@ -82,7 +82,7 @@ export function CustomHeader() {
 
           {/* GitHub Icon */}
           <a
-            href="https://github.com/rybbit-io/rybbit"
+            href="https://github.com/ghost-id-io/ghost-id"
             target="_blank"
             rel="noopener noreferrer"
             className="text-neutral-600 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-white transition-colors"
@@ -98,7 +98,7 @@ export function CustomHeader() {
           <ThemeSwitcher />
 
           {/* Login Button */}
-          <a href="https://app.rybbit.io" target="_blank" rel="noopener noreferrer">
+          <a href="https://app.ghost-id.io" target="_blank" rel="noopener noreferrer">
             <button
               onClick={() => trackAdEvent("login", { location: "header" })}
               className="bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white text-sm font-medium px-3 py-1.5 rounded-md transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-opacity-50"
@@ -147,7 +147,7 @@ export function CustomHeader() {
               Blog
             </Link>
             <a
-              href="https://github.com/rybbit-io/rybbit"
+              href="https://github.com/ghost-id-io/ghost-id"
               target="_blank"
               rel="noopener noreferrer"
               className="block rounded-md px-3 py-2 text-base font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-white"
@@ -164,10 +164,10 @@ export function CustomHeader() {
             </div>
 
             <div className="border-t border-neutral-300 dark:border-neutral-800">
-              <a href="https://app.rybbit.io" target="_blank" rel="noopener noreferrer" className="block w-full">
+              <a href="https://app.ghost-id.io" target="_blank" rel="noopener noreferrer" className="block w-full">
                 <button
                   onClick={() => trackAdEvent("login", { location: "header" })}
-                  data-rybbit-event="login"
+                  data-ghost-id-event="login"
                   className="w-full bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white text-sm font-medium px-3 py-2 rounded-md border border-neutral-400 dark:border-neutral-600"
                 >
                   Login

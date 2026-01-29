@@ -1,32 +1,32 @@
 ---
 title: Express.js Proxy Setup
-description: Configure Express.js middleware to proxy Rybbit tracking requests
+description: Configure Express.js middleware to proxy GHOST ID tracking requests
 ---
 
 import { Steps } from 'fumadocs-ui/components/steps';
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
 
-Express.js makes it easy to proxy Rybbit tracking using middleware. This guide shows how to set up a reverse proxy using `http-proxy-middleware`.
+Express.js makes it easy to proxy GHOST ID tracking using middleware. This guide shows how to set up a reverse proxy using `http-proxy-middleware`.
 
 ## Overview
 
-The `http-proxy-middleware` package provides a simple way to proxy requests in Express applications, making it perfect for routing analytics requests to Rybbit servers.
+The `http-proxy-middleware` package provides a simple way to proxy requests in Express applications, making it perfect for routing analytics requests to GHOST ID servers.
 
 **What you'll achieve:**
-- Proxy all Rybbit endpoints through your Express app
+- Proxy all GHOST ID endpoints through your Express app
 - Forward necessary headers for accurate tracking
 - Optional caching for better performance
-- Support all Rybbit features
+- Support all GHOST ID features
 
 ## Prerequisites
 
 - Node.js and Express.js application
 - npm or yarn package manager
-- Your Rybbit instance URL:
-  - **Cloud hosted**: `https://app.rybbit.io`
+- Your GHOST ID instance URL:
+  - **Cloud hosted**: `https://app.ghost-id.io`
   - **Self-hosted**: Your instance URL
-- Your Rybbit site ID
+- Your GHOST ID site ID
 
 ## Implementation
 
@@ -52,7 +52,7 @@ Create or update your `.env` file:
 
 ```bash
 # .env
-RYBBIT_HOST=https://app.rybbit.io
+RYBBIT_HOST=https://app.ghost-id.io
 # For self-hosted: RYBBIT_HOST=https://analytics.yourcompany.com
 ```
 
@@ -74,10 +74,10 @@ const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
-const RYBBIT_HOST = process.env.RYBBIT_HOST || 'https://app.rybbit.io';
+const RYBBIT_HOST = process.env.RYBBIT_HOST || 'https://app.ghost-id.io';
 
-// Rybbit Analytics Proxy
-// Proxy all /analytics/* requests to Rybbit
+// GHOST ID Analytics Proxy
+// Proxy all /analytics/* requests to GHOST ID
 app.use('/analytics', createProxyMiddleware({
   target: RYBBIT_HOST,
   changeOrigin: true,
@@ -130,7 +130,7 @@ const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
-const RYBBIT_HOST = process.env.RYBBIT_HOST || 'https://app.rybbit.io';
+const RYBBIT_HOST = process.env.RYBBIT_HOST || 'https://app.ghost-id.io';
 
 // Proxy script and track endpoints only
 app.use(['/analytics/script.js', '/analytics/track'], createProxyMiddleware({
@@ -164,7 +164,7 @@ import express, { Request, Response } from 'express';
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 
 const app = express();
-const RYBBIT_HOST = process.env.RYBBIT_HOST || 'https://app.rybbit.io';
+const RYBBIT_HOST = process.env.RYBBIT_HOST || 'https://app.ghost-id.io';
 
 const proxyOptions: Options = {
   target: RYBBIT_HOST,
@@ -230,17 +230,17 @@ npx nodemon server.js
 
 2. **Open your app** in a browser with Developer Tools
 3. **Check Network tab**: Requests should go to `/analytics/*`
-4. **Verify in Rybbit dashboard**: Data should appear
+4. **Verify in GHOST ID dashboard**: Data should appear
 
 </Steps>
 
 ## How It Works
 
-The `http-proxy-middleware` intercepts requests matching the specified paths and forwards them to Rybbit:
+The `http-proxy-middleware` intercepts requests matching the specified paths and forwards them to GHOST ID:
 
 1. Request to `/analytics/script.js` is intercepted
 2. Path is rewritten to `/api/script.js`
-3. Request is forwarded to `https://app.rybbit.io/api/script.js`
+3. Request is forwarded to `https://app.ghost-id.io/api/script.js`
 4. Client IP headers are added for accurate tracking
 5. Response is sent back to the browser
 
@@ -404,7 +404,7 @@ onProxyReq: (proxyReq, req, res) => {
 
 ### Path rewriting issues
 
-**Problem**: 404 errors on Rybbit endpoints.
+**Problem**: 404 errors on GHOST ID endpoints.
 
 **Solution**:
 Check path rewriting is correct:

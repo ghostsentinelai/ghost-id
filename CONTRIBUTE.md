@@ -1,4 +1,4 @@
-# Contributing to Rybbit
+# Contributing to GHOST ID
 
 First off, thank you for taking the time to contribute! 🎉  
 Whether it's a bug report, feature idea, or code contribution, all forms of help are appreciated.
@@ -7,7 +7,7 @@ Whether it's a bug report, feature idea, or code contribution, all forms of help
 
 ## Got an Idea or a Question?
 
-Please start a [**Discussion**](https://github.com/rybbit-io/rybbit/discussions) if your contribution is not a bug report:
+Please start a [**Discussion**](https://github.com/ghost-id-io/ghost-id/discussions) if your contribution is not a bug report:
 
 - **Ideas** – Share new features, suggestions, or improvements.
 - **Q&A** – Ask questions about how things work.
@@ -19,7 +19,7 @@ Use the appropriate category when opening a new discussion.
 
 ## Found a Bug?
 
-If something isn't working as expected, please [**open an Issue**](https://github.com/rybbit-io/rybbit/issues).
+If something isn't working as expected, please [**open an Issue**](https://github.com/ghost-id-io/ghost-id/issues).
 
 When filing an issue, make sure to:
 
@@ -45,12 +45,12 @@ Pull requests are welcome! Please keep in mind:
 
 ## Join Our Community
 
-You’re also welcome to join the Rybbit Discord to chat with the community and the team:
+You’re also welcome to join the GHOST ID Discord to chat with the community and the team:
 
 👉 [https://discord.gg/DEhGb4hYBj](https://discord.gg/DEhGb4hYBj)
 
 ---
 
-Thank you again for helping make Rybbit better!
+Thank you again for helping make GHOST ID better!
 
-— The Rybbit Team
+— The GHOST ID Team

@@ -21,6 +21,7 @@ const baseEventFields = {
   page_title: z.string().max(512).optional(),
   referrer: z.string().max(2048).optional(),
   user_id: z.string().max(255).optional(),
+  visitor_id: z.string().max(255).optional(), // Persistent GHOST Visitor ID
   ip_address: z.string().ip().optional(),
   user_agent: z.string().max(512).optional(),
 };

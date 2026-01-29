@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Privacy Policy",
-  description: "Rybbit privacy policy - how we protect your data",
+  description: "GHOST ID privacy policy - how we protect your data",
 };
 
 export default function PrivacyPolicy() {
@@ -15,13 +15,13 @@ export default function PrivacyPolicy() {
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Overview</h2>
         <p>
-          Rybbit is an open-source, privacy-friendly web analytics alternative to Google Analytics. This privacy policy
+          GHOST ID is an open-source, privacy-friendly web analytics alternative to Google Analytics. This privacy policy
           explains our approach to data collection and how we prioritize user privacy while still providing website
           owners with valuable insights.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Data We Collect</h2>
-        <p>Rybbit collects the following anonymous data about website visits:</p>
+        <p>GHOST ID collects the following anonymous data about website visits:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>
             <strong>Page data:</strong> URLs visited, page titles, referrers, and query parameters
@@ -57,13 +57,13 @@ export default function PrivacyPolicy() {
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">User and Session IDs</h2>
         <p>
-          Rybbit uses anonymous session and user identifiers that contain no personally identifiable information. These
+          GHOST ID uses anonymous session and user identifiers that contain no personally identifiable information. These
           IDs help track user journeys and session information without compromising privacy or requiring cookies.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">No Cookies Policy</h2>
         <p>
-          Unlike traditional analytics tools, Rybbit functions without cookies. This means websites using Rybbit
+          Unlike traditional analytics tools, GHOST ID functions without cookies. This means websites using GHOST ID
           typically don&apos;t require cookie consent banners.
         </p>
 
@@ -79,7 +79,7 @@ export default function PrivacyPolicy() {
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Data Ownership</h2>
         <p>
-          For self-hosted Rybbit instances, all collected data remains exclusively on your servers and under your
+          For self-hosted GHOST ID instances, all collected data remains exclusively on your servers and under your
           control. For our cloud service, you retain ownership of your analytics data, and we process it solely to
           provide the analytics service to you.
         </p>
@@ -91,7 +91,7 @@ export default function PrivacyPolicy() {
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">GDPR and Privacy Regulations Compliance</h2>
-        <p>Rybbit is designed with privacy regulations in mind, including GDPR, CCPA, and ePrivacy Directive:</p>
+        <p>GHOST ID is designed with privacy regulations in mind, including GDPR, CCPA, and ePrivacy Directive:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>We collect minimal data needed for analytics</li>
           <li>We don&apos;t use cookies or local storage</li>
@@ -116,7 +116,7 @@ export default function PrivacyPolicy() {
         <p>
           As an open-source project, our code is publicly available for review. This includes our data collection
           mechanisms, which you can audit to verify our privacy claims.
-          <a href="https://github.com/rybbit-io/rybbit" className="text-emerald-400 hover:text-emerald-300 ml-1">
+          <a href="https://github.com/ghost-id-io/ghost-id" className="text-emerald-400 hover:text-emerald-300 ml-1">
             View our GitHub repository
           </a>
           .
@@ -124,9 +124,9 @@ export default function PrivacyPolicy() {
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Contact Us</h2>
         <p>
-          If you have questions about this privacy policy or Rybbit&apos;s data practices, please contact us at:
-          <a href="https://www.rybbit.com/contact" className="text-emerald-400 hover:text-emerald-300 ml-1">
-            hello@rybbit.com
+          If you have questions about this privacy policy or GHOST ID&apos;s data practices, please contact us at:
+          <a href="https://www.ghost-id.com/contact" className="text-emerald-400 hover:text-emerald-300 ml-1">
+            hello@ghost-id.com
           </a>
         </p>
       </div>

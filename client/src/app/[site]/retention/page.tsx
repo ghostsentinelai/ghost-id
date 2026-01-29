@@ -68,7 +68,7 @@ const getRetentionColor = (
 };
 
 export default function RetentionPage() {
-  useSetPageTitle("Rybbit · Retention");
+  useSetPageTitle("GHOST ID · Retention");
 
   // State for the retention mode (day or week)
   const [mode, setMode] = useState<RetentionMode>("week");

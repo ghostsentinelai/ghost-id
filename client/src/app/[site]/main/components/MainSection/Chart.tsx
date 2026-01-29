@@ -1,5 +1,5 @@
 "use client";
-import { TimeBucket } from "@rybbit/shared";
+import { TimeBucket } from "@ghost-id/shared";
 import { useNivoTheme } from "@/lib/nivo";
 import { StatType, useStore } from "@/lib/store";
 import { LineCustomSvgLayer, LineCustomSvgLayerProps, LineSeries, ResponsiveLine } from "@nivo/line";

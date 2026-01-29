@@ -9,4 +9,5 @@ export interface TrackingPayload {
   language: string;
   page_title: string;
   referrer: string;
+  visitor_id?: string; // Persistent GHOST Visitor ID
 }

@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "Rybbit pricing plans and features",
+  description: "GHOST ID pricing plans and features",
 };
 
 export default function PricingPage() {

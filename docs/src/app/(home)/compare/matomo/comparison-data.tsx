@@ -7,27 +7,27 @@ export const matomoComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Simple, intuitive interface",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Single-page dashboard",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "No training required",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "One-click setup",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Beautiful modern UI",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
     ],
@@ -37,42 +37,42 @@ export const matomoComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Web analytics dashboard",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Real-time data",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Custom events tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Conversion goals",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Ecommerce tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Heatmaps",
-        rybbitValue: false,
+        ghost-idValue: false,
         competitorValue: true,
       },
       {
         name: "A/B testing",
-        rybbitValue: false,
+        ghost-idValue: false,
         competitorValue: true,
       },
       {
         name: "Form analytics",
-        rybbitValue: false,
+        ghost-idValue: false,
         competitorValue: true,
       },
     ],
@@ -82,42 +82,42 @@ export const matomoComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Session Replay",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Funnels",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "User journeys (Sankey)",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "User profiles",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Real-time globe view",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Web Vitals dashboard",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Error tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Public dashboards",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
     ],
@@ -127,27 +127,27 @@ export const matomoComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Script size",
-        rybbitValue: "18KB",
+        ghost-idValue: "18KB",
         competitorValue: "20-50KB",
       },
       {
         name: "Global CDN included",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Modern tech stack",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Auto-scaling cloud",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: "Self-host only",
       },
       {
         name: "Zero maintenance",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
     ],
@@ -157,27 +157,27 @@ export const matomoComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Cookie-free tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: "Optional",
       },
       // {
       //   name: "GDPR compliant by default",
-      //   rybbitValue: true,
+      //   ghost-idValue: true,
       //   competitorValue: false,
       // },
       {
         name: "No consent banner needed",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Daily rotating salt option",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Data stored in EU",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: "Varies",
       },
     ],
@@ -187,32 +187,32 @@ export const matomoComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Data retention",
-        rybbitValue: "2-5+ years",
+        ghost-idValue: "2-5+ years",
         competitorValue: "24 months (cloud)",
       },
       {
         name: "Self-hostable",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Managed cloud option",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: "Limited",
       },
       {
         name: "Easy Google Analytics import",
-        rybbitValue: false,
+        ghost-idValue: false,
         competitorValue: "Complex",
       },
       {
         name: "Data export",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "API access",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
     ],
@@ -222,32 +222,32 @@ export const matomoComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Human customer support",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: "Paid only",
       },
       {
         name: "Free tier",
-        rybbitValue: DEFAULT_EVENT_LIMIT.toLocaleString() + " events",
+        ghost-idValue: DEFAULT_EVENT_LIMIT.toLocaleString() + " events",
         competitorValue: "Self-host only",
       },
       {
         name: "Cloud pricing",
-        rybbitValue: "$19-$499/mo",
+        ghost-idValue: "$19-$499/mo",
         competitorValue: "€19-€450+/mo",
       },
       {
         name: "Open source",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Live demo available",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Documentation quality",
-        rybbitValue: "Modern",
+        ghost-idValue: "Modern",
         competitorValue: "Extensive but complex",
       },
     ],

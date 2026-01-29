@@ -8,7 +8,7 @@ import { Turnstile } from "@/components/auth/Turnstile";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { RybbitTextLogo } from "../../components/RybbitLogo";
+import { GHOST IDTextLogo } from "../../components/GHOST IDLogo";
 import { SpinningGlobe } from "../../components/SpinningGlobe";
 import { useSetPageTitle } from "../../hooks/useSetPageTitle";
 import { authClient } from "../../lib/auth";
@@ -18,7 +18,7 @@ import { userStore } from "../../lib/userStore";
 
 export default function Page() {
   const { configs, isLoading: isLoadingConfigs } = useConfigs();
-  useSetPageTitle("Rybbit · Login");
+  useSetPageTitle("GHOST ID · Login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -77,8 +77,8 @@ export default function Page() {
       <div className="w-full lg:w-[550px] flex flex-col p-6 lg:p-10">
         {/* Logo at top left */}
         <div className="mb-8">
-          <a href="https://rybbit.com" target="_blank" className="inline-block">
-            <RybbitTextLogo />
+          <a href="https://ghost-id.com" target="_blank" className="inline-block">
+            <GHOST IDTextLogo />
           </a>
         </div>
         <div className="flex-1 flex flex-col justify-center w-full max-w-[550px] mx-auto">
@@ -152,12 +152,12 @@ export default function Page() {
         {!IS_CLOUD && (
           <div className="text-xs text-muted-foreground mt-8">
             <a
-              href="https://rybbit.com"
+              href="https://ghost-id.com"
               target="_blank"
               rel="noopener"
-              title="Rybbit - Open Source Privacy-Focused Web Analytics"
+              title="GHOST ID - Open Source Privacy-Focused Web Analytics"
             >
-              Open source web analytics powered by Rybbit
+              Open source web analytics powered by GHOST ID
             </a>
           </div>
         )}

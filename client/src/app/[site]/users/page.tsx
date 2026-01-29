@@ -31,7 +31,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../../../components/ui/
 import { Info } from "lucide-react";
 import { useSetPageTitle } from "../../../hooks/useSetPageTitle";
 import { USER_PAGE_FILTERS } from "../../../lib/filterGroups";
-import { FilterParameter } from "@rybbit/shared";
+import { FilterParameter } from "@ghost-id/shared";
 import { getCountryName, getUserDisplayName } from "../../../lib/utils";
 import { Browser } from "../components/shared/icons/Browser";
 import { CountryFlag } from "../components/shared/icons/CountryFlag";
@@ -77,7 +77,7 @@ const SortHeader = ({ column, children }: any) => {
 };
 
 export default function UsersPage() {
-  useSetPageTitle("Rybbit · Users");
+  useSetPageTitle("GHOST ID · Users");
 
   const { site } = useParams();
 
@@ -341,7 +341,7 @@ export default function UsersPage() {
           </Label>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Link href="https://www.rybbit.io/docs/identify-users" target="_blank">
+              <Link href="https://www.ghost-id.io/docs/identify-users" target="_blank">
                 <Info className="h-4 w-4 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 cursor-pointer" />
               </Link>
             </TooltipTrigger>

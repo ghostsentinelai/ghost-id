@@ -69,8 +69,8 @@ export class FormTrackingManager {
   private extractDataAttributes(element: HTMLElement): Record<string, string> {
     const attrs: Record<string, string> = {};
     for (const attr of element.attributes) {
-      if (attr.name.startsWith("data-rybbit-prop-")) {
-        const key = attr.name.replace("data-rybbit-prop-", "");
+      if (attr.name.startsWith("data-ghost-id-prop-")) {
+        const key = attr.name.replace("data-ghost-id-prop-", "");
         attrs[key] = attr.value;
       }
     }

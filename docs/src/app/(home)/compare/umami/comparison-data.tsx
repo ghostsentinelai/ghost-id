@@ -6,47 +6,47 @@ export const umamiComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Simple dashboard",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Real-time data",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Visitor analytics",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Page analytics",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Source tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Device/OS/Browser stats",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "UTM tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Custom events",
-        rybbitValue: "With attributes",
+        ghost-idValue: "With attributes",
         competitorValue: "With properties",
       },
       {
         name: "Conversion goals",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
     ],
@@ -56,47 +56,47 @@ export const umamiComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Session Replay",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Funnels",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "User journeys (Sankey)",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "User profiles",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Sessions tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Real-time globe view",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Web Vitals dashboard",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Error tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Retention reports",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
     ],
@@ -106,37 +106,37 @@ export const umamiComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Cookie-free tracking",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       // {
       //   name: "GDPR/CCPA compliant",
-      //   rybbitValue: true,
+      //   ghost-idValue: true,
       //   competitorValue: true,
       // },
       {
         name: "No personal data collection",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "IP anonymization",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Daily rotating salt option",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Open source",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Self-hostable",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
     ],
@@ -146,22 +146,22 @@ export const umamiComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "No training required",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Public dashboards",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Live demo",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Team collaboration",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
     ],
@@ -171,32 +171,32 @@ export const umamiComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Real-time updates",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "API access",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Self-hosted DB options",
-        rybbitValue: "ClickHouse",
+        ghost-idValue: "ClickHouse",
         competitorValue: "PostgreSQL/MySQL",
       },
       {
         name: "Cloud DB options",
-        rybbitValue: "ClickHouse",
+        ghost-idValue: "ClickHouse",
         competitorValue: "ClickHouse",
       },
       {
         name: "Bot filtering",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Bypasses ad blockers",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
     ],
@@ -206,27 +206,27 @@ export const umamiComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Data retention",
-        rybbitValue: "2-5+ years",
+        ghost-idValue: "2-5+ years",
         competitorValue: "Limited",
       },
       {
         name: "Team collaboration",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Organization support",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: false,
       },
       {
         name: "Multiple websites",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
       {
         name: "Cloud hosting option",
-        rybbitValue: true,
+        ghost-idValue: true,
         competitorValue: true,
       },
     ],
@@ -236,12 +236,12 @@ export const umamiComparisonData: ComparisonSection[] = [
     features: [
       {
         name: "Entry price",
-        rybbitValue: "$19/mo",
+        ghost-idValue: "$19/mo",
         competitorValue: "$20/mo",
       },
       {
         name: "Pricing model",
-        rybbitValue: "Events-based",
+        ghost-idValue: "Events-based",
         competitorValue: "Usage-based + $20/mo",
       },
     ],

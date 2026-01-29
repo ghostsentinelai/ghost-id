@@ -17,7 +17,7 @@ import { SubHeader } from "../components/SubHeader/SubHeader";
 import { SankeyDiagram } from "./components/SankeyDiagram";
 
 export default function JourneysPage() {
-  useSetPageTitle("Rybbit · Journeys");
+  useSetPageTitle("GHOST ID · Journeys");
 
   const [steps, setSteps] = useState<number>(4);
   const [maxJourneys, setMaxJourneys] = useState<number>(50);

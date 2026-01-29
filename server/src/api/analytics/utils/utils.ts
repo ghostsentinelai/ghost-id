@@ -1,5 +1,5 @@
 import { ResultSet } from "@clickhouse/client";
-import { FilterParams } from "@rybbit/shared";
+import { FilterParams } from "@ghost-id/shared";
 import { and, eq, inArray } from "drizzle-orm";
 import SqlString from "sqlstring";
 import { db } from "../../../db/postgres/postgres.js";

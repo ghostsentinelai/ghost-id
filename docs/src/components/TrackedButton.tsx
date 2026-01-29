@@ -17,8 +17,8 @@ export function TrackedButton({ href, eventName, eventProps, className, children
     <Link
       href={href}
       className="w-full sm:w-auto"
-      data-rybbit-event={eventName}
-      data-rybbit-prop-location={eventProps.location}
+      data-ghost-id-event={eventName}
+      data-ghost-id-prop-location={eventProps.location}
       target={target}
       rel={rel}
     >

@@ -1,4 +1,4 @@
-import { FilterParameter } from "@rybbit/shared";
+import { FilterParameter } from "@ghost-id/shared";
 import Map from "ol/Map";
 import View from "ol/View";
 import { fromLonLat } from "ol/proj";

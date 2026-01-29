@@ -1,4 +1,4 @@
-# Makefile for Rybbit Monitor Agent
+# Makefile for GHOST ID Monitor Agent
 
 .PHONY: help build dev prod test clean deploy-all status-all
 
@@ -30,7 +30,7 @@ lint: ## Run linter
 
 clean: ## Clean up containers and images
 	docker-compose down -v
-	docker rmi rybbit-monitor-agent:latest || true
+	docker rmi ghost-id-monitor-agent:latest || true
 
 logs: ## Show logs
 	docker-compose logs -f monitor-agent

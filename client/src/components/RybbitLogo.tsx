@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useWhiteLabel } from "../hooks/useIsWhiteLabel";
 import { Skeleton } from "./ui/skeleton";
 
-export function RybbitLogo({ width = 32, height = 32 }: { width?: number; height?: number }) {
+export function GHOST IDLogo({ width = 32, height = 32 }: { width?: number; height?: number }) {
   const { whiteLabelImage, isPending } = useWhiteLabel();
   const [mounted, setMounted] = useState(false);
 
@@ -16,15 +16,15 @@ export function RybbitLogo({ width = 32, height = 32 }: { width?: number; height
   }
 
   if (whiteLabelImage) {
-    return <Image src={whiteLabelImage} alt="Rybbit" width={width} height={height} />;
+    return <Image src={whiteLabelImage} alt="GHOST ID" width={width} height={height} />;
   }
 
   return null;
 
   // return (
   //   <Image
-  //     src="/rybbit.svg"
-  //     alt="Rybbit"
+  //     src="/ghost-id.svg"
+  //     alt="GHOST ID"
   //     width={width}
   //     height={height}
   //     className="invert dark:invert-0"
@@ -32,7 +32,7 @@ export function RybbitLogo({ width = 32, height = 32 }: { width?: number; height
   // );
 }
 
-export function RybbitTextLogo({ width = 150, height = 34 }: { width?: number; height?: number }) {
+export function GHOST IDTextLogo({ width = 150, height = 34 }: { width?: number; height?: number }) {
   const { whiteLabelImage, isPending } = useWhiteLabel();
   const [mounted, setMounted] = useState(false);
 
@@ -45,8 +45,8 @@ export function RybbitTextLogo({ width = 150, height = 34 }: { width?: number; h
   }
 
   if (whiteLabelImage) {
-    return <Image src={whiteLabelImage} alt="Rybbit" width={width} height={height} />;
+    return <Image src={whiteLabelImage} alt="GHOST ID" width={width} height={height} />;
   }
 
-  return <Image src="/rybbit-text.svg" alt="Rybbit" width={width} height={height} className="dark:invert-0 invert" />;
+  return <Image src="/ghost-id-text.svg" alt="GHOST ID" width={width} height={height} className="dark:invert-0 invert" />;
 }

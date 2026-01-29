@@ -15,7 +15,7 @@ const tilt_wrap = Tilt_Warp({
 
 export interface ComparisonFeature {
   name: string;
-  rybbitValue: string | boolean;
+  ghost-idValue: string | boolean;
   competitorValue: string | boolean;
 }
 
@@ -54,16 +54,16 @@ export function ComparisonPage({ competitorName, sections, comparisonContent }: 
             tilt_wrap.className
           )}
         >
-          Rybbit vs. {competitorName}
+          GHOST ID vs. {competitorName}
         </h1>
         <h2 className="relative z-10 text-base md:text-xl pt-4 md:pt-6 px-4 tracking-tight max-w-4xl text-center text-neutral-600 dark:text-neutral-300 font-light">
-          Compare the key features of Rybbit and {competitorName}.
+          Compare the key features of GHOST ID and {competitorName}.
         </h2>
 
         <div className="relative z-10 flex flex-col items-center my-8 md:my-10">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 text-base md:text-lg px-4">
             <TrackedButton
-              href="https://app.rybbit.io/signup"
+              href="https://app.ghost-id.io/signup"
               eventName="signup"
               eventProps={{ location: "hero", button_text: "Track your site" }}
               className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-5 py-3 rounded-lg shadow-lg shadow-emerald-900/20 transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50 cursor-pointer"
@@ -71,7 +71,7 @@ export function ComparisonPage({ competitorName, sections, comparisonContent }: 
               Track your site
             </TrackedButton>
             <TrackedButton
-              href="https://demo.rybbit.com/1"
+              href="https://demo.ghost-id.com/1"
               eventName="demo"
               target="_blank"
               rel="noopener noreferrer"
@@ -111,14 +111,14 @@ export function ComparisonPage({ competitorName, sections, comparisonContent }: 
             height="750"
             className="w-full h-[600px] md:h-[700px] lg:h-[750px]"
             style={{ border: "none" }}
-            title="Rybbit Analytics Demo"
+            title="GHOST ID Analytics Demo"
           ></iframe>
         </div>
       </div> */}
 
       <div className="w-full max-w-5xl mx-auto mt-12 px-4 z-10">
         <h2 className="text-2xl md:text-3xl font-semibold mb-4 md:mb-6 text-left">
-          Why choose Rybbit over {competitorName}?
+          Why choose GHOST ID over {competitorName}?
         </h2>
       </div>
       {/* Comparison Table */}
@@ -133,8 +133,8 @@ export function ComparisonPage({ competitorName, sections, comparisonContent }: 
                     <div className="flex flex-col items-center gap-2">
                       <span className="font-semibold">
                         <Image
-                          src="/rybbit-text.svg"
-                          alt="Rybbit"
+                          src="/ghost-id-text.svg"
+                          alt="GHOST ID"
                           width={100}
                           height={27}
                           className="dark:invert-0 invert"
@@ -170,7 +170,7 @@ export function ComparisonPage({ competitorName, sections, comparisonContent }: 
                       >
                         <td className="px-6 py-4 text-neutral-700 dark:text-neutral-300 text-sm">{feature.name}</td>
                         <td className="px-6 py-4 text-center text-sm">
-                          <div className="flex justify-center">{renderFeatureValue(feature.rybbitValue)}</div>
+                          <div className="flex justify-center">{renderFeatureValue(feature.ghost-idValue)}</div>
                         </td>
                         <td className="px-6 py-4 text-center text-sm">
                           <div className="flex justify-center">{renderFeatureValue(feature.competitorValue)}</div>

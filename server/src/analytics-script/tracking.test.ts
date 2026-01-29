@@ -75,7 +75,7 @@ describe("Tracker", () => {
     });
 
     config = {
-      namespace: "rybbit",
+      namespace: "ghost-id",
       analyticsHost: "https://analytics.example.com",
       siteId: "123",
       debounceDuration: 0,

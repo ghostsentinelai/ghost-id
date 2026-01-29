@@ -217,7 +217,7 @@ export function PricingSection() {
               </div>
             }
             buttonText="Start for free"
-            buttonHref="https://app.rybbit.io/signup"
+            buttonHref="https://app.ghost-id.io/signup"
             buttonVariant="default"
             features={FREE_FEATURES}
             variant="free"
@@ -241,7 +241,7 @@ export function PricingSection() {
               )
             }
             buttonText={standardPrices.custom ? "Contact us" : "Get started"}
-            buttonHref={standardPrices.custom ? "https://www.rybbit.com/contact" : "https://app.rybbit.io/signup"}
+            buttonHref={standardPrices.custom ? "https://www.ghost-id.com/contact" : "https://app.ghost-id.io/signup"}
             features={STANDARD_FEATURES}
             eventLocation={standardPrices.custom ? undefined : "standard"}
           />
@@ -263,7 +263,7 @@ export function PricingSection() {
               )
             }
             buttonText={proPrices.custom ? "Contact us" : "Get started"}
-            buttonHref={proPrices.custom ? "https://www.rybbit.com/contact" : "https://app.rybbit.io/signup"}
+            buttonHref={proPrices.custom ? "https://www.ghost-id.com/contact" : "https://app.ghost-id.io/signup"}
             features={PRO_FEATURES}
             eventLocation={proPrices.custom ? undefined : "pro"}
             recommended={true}
@@ -276,7 +276,7 @@ export function PricingSection() {
             priceDisplay={<div className="text-3xl font-bold">Custom</div>}
             features={ENTERPRISE_FEATURES}
             buttonText={"Contact us"}
-            buttonHref={"https://www.rybbit.com/contact"}
+            buttonHref={"https://www.ghost-id.com/contact"}
           />
         </div>
       </div>

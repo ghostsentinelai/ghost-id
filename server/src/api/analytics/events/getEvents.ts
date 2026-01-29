@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { clickhouse } from "../../../db/clickhouse/clickhouse.js";
 import { processResults, getTimeStatement } from "../utils/utils.js";
-import { FilterParams } from "@rybbit/shared";
+import { FilterParams } from "@ghost-id/shared";
 import { getFilterStatement } from "../utils/getFilterStatement.js";
 
 export type GetEventsResponse = {

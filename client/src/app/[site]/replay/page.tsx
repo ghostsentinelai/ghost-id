@@ -15,7 +15,7 @@ import { useReplayStore } from "@/components/replay/replayStore";
 import { Video } from "lucide-react";
 
 export default function SessionReplayPage() {
-  useSetPageTitle("Rybbit · Session Replay");
+  useSetPageTitle("GHOST ID · Session Replay");
 
   const { minDuration } = useReplayStore();
 

@@ -1,7 +1,7 @@
 {
-  "name": "rybbit-monitor-agent",
+  "name": "ghost-id-monitor-agent",
   "version": "1.0.0",
-  "description": "Regional monitoring agent for Rybbit uptime monitoring",
+  "description": "Regional monitoring agent for GHOST ID uptime monitoring",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {

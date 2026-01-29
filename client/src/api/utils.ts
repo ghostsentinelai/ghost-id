@@ -1,4 +1,4 @@
-import { Filter } from "@rybbit/shared";
+import { Filter } from "@ghost-id/shared";
 import { DateTime } from "luxon";
 import { Time } from "../components/DateSelector/types";
 import axios, { AxiosRequestConfig } from "axios";

@@ -3,7 +3,7 @@ import { Mail, Github, Bell, Twitter } from "lucide-react";
 
 export const metadata = {
   title: "Contact",
-  description: "Get in touch with the Rybbit team",
+  description: "Get in touch with the GHOST ID team",
 };
 
 export default function Contact() {
@@ -13,7 +13,7 @@ export default function Contact() {
 
       <div className="bg-neutral-100/50 dark:bg-neutral-800/20 border border-neutral-300/50 dark:border-neutral-700/50 rounded-xl p-6 md:p-8 mb-8">
         <p className="text-lg mb-6 text-neutral-700 dark:text-neutral-300">
-          Have questions about Rybbit? We&apos;re here to help! Reach out to us through any of these channels:
+          Have questions about GHOST ID? We&apos;re here to help! Reach out to us through any of these channels:
         </p>
 
         <div className="space-y-6">
@@ -23,8 +23,8 @@ export default function Contact() {
             </div>
             <div>
               <h2 className="text-xl font-medium mb-1">Email</h2>
-              <a href="mailto:hello@rybbit.com" className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors">
-                hello@rybbit.com
+              <a href="mailto:hello@ghost-id.com" className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                hello@ghost-id.com
               </a>
             </div>
           </div>
@@ -69,8 +69,8 @@ export default function Contact() {
         <h2 className="text-xl font-medium mb-3">Customer Support</h2>
         <p className="mb-4 text-neutral-700 dark:text-neutral-300">
           If you are a customer and need help with your account, please contact us at{" "}
-          <a href="mailto:support@rybbit.com" className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors underline">
-            support@rybbit.com
+          <a href="mailto:support@ghost-id.com" className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors underline">
+            support@ghost-id.com
           </a>
           . we try to respond to all support requests within 12 hours.
         </p>
@@ -78,16 +78,16 @@ export default function Contact() {
       <div className="bg-neutral-100/30 dark:bg-neutral-800/30 border border-neutral-300/50 dark:border-neutral-700/50 rounded-xl p-6 mb-8">
         <h2 className="text-xl font-medium mb-3">White-Labeling & Custom Solutions</h2>
         <p className="mb-4 text-neutral-700 dark:text-neutral-300">
-          Looking to white-label Rybbit for your organization or need a custom analytics solution? We offer tailored
+          Looking to white-label GHOST ID for your organization or need a custom analytics solution? We offer tailored
           implementations to meet your specific requirements.
         </p>
         <p className="mb-4 text-neutral-700 dark:text-neutral-300">
           Contact us at{" "}
           <a
-            href="mailto:partnerships@rybbit.com"
+            href="mailto:partnerships@ghost-id.com"
             className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors underline"
           >
-            partnerships@rybbit.com
+            partnerships@ghost-id.com
           </a>{" "}
           to discuss your needs.
         </p>

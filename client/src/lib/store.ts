@@ -1,4 +1,4 @@
-import { Filter, FilterParameter, TimeBucket } from "@rybbit/shared";
+import { Filter, FilterParameter, TimeBucket } from "@ghost-id/shared";
 import { DateTime } from "luxon";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -263,7 +263,7 @@ export const useStore = create<Store>()(
       },
     }),
     {
-      name: "rybbit-store",
+      name: "ghost-id-store",
       partialize: state => ({ timezone: state.timezone }),
     }
   )

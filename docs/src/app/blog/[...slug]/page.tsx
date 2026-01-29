@@ -19,7 +19,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
   const page = blogSource.getPage(params.slug);
   if (!page) return {};
 
-  const url = `https://rybbit.com/blog/${params.slug.join("/")}`;
+  const url = `https://ghost-id.com/blog/${params.slug.join("/")}`;
   const publishedTime = page.data.date ? new Date(page.data.date).toISOString() : undefined;
   const ogImage = page.data.image || "/opengraph-image.png";
 
@@ -44,7 +44,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
           alt: page.data.title,
         },
       ],
-      siteName: "Rybbit",
+      siteName: "GHOST ID",
       locale: "en_US",
     },
     twitter: {
@@ -52,11 +52,11 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
       title: page.data.title,
       description: page.data.description,
       images: [ogImage],
-      creator: "@rybbitio",
+      creator: "@ghost-idio",
     },
     keywords: page.data.tags
-      ? [...page.data.tags, "web analytics", "privacy analytics", "Rybbit"]
-      : ["web analytics", "privacy analytics", "Rybbit"],
+      ? [...page.data.tags, "web analytics", "privacy analytics", "GHOST ID"]
+      : ["web analytics", "privacy analytics", "GHOST ID"],
     authors: page.data.author ? [{ name: page.data.author }] : undefined,
   };
 }
@@ -82,14 +82,14 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
     dateModified: date?.toISOString(),
     author: {
       "@type": "Person",
-      name: page.data.author || "Rybbit Team",
+      name: page.data.author || "GHOST ID Team",
     },
     publisher: {
       "@type": "Organization",
-      name: "Rybbit",
+      name: "GHOST ID",
       logo: {
         "@type": "ImageObject",
-        url: "https://rybbit.com/public/rybbit.svg",
+        url: "https://ghost-id.com/public/ghost-id.svg",
       },
     },
     keywords: page.data.tags?.join(", "),

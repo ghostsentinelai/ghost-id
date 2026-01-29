@@ -1,4 +1,4 @@
-import { Filter, TimeBucket } from "@rybbit/shared";
+import { Filter, TimeBucket } from "@ghost-id/shared";
 import { createParser, parseAsBoolean, parseAsInteger, parseAsJson, parseAsString, parseAsStringEnum } from "nuqs";
 import { StatType } from "./store";
 import { Time } from "@/components/DateSelector/types";

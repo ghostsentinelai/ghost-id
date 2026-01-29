@@ -8,7 +8,7 @@ import { useEmbedablePage } from "../app/[site]/utils";
 import { useAdminPermission } from "../app/admin/hooks/useAdminPermission";
 import { IS_CLOUD } from "../lib/const";
 import { cn } from "../lib/utils";
-import { RybbitLogo } from "./RybbitLogo";
+import { GHOST IDLogo } from "./GHOST IDLogo";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { authClient } from "../lib/auth";
 import { useSignout } from "../hooks/useSignout";
@@ -49,7 +49,7 @@ function AppSidebarContent() {
     >
       <div className="flex flex-col items-start gap-2">
         {/* <Link href="/" className="mb-3 mt-1 ml-0.5 flex items-center justify-center">
-          <RybbitLogo width={24} height={18} />
+          <GHOST IDLogo width={24} height={18} />
           <HomeIcon className="w-5 h-5" />
         </Link> */}
         <SidebarLink
@@ -61,7 +61,7 @@ function AppSidebarContent() {
           expanded={isExpanded}
         />
         <SidebarLink
-          href="https://rybbit.com/docs"
+          href="https://ghost-id.com/docs"
           icon={<BookOpen className="w-5 h-5" />}
           label="Documentation"
           target="_blank"

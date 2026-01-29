@@ -12,16 +12,16 @@ const tilt_wrap = Tilt_Warp({
 });
 
 export const metadata: Metadata = {
-  title: "Sponsors - Rybbit Analytics",
-  description: "Meet the sponsors who support Rybbit, the open-source privacy-first analytics platform.",
+  title: "Sponsors - GHOST ID Analytics",
+  description: "Meet the sponsors who support GHOST ID, the open-source privacy-first analytics platform.",
   openGraph: {
-    title: "Rybbit Sponsors",
-    description: "Meet the sponsors who support Rybbit, the open-source privacy-first analytics platform.",
+    title: "GHOST ID Sponsors",
+    description: "Meet the sponsors who support GHOST ID, the open-source privacy-first analytics platform.",
     type: "website",
-    url: "https://rybbit.com/sponsors",
+    url: "https://ghost-id.com/sponsors",
   },
   alternates: {
-    canonical: "https://rybbit.com/sponsors",
+    canonical: "https://ghost-id.com/sponsors",
   },
 };
 
@@ -96,7 +96,7 @@ export default function SponsorsPage() {
           Our Sponsors
         </h1>
         <h2 className="relative z-10 text-base md:text-xl pt-4 md:pt-6 px-4 tracking-tight max-w-4xl text-center text-neutral-600 dark:text-neutral-300 font-light">
-          Thank you to the amazing companies that support Rybbit&apos;s development.
+          Thank you to the amazing companies that support GHOST ID&apos;s development.
         </h2>
 
         <div className="relative z-10 flex flex-col items-center my-8 md:my-10">

@@ -1,6 +1,6 @@
 "use client";
 
-import { FilterParameter } from "@rybbit/shared";
+import { FilterParameter } from "@ghost-id/shared";
 import { useMemo } from "react";
 import { useMetric } from "../../../../../api/analytics/hooks/useGetMetric";
 import { MultiSelect } from "../../../../../components/MultiSelect";

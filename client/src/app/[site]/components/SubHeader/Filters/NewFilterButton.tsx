@@ -1,5 +1,5 @@
 "use client";
-import { Filter, FilterParameter } from "@rybbit/shared";
+import { Filter, FilterParameter } from "@ghost-id/shared";
 import { ListFilterPlus, Plus } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../../../../components/ui/button";

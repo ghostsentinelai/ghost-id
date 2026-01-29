@@ -43,7 +43,7 @@ import {
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Features - Rybbit Analytics",
+  title: "Features - GHOST ID Analytics",
   description:
     "Powerful, privacy-friendly analytics features to help you understand your audience and grow your business. Real-time data, session replay, web vitals, and more.",
 };
@@ -327,7 +327,7 @@ export default function FeaturesPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-base md:text-lg">
               <TrackedButton
-                href="https://app.rybbit.io/signup"
+                href="https://app.ghost-id.io/signup"
                 eventName="signup"
                 eventProps={{ location: "features_hero", button_text: "Get started for free" }}
                 className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-6 py-3 rounded-lg shadow-lg shadow-emerald-900/20 transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50 cursor-pointer"
@@ -335,7 +335,7 @@ export default function FeaturesPage() {
                 Get started
               </TrackedButton>
               <TrackedButton
-                href="https://demo.rybbit.com/1"
+                href="https://demo.ghost-id.com/1"
                 eventName="demo"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -385,7 +385,7 @@ export default function FeaturesPage() {
 
       <CTASection
         title="Ready to get started?"
-        description="Join thousands of companies using Rybbit to understand their audience"
+        description="Join thousands of companies using GHOST ID to understand their audience"
         eventLocation="features_bottom_cta"
       />
     </div>

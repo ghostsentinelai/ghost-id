@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Terms and Conditions",
-  description: "Rybbit terms and conditions of service",
+  description: "GHOST ID terms and conditions of service",
 };
 
 export default function TermsAndConditions() {
@@ -15,20 +15,20 @@ export default function TermsAndConditions() {
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Acceptance of Terms</h2>
         <p>
-          By accessing and using Rybbit, you accept and agree to be bound by the terms and provision of this agreement.
+          By accessing and using GHOST ID, you accept and agree to be bound by the terms and provision of this agreement.
           If you do not agree to these terms, please do not use our service.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Description of Service</h2>
         <p>
-          Rybbit is an open-source, privacy-friendly web analytics platform. We provide both a cloud-hosted service and
+          GHOST ID is an open-source, privacy-friendly web analytics platform. We provide both a cloud-hosted service and
           self-hosted software that enables website owners to collect and analyze visitor statistics while respecting
           user privacy.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Use of Service</h2>
         <h3 className="text-xl font-semibold mt-6 mb-3">Acceptable Use</h3>
-        <p>You agree to use Rybbit only for lawful purposes and in accordance with these Terms. You agree not to:</p>
+        <p>You agree to use GHOST ID only for lawful purposes and in accordance with these Terms. You agree not to:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Use the service in any way that violates any applicable law or regulation</li>
           <li>Attempt to gain unauthorized access to any portion of the service</li>
@@ -49,7 +49,7 @@ export default function TermsAndConditions() {
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Open Source License</h2>
         <p>
-          Rybbit is open-source software released under the MIT License. The self-hosted version is free to use, modify,
+          GHOST ID is open-source software released under the MIT License. The self-hosted version is free to use, modify,
           and distribute according to the terms of that license. These Terms and Conditions apply specifically to the
           use of our cloud-hosted service and website.
         </p>
@@ -129,7 +129,7 @@ export default function TermsAndConditions() {
 
         <h3 className="text-xl font-semibold mt-6 mb-3">Privacy Commitment</h3>
         <p>
-          Rybbit does not collect personally identifiable information from your website visitors. Our service is
+          GHOST ID does not collect personally identifiable information from your website visitors. Our service is
           designed to be privacy-friendly and compliant with GDPR, CCPA, and other privacy regulations. Our full data
           practices are described in our
           <a href="/privacy" className="text-emerald-400 hover:text-emerald-300 mx-1">
@@ -140,20 +140,20 @@ export default function TermsAndConditions() {
 
         <h3 className="text-xl font-semibold mt-6 mb-3">Your Compliance Obligations</h3>
         <p>
-          You are responsible for ensuring your use of Rybbit complies with all applicable privacy laws and regulations
+          You are responsible for ensuring your use of GHOST ID complies with all applicable privacy laws and regulations
           in your jurisdiction. You must obtain any necessary consents from your website visitors as required by law.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Intellectual Property</h2>
         <p>
-          The Rybbit name, logo, and branding are property of Rybbit. The open-source code is available under the MIT
+          The GHOST ID name, logo, and branding are property of GHOST ID. The open-source code is available under the MIT
           License. All other content on this website, including text, graphics, and documentation, is protected by
           copyright and other intellectual property laws.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Limitation of Liability</h2>
         <p>
-          To the maximum extent permitted by law, Rybbit and its contributors shall not be liable for any indirect,
+          To the maximum extent permitted by law, GHOST ID and its contributors shall not be liable for any indirect,
           incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred
           directly or indirectly, or any loss of data, use, goodwill, or other intangible losses resulting from:
         </p>
@@ -181,7 +181,7 @@ export default function TermsAndConditions() {
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Indemnification</h2>
         <p>
-          You agree to indemnify and hold harmless Rybbit and its contributors from any claims, damages, losses,
+          You agree to indemnify and hold harmless GHOST ID and its contributors from any claims, damages, losses,
           liabilities, and expenses (including legal fees) arising from your use of the service or violation of these
           Terms.
         </p>
@@ -208,15 +208,15 @@ export default function TermsAndConditions() {
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Entire Agreement</h2>
         <p>
-          These Terms, along with our Privacy Policy, constitute the entire agreement between you and Rybbit regarding
+          These Terms, along with our Privacy Policy, constitute the entire agreement between you and GHOST ID regarding
           the use of the service and supersede any prior agreements.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Contact Information</h2>
         <p>
           If you have any questions about these Terms and Conditions, please contact us at:
-          <a href="https://www.rybbit.com/contact" className="text-emerald-400 hover:text-emerald-300 ml-1">
-            hello@rybbit.com
+          <a href="https://www.ghost-id.com/contact" className="text-emerald-400 hover:text-emerald-300 ml-1">
+            hello@ghost-id.com
           </a>
         </p>
       </div>

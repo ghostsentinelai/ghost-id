@@ -52,6 +52,7 @@ export const initializeClickhouse = async () => {
   await clickhouse.exec({
     query: `
       ALTER TABLE events
+        ADD COLUMN IF NOT EXISTS visitor_id String DEFAULT '', -- Persistent GHOST Visitor ID
         ADD COLUMN IF NOT EXISTS lcp Nullable(Float64),
         ADD COLUMN IF NOT EXISTS cls Nullable(Float64),
         ADD COLUMN IF NOT EXISTS inp Nullable(Float64),

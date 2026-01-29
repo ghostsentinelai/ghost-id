@@ -19,11 +19,11 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <Image src="/rybbit-text.svg" alt="Rybbit" width={120} height={27} className="dark:invert-0 invert" />
+            <Image src="/ghost-id-text.svg" alt="GHOST ID" width={120} height={27} className="dark:invert-0 invert" />
             {!IS_CLOUD && (
               <div className="space-y-3">
                 <div className="text-sm text-neutral-600 dark:text-neutral-200">
-                  Liking Rybbit? Consider sponsoring the project!
+                  Liking GHOST ID? Consider sponsoring the project!
                 </div>
                 <a href="https://github.com/sponsors/goldflag" target="_blank" rel="noopener noreferrer">
                   <Button>
@@ -36,7 +36,7 @@ export function Footer() {
             {/* Social Media Links */}
             <div className="flex gap-4">
               <a
-                href="https://github.com/rybbit-io/rybbit"
+                href="https://github.com/ghost-id-io/ghost-id"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
@@ -77,7 +77,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="https://rybbit.com/docs"
+                  href="https://ghost-id.com/docs"
                   className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
                 >
                   Documentation
@@ -85,7 +85,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://rybbit.com/features"
+                  href="https://ghost-id.com/features"
                   className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
                 >
                   Features
@@ -93,7 +93,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://github.com/rybbit-io/rybbit"
+                  href="https://github.com/ghost-id-io/ghost-id"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
@@ -113,7 +113,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://rybbit.com/docs/api/getting-started"
+                  href="https://ghost-id.com/docs/api/getting-started"
                   className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
                 >
                   API Reference
@@ -128,7 +128,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="https://rybbit.com/privacy"
+                  href="https://ghost-id.com/privacy"
                   className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
                 >
                   Privacy Policy
@@ -136,7 +136,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://rybbit.com/terms-and-conditions"
+                  href="https://ghost-id.com/terms-and-conditions"
                   className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
                 >
                   Terms and Conditions
@@ -144,7 +144,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://rybbit.com/security"
+                  href="https://ghost-id.com/security"
                   className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
                 >
                   Security
@@ -152,7 +152,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://rybbit.com/dpa"
+                  href="https://ghost-id.com/dpa"
                   className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
                 >
                   DPA
@@ -161,7 +161,7 @@ export function Footer() {
               {IS_CLOUD && (
                 <li>
                   <a
-                    href="mailto:hello@rybbit.com"
+                    href="mailto:hello@ghost-id.com"
                     className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
                   >
                     Support
@@ -176,9 +176,9 @@ export function Footer() {
         <div className="pt-8 border-t border-neutral-200 dark:border-neutral-800">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
-              <span>© {new Date().getFullYear()} Rybbit. All rights reserved.</span>
+              <span>© {new Date().getFullYear()} GHOST ID. All rights reserved.</span>
               <Link
-                href={`https://github.com/rybbit-io/rybbit/releases/tag/v${APP_VERSION}`}
+                href={`https://github.com/ghost-id-io/ghost-id/releases/tag/v${APP_VERSION}`}
                 className="hover:text-neutral-700 dark:hover:text-neutral-300"
               >
                 v{APP_VERSION}

@@ -1,27 +1,27 @@
 [Unit]
-Description=Rybbit Monitor Agent
-Documentation=https://github.com/rybbit/monitor-agent
+Description=GHOST ID Monitor Agent
+Documentation=https://github.com/ghost-id/monitor-agent
 After=network.target
 
 [Service]
 Type=simple
-User=rybbit
-Group=rybbit
-WorkingDirectory=/opt/rybbit-monitor-agent
-ExecStart=/usr/bin/node /opt/rybbit-monitor-agent/dist/index.js
+User=ghost-id
+Group=ghost-id
+WorkingDirectory=/opt/ghost-id-monitor-agent
+ExecStart=/usr/bin/node /opt/ghost-id-monitor-agent/dist/index.js
 Restart=always
 RestartSec=10
 
 # Environment
 Environment="NODE_ENV=production"
-EnvironmentFile=/opt/rybbit-monitor-agent/.env
+EnvironmentFile=/opt/ghost-id-monitor-agent/.env
 
 # Security
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
-ReadWritePaths=/opt/rybbit-monitor-agent/logs
+ReadWritePaths=/opt/ghost-id-monitor-agent/logs
 
 # Resource limits
 LimitNOFILE=65536
@@ -31,7 +31,7 @@ CPUQuota=100%
 # Logging
 StandardOutput=journal
 StandardError=journal
-SyslogIdentifier=rybbit-monitor-agent
+SyslogIdentifier=ghost-id-monitor-agent
 
 [Install]
 WantedBy=multi-user.target

@@ -271,11 +271,11 @@ const OS_TO_LOGO: Record<string, string> = {
 };
 
 function getBrowserIconPath(browser: string): string {
-  return BROWSER_TO_LOGO[browser] ? `https://app.rybbit.io/browsers/${BROWSER_TO_LOGO[browser]}` : "";
+  return BROWSER_TO_LOGO[browser] ? `https://app.ghost-id.io/browsers/${BROWSER_TO_LOGO[browser]}` : "";
 }
 
 function getOSIconPath(os: string): string {
-  return OS_TO_LOGO[os] ? `https://app.rybbit.io/operating-systems/${OS_TO_LOGO[os]}` : "";
+  return OS_TO_LOGO[os] ? `https://app.ghost-id.io/operating-systems/${OS_TO_LOGO[os]}` : "";
 }
 
 // Duration formatting
@@ -602,7 +602,7 @@ export function SpinningGlobe() {
     const fetchSessions = async () => {
       try {
         const response = await fetch(
-          "https://demo.rybbit.com/api/sites/1/sessions?past_minutes_start=120&past_minutes_end=0&filters=[]&page=1&limit=100"
+          "https://demo.ghost-id.com/api/sites/1/sessions?past_minutes_start=120&past_minutes_end=0&filters=[]&page=1&limit=100"
         );
         const data = await response.json();
         setSessions(data.data || []);

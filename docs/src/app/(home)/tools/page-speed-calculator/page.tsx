@@ -11,11 +11,11 @@ export const metadata: Metadata = {
     description:
       "Calculate how page load time affects your conversions and revenue. See the real cost of a slow website.",
     type: "website",
-    url: "https://rybbit.com/tools/page-speed-calculator",
-    siteName: "Rybbit",
+    url: "https://ghost-id.com/tools/page-speed-calculator",
+    siteName: "GHOST ID",
     images: [
       {
-        url: "https://rybbit.com/og-image.png",
+        url: "https://ghost-id.com/og-image.png",
         width: 1200,
         height: 630,
         alt: "Page Speed Calculator",
@@ -26,10 +26,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Free Page Speed Calculator | Website Load Time Impact Calculator",
     description: "Calculate how page load time affects your conversions and revenue.",
-    images: ["https://rybbit.com/og-image.png"],
+    images: ["https://ghost-id.com/og-image.png"],
   },
   alternates: {
-    canonical: "https://rybbit.com/tools/page-speed-calculator",
+    canonical: "https://ghost-id.com/tools/page-speed-calculator",
   },
 };
 
@@ -41,7 +41,7 @@ const structuredData = {
       name: "Page Speed Impact Calculator",
       description:
         "Calculate how page load time affects your conversions and revenue. See the real cost of a slow website.",
-      url: "https://rybbit.com/tools/page-speed-calculator",
+      url: "https://ghost-id.com/tools/page-speed-calculator",
       applicationCategory: "WebApplication",
       offers: {
         "@type": "Offer",
@@ -50,8 +50,8 @@ const structuredData = {
       },
       creator: {
         "@type": "Organization",
-        name: "Rybbit",
-        url: "https://rybbit.com",
+        name: "GHOST ID",
+        url: "https://ghost-id.com",
       },
     },
     {
@@ -94,7 +94,7 @@ const structuredData = {
           name: "How can analytics tools affect my page speed?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Many analytics tools can significantly impact page performance by loading large scripts synchronously and making blocking network requests. Tools like Rybbit are designed to minimize this impact with lightweight asynchronous loading.",
+            text: "Many analytics tools can significantly impact page performance by loading large scripts synchronously and making blocking network requests. Tools like GHOST ID are designed to minimize this impact with lightweight asynchronous loading.",
           },
         },
       ],
@@ -142,7 +142,7 @@ const educationalContent = (
         <strong>Content Delivery:</strong> Use a CDN to serve content from servers geographically closer to your users.
       </li>
       <li>
-        <strong>Tool Selection:</strong> Choose lightweight tools like Rybbit (3KB) instead of heavyweight analytics
+        <strong>Tool Selection:</strong> Choose lightweight tools like GHOST ID (3KB) instead of heavyweight analytics
         solutions that slow down your site.
       </li>
     </ul>
@@ -195,7 +195,7 @@ const faqs = [
     answer: (
       <>
         Many analytics tools can significantly impact page performance by loading large scripts synchronously and making
-        blocking network requests. Tools like Rybbit are designed to minimize this impact with lightweight asynchronous
+        blocking network requests. Tools like GHOST ID are designed to minimize this impact with lightweight asynchronous
         loading.
       </>
     ),
@@ -213,8 +213,8 @@ export default function PageSpeedCalculatorPage() {
       educationalContent={educationalContent}
       faqs={faqs}
       relatedToolsCategory="analytics"
-      ctaTitle="Optimize your site speed with Rybbit"
-      ctaDescription="Rybbit is a lightweight analytics solution (3KB) that won't slow down your site. Monitor performance while maintaining fast load times."
+      ctaTitle="Optimize your site speed with GHOST ID"
+      ctaDescription="GHOST ID is a lightweight analytics solution (3KB) that won't slow down your site. Monitor performance while maintaining fast load times."
       ctaEventLocation="page_speed_calculator_cta"
       structuredData={structuredData}
     />

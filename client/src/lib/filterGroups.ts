@@ -1,4 +1,4 @@
-import { FilterParameter } from "@rybbit/shared";
+import { FilterParameter } from "@ghost-id/shared";
 
 const BASE_FILTERS: FilterParameter[] = [
   "hostname",

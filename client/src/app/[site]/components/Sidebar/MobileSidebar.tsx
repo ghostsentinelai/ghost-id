@@ -30,7 +30,7 @@ function MobileSidebarContent() {
         </SheetTrigger>
         <VisuallyHidden>
           <SheetHeader>
-            <SheetTitle>Rybbit Sidebar</SheetTitle>
+            <SheetTitle>GHOST ID Sidebar</SheetTitle>
           </SheetHeader>
         </VisuallyHidden>
         <SheetContent side="left" className="p-0 w-[240px] flex gap-0" showClose={false}>

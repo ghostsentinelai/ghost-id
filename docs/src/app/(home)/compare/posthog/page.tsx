@@ -4,22 +4,22 @@ import { PostHogComparisonContent } from "./ComparisonContent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Rybbit vs PostHog: Analytics Platform Comparison 2025",
+  title: "GHOST ID vs PostHog: Analytics Platform Comparison 2025",
   description:
-    "Compare Rybbit and PostHog. See why Rybbit's focused web analytics beats PostHog's complex product suite for teams wanting simplicity without sacrificing power.",
+    "Compare GHOST ID and PostHog. See why GHOST ID's focused web analytics beats PostHog's complex product suite for teams wanting simplicity without sacrificing power.",
   openGraph: {
-    title: "Rybbit vs PostHog: Focused Analytics vs Feature Bloat",
-    description: "PostHog does everything. Rybbit does web analytics perfectly. Compare the approaches.",
+    title: "GHOST ID vs PostHog: Focused Analytics vs Feature Bloat",
+    description: "PostHog does everything. GHOST ID does web analytics perfectly. Compare the approaches.",
     type: "website",
-    url: "https://rybbit.com/compare/posthog",
+    url: "https://ghost-id.com/compare/posthog",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rybbit vs PostHog Comparison",
+    title: "GHOST ID vs PostHog Comparison",
     description: "Focused web analytics vs all-in-one platform. Which approach fits your needs?",
   },
   alternates: {
-    canonical: "https://rybbit.com/compare/posthog",
+    canonical: "https://ghost-id.com/compare/posthog",
   },
 };
 
@@ -28,14 +28,14 @@ const structuredData = {
   "@graph": [
     {
       "@type": "WebPage",
-      "@id": "https://rybbit.com/compare/posthog",
-      name: "Rybbit vs PostHog Comparison",
-      description: "Compare Rybbit and PostHog analytics platforms",
-      url: "https://rybbit.com/compare/posthog",
+      "@id": "https://ghost-id.com/compare/posthog",
+      name: "GHOST ID vs PostHog Comparison",
+      description: "Compare GHOST ID and PostHog analytics platforms",
+      url: "https://ghost-id.com/compare/posthog",
       isPartOf: {
         "@type": "WebSite",
-        name: "Rybbit",
-        url: "https://rybbit.com",
+        name: "GHOST ID",
+        url: "https://ghost-id.com",
       },
     },
     {
@@ -43,26 +43,26 @@ const structuredData = {
       mainEntity: [
         {
           "@type": "Question",
-          name: "How is Rybbit different from PostHog?",
+          name: "How is GHOST ID different from PostHog?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Rybbit focuses exclusively on web analytics with a clean, simple interface. PostHog is an all-in-one product suite with analytics, feature flags, A/B testing, and more. Rybbit is ideal for teams who want powerful web analytics without the complexity.",
+            text: "GHOST ID focuses exclusively on web analytics with a clean, simple interface. PostHog is an all-in-one product suite with analytics, feature flags, A/B testing, and more. GHOST ID is ideal for teams who want powerful web analytics without the complexity.",
           },
         },
         {
           "@type": "Question",
-          name: "Is Rybbit simpler than PostHog?",
+          name: "Is GHOST ID simpler than PostHog?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Yes. Rybbit provides a single-page dashboard with all essential metrics visible at a glance. PostHog's extensive feature set requires more time to learn and configure.",
+            text: "Yes. GHOST ID provides a single-page dashboard with all essential metrics visible at a glance. PostHog's extensive feature set requires more time to learn and configure.",
           },
         },
         {
           "@type": "Question",
-          name: "Which is better for web analytics, Rybbit or PostHog?",
+          name: "Which is better for web analytics, GHOST ID or PostHog?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "For pure web analytics, Rybbit offers a more focused and streamlined experience. PostHog is better suited for teams needing a full product analytics suite with feature flags and experimentation.",
+            text: "For pure web analytics, GHOST ID offers a more focused and streamlined experience. PostHog is better suited for teams needing a full product analytics suite with feature flags and experimentation.",
           },
         },
       ],

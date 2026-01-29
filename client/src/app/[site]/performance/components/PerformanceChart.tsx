@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useGetPerformanceTimeSeries } from "../../../../api/analytics/hooks/performance/useGetPerformanceTimeSeries";
 import { BucketSelection } from "../../../../components/BucketSelection";
-import { RybbitLogo } from "../../../../components/RybbitLogo";
+import { GHOST IDLogo } from "../../../../components/GHOST IDLogo";
 import { authClient } from "../../../../lib/auth";
 import { formatChartDateTime, hour12, userLocale } from "../../../../lib/dateTimeUtils";
 import { getTimezone, useStore } from "../../../../lib/store";
@@ -197,11 +197,11 @@ export function PerformanceChart() {
         <div className="flex items-center justify-between px-2 md:px-0">
           <div className="flex items-center space-x-4">
             <Link
-              href={session.data ? "/" : "https://rybbit.com"}
+              href={session.data ? "/" : "https://ghost-id.com"}
               className={cn("text-lg font-semibold flex items-center gap-1.5 opacity-75", tilt_wrap.className)}
             >
-              <RybbitLogo width={20} height={20} />
-              rybbit
+              <GHOST IDLogo width={20} height={20} />
+              ghost-id
             </Link>
           </div>
           <div className="flex items-center space-x-4">

@@ -9,7 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <Image src="/rybbit-text.svg" alt="Rybbit" width={120} height={0} style={{ height: "auto" }}
+            <Image src="/ghost-id-text.svg" alt="GHOST ID" width={120} height={0} style={{ height: "auto" }}
               className="dark:invert-0 invert"
               
                />
@@ -18,12 +18,12 @@ export function Footer() {
               user privacy.
             </p> */}
             <a
-              href="https://www.producthunt.com/products/rybbit?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-rybbit&#0045;2"
+              href="https://www.producthunt.com/products/ghost-id?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-ghost-id&#0045;2"
               target="_blank"
             >
               <img
                 src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1028220&theme=neutral&period=daily&t=1761001525479"
-                alt="Rybbit - Open&#0032;Source&#0032;Google&#0032;Analytics&#0032;Replacement | Product Hunt"
+                alt="GHOST ID - Open&#0032;Source&#0032;Google&#0032;Analytics&#0032;Replacement | Product Hunt"
                 style={{ width: "250px", height: "54px", margin: "20px 0px" }}
                 width="250"
                 height="54"
@@ -32,7 +32,7 @@ export function Footer() {
             {/* Social Media Links */}
             <div className="flex gap-4">
               <a
-                href="https://github.com/rybbit-io/rybbit"
+                href="https://github.com/ghost-id-io/ghost-id"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
@@ -148,7 +148,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://github.com/rybbit-io/rybbit"
+                  href="https://github.com/ghost-id-io/ghost-id"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
@@ -214,7 +214,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="mailto:hello@rybbit.com" className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                <a href="mailto:hello@ghost-id.com" className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors">
                   Support
                 </a>
               </li>
@@ -225,7 +225,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-neutral-200 dark:border-neutral-800">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-neutral-400">© {new Date().getFullYear()} Rybbit. All rights reserved.</div>
+            <div className="text-sm text-neutral-400">© {new Date().getFullYear()} GHOST ID. All rights reserved.</div>
             <div className="text-sm text-neutral-400">
               Made with ❤️ by frogs{" "}
               <a href="https://tomato.gg" target="_blank" title="Tomato.gg">

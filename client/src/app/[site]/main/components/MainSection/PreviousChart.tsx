@@ -7,7 +7,7 @@ import { DateTime } from "luxon";
 import { GetOverviewBucketedResponse } from "../../../../../api/analytics/endpoints";
 import { APIResponse } from "../../../../../api/types";
 import { Time } from "../../../../../components/DateSelector/types";
-import { TimeBucket } from "@rybbit/shared";
+import { TimeBucket } from "@ghost-id/shared";
 
 const getMin = (time: Time, bucket: TimeBucket, timezone: string) => {
   if (time.mode === "day") {

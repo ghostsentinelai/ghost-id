@@ -43,6 +43,7 @@ export interface BasePayload {
   page_title: string;
   referrer: string;
   user_id?: string;
+  visitor_id?: string; // Persistent GHOST Visitor ID
 }
 
 export interface TrackingPayload extends BasePayload {
@@ -59,7 +60,7 @@ export interface TrackingPayload extends BasePayload {
 
 export interface ButtonClickProperties {
   text?: string;
-  [key: string]: string | undefined; // Additional data-rybbit-* attributes
+  [key: string]: string | undefined; // Additional data-ghost-id-* attributes
 }
 
 export interface CopyProperties {
@@ -100,7 +101,7 @@ export interface ErrorProperties {
   [key: string]: any;
 }
 
-export interface RybbitAPI {
+export interface GHOST IDAPI {
   pageview: () => void;
   event: (name: string, properties?: Record<string, any>) => void;
   error: (error: Error, properties?: ErrorProperties) => void;

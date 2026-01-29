@@ -114,7 +114,7 @@ class UsageService {
     name: string;
   }): Promise<[number, string | null]> {
     // Special case for specific organizations
-    if (orgData.name === "rybbit" || orgData.name === "Zam") {
+    if (orgData.name === "ghost-id" || orgData.name === "Zam") {
       return [Infinity, this.getStartOfMonth()];
     }
 

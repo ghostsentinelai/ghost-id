@@ -1,4 +1,4 @@
-import { Filter } from "@rybbit/shared";
+import { Filter } from "@ghost-id/shared";
 import { DateTime } from "luxon";
 import { create } from "zustand";
 import { EndpointConfig } from "../utils/endpointConfig";

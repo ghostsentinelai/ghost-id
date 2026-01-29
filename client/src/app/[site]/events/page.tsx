@@ -12,7 +12,7 @@ import { EventsChart } from "./components/EventsChart";
 
 
 export default function EventsPage() {
-  useSetPageTitle("Rybbit · Events");
+  useSetPageTitle("GHOST ID · Events");
 
   const { data: eventNamesData, isLoading: isLoadingEventNames } = useGetEventNames();
 

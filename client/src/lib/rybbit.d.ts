@@ -1,4 +1,4 @@
-interface Rybbit {
+interface GHOST ID {
   /**
    * Tracks a page view
    */
@@ -46,7 +46,7 @@ interface Rybbit {
 
 declare global {
   interface Window {
-    rybbit: Rybbit;
+    ghost-id: GHOST ID;
   }
 }
 

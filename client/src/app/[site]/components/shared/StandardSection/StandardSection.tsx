@@ -1,6 +1,6 @@
 "use client";
 
-import { Filter, FilterParameter } from "@rybbit/shared";
+import { Filter, FilterParameter } from "@ghost-id/shared";
 import { Info } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";

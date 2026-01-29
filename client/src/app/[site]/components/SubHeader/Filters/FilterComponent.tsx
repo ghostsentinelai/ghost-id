@@ -1,4 +1,4 @@
-import { Filter, FilterParameter, FilterType } from "@rybbit/shared";
+import { Filter, FilterParameter, FilterType } from "@ghost-id/shared";
 import { HelpCircle, Trash } from "lucide-react";
 import { useMemo } from "react";
 import { Button } from "../../../../../components/ui/button";

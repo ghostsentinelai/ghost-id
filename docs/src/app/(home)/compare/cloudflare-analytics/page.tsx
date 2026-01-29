@@ -4,22 +4,22 @@ import { CloudflareAnalyticsComparisonContent } from "./ComparisonContent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Rybbit vs Cloudflare Analytics: Full Comparison 2025",
+  title: "GHOST ID vs Cloudflare Analytics: Full Comparison 2025",
   description:
-    "Compare Rybbit and Cloudflare Web Analytics. While Cloudflare is free and basic, Rybbit offers advanced features like session replay, funnels, and custom events.",
+    "Compare GHOST ID and Cloudflare Web Analytics. While Cloudflare is free and basic, GHOST ID offers advanced features like session replay, funnels, and custom events.",
   openGraph: {
-    title: "Rybbit vs Cloudflare Analytics: Basic vs Full-Featured",
-    description: "Cloudflare is free but limited. Rybbit offers the full analytics experience. Compare features.",
+    title: "GHOST ID vs Cloudflare Analytics: Basic vs Full-Featured",
+    description: "Cloudflare is free but limited. GHOST ID offers the full analytics experience. Compare features.",
     type: "website",
-    url: "https://rybbit.com/compare/cloudflare-analytics",
+    url: "https://ghost-id.com/compare/cloudflare-analytics",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rybbit vs Cloudflare Analytics",
+    title: "GHOST ID vs Cloudflare Analytics",
     description: "Free basic analytics vs full-featured platform. See the difference.",
   },
   alternates: {
-    canonical: "https://rybbit.com/compare/cloudflare-analytics",
+    canonical: "https://ghost-id.com/compare/cloudflare-analytics",
   },
 };
 
@@ -28,14 +28,14 @@ const structuredData = {
   "@graph": [
     {
       "@type": "WebPage",
-      "@id": "https://rybbit.com/compare/cloudflare-analytics",
-      name: "Rybbit vs Cloudflare Analytics Comparison",
-      description: "Compare Rybbit and Cloudflare Web Analytics",
-      url: "https://rybbit.com/compare/cloudflare-analytics",
+      "@id": "https://ghost-id.com/compare/cloudflare-analytics",
+      name: "GHOST ID vs Cloudflare Analytics Comparison",
+      description: "Compare GHOST ID and Cloudflare Web Analytics",
+      url: "https://ghost-id.com/compare/cloudflare-analytics",
       isPartOf: {
         "@type": "WebSite",
-        name: "Rybbit",
-        url: "https://rybbit.com",
+        name: "GHOST ID",
+        url: "https://ghost-id.com",
       },
     },
     {
@@ -43,26 +43,26 @@ const structuredData = {
       mainEntity: [
         {
           "@type": "Question",
-          name: "Is Rybbit better than Cloudflare Analytics?",
+          name: "Is GHOST ID better than Cloudflare Analytics?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Rybbit offers significantly more features than Cloudflare Web Analytics including session replay, funnels, custom events, user journeys, and conversion tracking. Cloudflare is free but limited to basic pageview metrics.",
+            text: "GHOST ID offers significantly more features than Cloudflare Web Analytics including session replay, funnels, custom events, user journeys, and conversion tracking. Cloudflare is free but limited to basic pageview metrics.",
           },
         },
         {
           "@type": "Question",
-          name: "What features does Rybbit have that Cloudflare doesn't?",
+          name: "What features does GHOST ID have that Cloudflare doesn't?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Rybbit includes session replay, funnel analysis, custom event tracking, user journey visualization, Web Vitals monitoring, error tracking, goals and conversions, and public dashboards. Cloudflare only provides basic traffic metrics.",
+            text: "GHOST ID includes session replay, funnel analysis, custom event tracking, user journey visualization, Web Vitals monitoring, error tracking, goals and conversions, and public dashboards. Cloudflare only provides basic traffic metrics.",
           },
         },
         {
           "@type": "Question",
-          name: "Should I switch from Cloudflare Analytics to Rybbit?",
+          name: "Should I switch from Cloudflare Analytics to GHOST ID?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "If you need more than basic pageview data, yes. Rybbit provides actionable insights with session replay, conversion tracking, and user behavior analysis that Cloudflare doesn't offer.",
+            text: "If you need more than basic pageview data, yes. GHOST ID provides actionable insights with session replay, conversion tracking, and user behavior analysis that Cloudflare doesn't offer.",
           },
         },
       ],

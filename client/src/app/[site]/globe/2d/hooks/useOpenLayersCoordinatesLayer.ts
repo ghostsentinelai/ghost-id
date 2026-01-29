@@ -1,4 +1,4 @@
-import { FilterParameter } from "@rybbit/shared/dist/filters";
+import { FilterParameter } from "@ghost-id/shared/dist/filters";
 import { round } from "lodash";
 import { useEffect, useRef } from "react";
 import Map from "ol/Map";

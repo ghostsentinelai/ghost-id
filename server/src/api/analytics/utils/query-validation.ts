@@ -1,4 +1,4 @@
-import { FilterParams } from "@rybbit/shared";
+import { FilterParams } from "@ghost-id/shared";
 import { z } from "zod";
 
 // =============================================================================

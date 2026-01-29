@@ -5,7 +5,7 @@ import { useGetOverviewBucketed } from "@/api/analytics/hooks/useGetOverviewBuck
 import { MetricResponse } from "@/api/analytics/endpoints";
 import { usePageMetadata } from "@/api/usePageMetadata";
 import { Card, CardContent } from "@/components/ui/card";
-import { Filter } from "@rybbit/shared";
+import { Filter } from "@ghost-id/shared";
 import { useStore } from "@/lib/store";
 import { MINUTES_IN_24_HOURS } from "@/lib/const";
 import { truncateString } from "@/lib/utils";

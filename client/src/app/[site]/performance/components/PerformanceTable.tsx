@@ -24,7 +24,7 @@ import { useGetSite } from "../../../../api/admin/hooks/useSites";
 import { useGetPerformanceByDimension } from "../../../../api/analytics/hooks/performance/useGetPerformanceByDimension";
 import { PerformanceByDimensionItem } from "../../../../api/analytics/endpoints";
 import { Pagination } from "../../../../components/pagination";
-import { FilterParameter } from "@rybbit/shared";
+import { FilterParameter } from "@ghost-id/shared";
 import { useStore, addFilter, removeFilter } from "../../../../lib/store";
 import { PerformanceMetric, usePerformanceStore } from "../performanceStore";
 import { formatMetricValue, getMetricColor, getMetricUnit } from "../utils/performanceUtils";

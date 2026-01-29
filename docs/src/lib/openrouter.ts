@@ -67,8 +67,8 @@ export async function callOpenRouter(
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://rybbit.com",
-        "X-Title": "Rybbit Analytics Tools",
+        "HTTP-Referer": "https://ghost-id.com",
+        "X-Title": "GHOST ID Analytics Tools",
       },
       body: JSON.stringify({
         model,
@@ -115,8 +115,8 @@ export async function callOpenRouterImage(
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://rybbit.com",
-        "X-Title": "Rybbit Analytics Tools",
+        "HTTP-Referer": "https://ghost-id.com",
+        "X-Title": "GHOST ID Analytics Tools",
       },
       body: JSON.stringify({
         model,
