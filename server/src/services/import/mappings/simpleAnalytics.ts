@@ -1,6 +1,6 @@
 import { clearSelfReferrer, getAllUrlParams } from "../../tracker/utils.js";
 import { getChannel } from "../../tracker/getChannel.js";
-import { GHOST IDEvent } from "./ghost-id.js";
+import { GhostIdEvent } from "./ghost-id.js";
 import { z } from "zod";
 import { UAParser } from "ua-parser-js";
 import { DateTime } from "luxon";
@@ -37,8 +37,8 @@ export class SimpleAnalyticsImportMapper {
     SimpleAnalyticsImportMapper.simpleAnalyticsEventSchema
   );
 
-  static transform(events: SimpleAnalyticsEvent[], site: number, importId: string): GHOST IDEvent[] {
-    return events.reduce<GHOST IDEvent[]>((acc, event) => {
+  static transform(events: SimpleAnalyticsEvent[], site: number, importId: string): GhostIdEvent[] {
+    return events.reduce<GhostIdEvent[]>((acc, event) => {
       const parsed = SimpleAnalyticsImportMapper.simpleAnalyticsEventSchema.safeParse(event);
       if (!parsed.success) {
         return acc;

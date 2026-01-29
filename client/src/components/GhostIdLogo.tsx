@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useWhiteLabel } from "../hooks/useIsWhiteLabel";
 import { Skeleton } from "./ui/skeleton";
 
-export function GHOST IDLogo({ width = 32, height = 32 }: { width?: number; height?: number }) {
+export function GhostIdLogo({ width = 32, height = 32 }: { width?: number; height?: number }) {
   const { whiteLabelImage, isPending } = useWhiteLabel();
   const [mounted, setMounted] = useState(false);
 
@@ -32,7 +32,7 @@ export function GHOST IDLogo({ width = 32, height = 32 }: { width?: number; heig
   // );
 }
 
-export function GHOST IDTextLogo({ width = 150, height = 34 }: { width?: number; height?: number }) {
+export function GhostIdTextLogo({ width = 150, height = 34 }: { width?: number; height?: number }) {
   const { whiteLabelImage, isPending } = useWhiteLabel();
   const [mounted, setMounted] = useState(false);
 

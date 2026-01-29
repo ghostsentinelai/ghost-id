@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     try {
       const response = await fetch(validatedData.url, {
         headers: {
-          "User-Agent": "Mozilla/5.0 (compatible; GHOST IDBot/1.0; +https://ghost-id.com)",
+          "User-Agent": "Mozilla/5.0 (compatible; GhostIdBot/1.0; +https://ghost-id.com)",
         },
         signal: AbortSignal.timeout(10000), // 10 second timeout
       });

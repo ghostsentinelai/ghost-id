@@ -8,7 +8,7 @@ import { useEmbedablePage } from "../app/[site]/utils";
 import { useAdminPermission } from "../app/admin/hooks/useAdminPermission";
 import { IS_CLOUD } from "../lib/const";
 import { cn } from "../lib/utils";
-import { GHOST IDLogo } from "./GHOST IDLogo";
+import { GhostIdLogo } from "./GhostIdLogo";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { authClient } from "../lib/auth";
 import { useSignout } from "../hooks/useSignout";
@@ -49,7 +49,7 @@ function AppSidebarContent() {
     >
       <div className="flex flex-col items-start gap-2">
         {/* <Link href="/" className="mb-3 mt-1 ml-0.5 flex items-center justify-center">
-          <GHOST IDLogo width={24} height={18} />
+          <GhostIdLogo width={24} height={18} />
           <HomeIcon className="w-5 h-5" />
         </Link> */}
         <SidebarLink

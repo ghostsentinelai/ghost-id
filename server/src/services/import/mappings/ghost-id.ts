@@ -1,4 +1,4 @@
-export interface GHOST IDEvent {
+export interface GhostIdEvent {
   site_id: number;
   timestamp: string;
   session_id: string;

@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useGetPerformanceTimeSeries } from "../../../../api/analytics/hooks/performance/useGetPerformanceTimeSeries";
 import { BucketSelection } from "../../../../components/BucketSelection";
-import { GHOST IDLogo } from "../../../../components/GHOST IDLogo";
+import { GhostIdLogo } from "../../../../components/GhostIdLogo";
 import { authClient } from "../../../../lib/auth";
 import { formatChartDateTime, hour12, userLocale } from "../../../../lib/dateTimeUtils";
 import { getTimezone, useStore } from "../../../../lib/store";
@@ -200,7 +200,7 @@ export function PerformanceChart() {
               href={session.data ? "/" : "https://ghost-id.com"}
               className={cn("text-lg font-semibold flex items-center gap-1.5 opacity-75", tilt_wrap.className)}
             >
-              <GHOST IDLogo width={20} height={20} />
+              <GhostIdLogo width={20} height={20} />
               ghost-id
             </Link>
           </div>

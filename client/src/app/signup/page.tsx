@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { parseAsInteger, useQueryState } from "nuqs";
 import React, { Suspense, useEffect, useState } from "react";
 import { addSite } from "../../api/admin/endpoints";
-import { GHOST IDLogo, GHOST IDTextLogo } from "../../components/GHOST IDLogo";
+import { GhostIdLogo, GhostIdTextLogo } from "../../components/GhostIdLogo";
 import { SpinningGlobe } from "../../components/SpinningGlobe";
 import { useSetPageTitle } from "../../hooks/useSetPageTitle";
 import { authClient } from "../../lib/auth";
@@ -372,7 +372,7 @@ function SignupPageContent() {
       <div className="flex justify-center items-center h-dvh w-full">
         <Card className="w-full max-w-sm p-1">
           <CardHeader>
-            <GHOST IDLogo width={32} height={32} />
+            <GhostIdLogo width={32} height={32} />
             <CardTitle className="text-2xl flex justify-center">Sign Up Disabled</CardTitle>
           </CardHeader>
           <CardContent>
@@ -398,7 +398,7 @@ function SignupPageContent() {
         {/* Logo at top left */}
         <div className="mb-8">
           <a href="https://ghost-id.com" target="_blank" className="inline-block">
-            <GHOST IDTextLogo />
+            <GhostIdTextLogo />
           </a>
         </div>
 

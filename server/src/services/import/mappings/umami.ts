@@ -1,6 +1,6 @@
 import { clearSelfReferrer, getAllUrlParams } from "../../tracker/utils.js";
 import { getChannel } from "../../tracker/getChannel.js";
-import { GHOST IDEvent } from "./ghost-id.js";
+import { GhostIdEvent } from "./ghost-id.js";
 import { z } from "zod";
 import { deriveKeyOnlySchema } from "./utils.js";
 
@@ -109,8 +109,8 @@ export class UmamiImportMapper {
 
   static readonly umamiEventKeyOnlySchema = deriveKeyOnlySchema(UmamiImportMapper.umamiEventSchema);
 
-  static transform(events: UmamiEvent[], site: number, importId: string): GHOST IDEvent[] {
-    return events.reduce<GHOST IDEvent[]>((acc, event) => {
+  static transform(events: UmamiEvent[], site: number, importId: string): GhostIdEvent[] {
+    return events.reduce<GhostIdEvent[]>((acc, event) => {
       const parsed = UmamiImportMapper.umamiEventSchema.safeParse(event);
       if (!parsed.success) {
         return acc;

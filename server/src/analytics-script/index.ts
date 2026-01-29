@@ -5,12 +5,12 @@ import { ClickTrackingManager } from "./clickTracking.js";
 import { CopyTrackingManager } from "./copyTracking.js";
 import { FormTrackingManager } from "./formTracking.js";
 import { debounce, isOutboundLink } from "./utils.js";
-import { GHOST IDAPI, WebVitalsData, ErrorProperties } from "./types.js";
+import { GhostIdAPI, WebVitalsData, ErrorProperties } from "./types.js";
 
 declare global {
   interface Window {
     __RYBBIT_OPTOUT__?: boolean;
-    ghost-id: GHOST IDAPI;
+    ghost-id: GhostIdAPI;
     [key: string]: any;
   }
 }

@@ -4,7 +4,7 @@ import { AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { ThreeDotLoader } from "../../components/Loaders";
-import { GHOST IDLogo } from "../../components/GHOST IDLogo";
+import { GhostIdLogo } from "../../components/GhostIdLogo";
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
@@ -28,7 +28,7 @@ function AuthComponent() {
   return (
     <Card className="w-full max-w-md p-1">
       <CardHeader>
-        <GHOST IDLogo width={32} height={32} />
+        <GhostIdLogo width={32} height={32} />
         <CardTitle className="text-2xl flex justify-center">Join {organization}</CardTitle>
         <p className="text-center text-sm text-muted-foreground mt-2">You've been invited by {inviterEmail}</p>
       </CardHeader>
@@ -84,7 +84,7 @@ function AcceptInvitationInner() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <GHOST IDLogo width={32} height={32} />
+        <GhostIdLogo width={32} height={32} />
         <CardTitle className="text-2xl flex justify-center">Invitation</CardTitle>
       </CardHeader>
       <CardContent>

@@ -101,7 +101,7 @@ export interface ErrorProperties {
   [key: string]: any;
 }
 
-export interface GHOST IDAPI {
+export interface GhostIdAPI {
   pageview: () => void;
   event: (name: string, properties?: Record<string, any>) => void;
   error: (error: Error, properties?: ErrorProperties) => void;
