@@ -84,7 +84,7 @@ After rebuilding and deploying your Docusaurus site (e.g., `npm run build` and `
 
 <Callout type="info">
   **Page View Tracking**: Docusaurus builds a Single Page Application (SPA). GHOST ID's tracking script is designed to automatically detect route changes in SPAs and track them as page views. If you find that page views are not being tracked correctly after client-side navigation (which is uncommon), you might need to manually trigger page views. Docusaurus uses React Router internally. You could potentially use a client module or swizzle a component to tap into navigation events if manual tracking is absolutely necessary, but **test the default behavior first**.
-  If manual tracking is required, you would call `window.ghost-id.pageview()` after a route change.
+  If manual tracking is required, you would call `window["ghost-id"].pageview()` after a route change.
 </Callout>
 
 ## Custom Event Tracking
@@ -98,8 +98,8 @@ import React from 'react';
 
 export default function MyCustomButton({ children, eventName, eventData }) {
   const handleClick = () => {
-    if (typeof window !== 'undefined' && window.ghost-id) {
-      window.ghost-id.event(eventName || 'docusaurus_custom_click', eventData || {});
+    if (typeof window !== 'undefined' && window["ghost-id"]) {
+      window["ghost-id"].event(eventName || 'docusaurus_custom_click', eventData || {});
     }
   };
 
@@ -128,20 +128,20 @@ export function onRouteUpdate({location, previousLocation}) {
   // This function runs after Docusaurus finishes navigating to a new route.
   // You could also use onRouteDidUpdate if you need the DOM to be fully updated.
 
-  if (typeof window !== 'undefined' && window.ghost-id && location.pathname !== previousLocation?.pathname) {
+  if (typeof window !== 'undefined' && window["ghost-id"] && location.pathname !== previousLocation?.pathname) {
     // GHOST ID should auto-track pageviews, but if needed:
-    // window.ghost-id.pageview();
+    // window["ghost-id"].pageview();
   }
 
   // Example: Add event listeners for specific elements
   document.querySelectorAll('a[target="_blank"]').forEach(link => {
     link.addEventListener('click', () => {
-      if (window.ghost-id) {
-        window.ghost-id.event('external_link_click', { href: link.href });
+      if (window["ghost-id"]) {
+        window["ghost-id"].event('external_link_click', { href: link.href });
       }
     });
   });
 }
 ```
 
-Always ensure `window.ghost-id` is available before calling its methods in client-side scripts.
+Always ensure `window["ghost-id"]` is available before calling its methods in client-side scripts.

@@ -97,7 +97,7 @@ Available script attributes:
 
 ## Custom Event Tracking
 
-You can track custom events in your Mintlify documentation using the global `window.ghost-id` API. This is useful for tracking specific user interactions like button clicks, downloads, or form submissions.
+You can track custom events in your Mintlify documentation using the global `window["ghost-id"]` API. This is useful for tracking specific user interactions like button clicks, downloads, or form submissions.
 
 ### Tracking Custom Events in MDX
 
@@ -106,8 +106,8 @@ Since Mintlify supports MDX, you can add inline event handlers to track custom e
 ```mdx
 <button
   onClick={() => {
-    if (typeof window !== 'undefined' && window.ghost-id) {
-      window.ghost-id.event('download_clicked', {
+    if (typeof window !== 'undefined' && window["ghost-id"]) {
+      window["ghost-id"].event('download_clicked', {
         file: 'getting-started-guide.pdf',
         section: 'introduction'
       });

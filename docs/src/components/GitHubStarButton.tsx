@@ -13,7 +13,7 @@ export function GitHubStarButton() {
 
   useEffect(() => {
     if (systemTheme && resolvedTheme && window?.ghost-id?.event) {
-      window.ghost-id.event("theme", {
+      window["ghost-id"].event("theme", {
         resolvedTheme,
         systemTheme,
       });

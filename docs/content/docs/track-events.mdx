@@ -3,7 +3,7 @@ title: Track Events
 description: How to track custom events with GHOST ID
 ---
 
-The script exposes a global object `window.ghost-id` with functions for manual tracking of events, as well as the ability to track events using data attributes on HTML elements.
+The script exposes a global object `window["ghost-id"]` with functions for manual tracking of events, as well as the ability to track events using data attributes on HTML elements.
 
 ## Using Data Attributes
 
@@ -27,7 +27,7 @@ This approach requires no JavaScript and works on any clickable element.
 
 ## Available Functions
 
-### `window.ghost-id.event(eventName, properties)`
+### `window["ghost-id"].event(eventName, properties)`
 
 Tracks a custom event with optional properties.
 
@@ -36,23 +36,23 @@ Tracks a custom event with optional properties.
 
 ```javascript
 // Track a simple custom event
-window.ghost-id.event("Signup Button Clicked");
+window["ghost-id"].event("Signup Button Clicked");
 
 // Track a custom event with properties
-window.ghost-id.event("Item Added To Cart", {
+window["ghost-id"].event("Item Added To Cart", {
   itemId: "PROD123",
   price: 49.99,
   category: "Clothing"
 });
 ```
 
-### `window.ghost-id.pageview()`
+### `window["ghost-id"].pageview()`
 
 Tracks a pageview. Useful when `data-track-spa` is set to `"false"` or when you need to manually trigger a pageview.
 
 ```javascript
 // Track a pageview
-window.ghost-id.pageview();
+window["ghost-id"].pageview();
 ```
 
 ## TypeScript Support

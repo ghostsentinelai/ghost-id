@@ -47,8 +47,8 @@ function ghost-id_track_view_product() {
     );
     ?>
     <script type="text/javascript">
-        if (typeof window.ghost-id !== 'undefined') {
-            window.ghost-id.event('view_item', <?php echo json_encode($product_data); ?>);
+        if (typeof window["ghost-id"] !== 'undefined') {
+            window["ghost-id"].event('view_item', <?php echo json_encode($product_data); ?>);
         }
     </script>
     <?php
@@ -88,10 +88,10 @@ function ghost-id_track_add_to_cart_script() {
                     quantity = parseInt(quantityInput.value, 10);
                 }
 
-                if (typeof window.ghost-id !== 'undefined') {
+                if (typeof window["ghost-id"] !== 'undefined') {
                     const eventData = <?php echo json_encode($product_data); ?>;
                     eventData.quantity = quantity > 0 ? quantity : 1;
-                    window.ghost-id.event('add_to_cart', eventData);
+                    window["ghost-id"].event('add_to_cart', eventData);
                 }
             });
         }
@@ -107,12 +107,12 @@ function ghost-id_ajax_add_to_cart_tracker() {
     ?>
     <script type="text/javascript">
         jQuery(document.body).on('added_to_cart', function(event, fragments, cart_hash, $button) {
-            if (typeof window.ghost-id !== 'undefined' && $button && $button.length) {
+            if (typeof window["ghost-id"] !== 'undefined' && $button && $button.length) {
                 const productId = $button.data('product_id');
                 const quantity = $button.data('quantity') || 1; // Or $button.closest('.product').find('input.qty').val()
                 // Note: Getting full product details here via AJAX might be needed for price, name, SKU
                 // This example sends basic info. For more details, you might need another AJAX call or pass data via $button.data attributes
-                window.ghost-id.event('add_to_cart', {
+                window["ghost-id"].event('add_to_cart', {
                     item_id: productId,
                     quantity: quantity,
                     source: 'ajax_add_to_cart'
@@ -156,8 +156,8 @@ function ghost-id_track_begin_checkout() {
     );
     ?>
     <script type="text/javascript">
-        if (typeof window.ghost-id !== 'undefined') {
-            window.ghost-id.event('begin_checkout', <?php echo json_encode($checkout_data); ?>);
+        if (typeof window["ghost-id"] !== 'undefined') {
+            window["ghost-id"].event('begin_checkout', <?php echo json_encode($checkout_data); ?>);
         }
     </script>
     <?php
@@ -201,8 +201,8 @@ function ghost-id_track_purchase( $order_id ) {
     );
     ?>
     <script type="text/javascript">
-        if (typeof window.ghost-id !== 'undefined') {
-            window.ghost-id.event('purchase', <?php echo json_encode($purchase_data); ?>);
+        if (typeof window["ghost-id"] !== 'undefined') {
+            window["ghost-id"].event('purchase', <?php echo json_encode($purchase_data); ?>);
         }
     </script>
     <?php
@@ -211,7 +211,7 @@ function ghost-id_track_purchase( $order_id ) {
 
 ## Important Considerations
 
-*   **Script Loading Order**: Ensure the main GHOST ID tracking script (added via the WordPress integration guide) is loaded before these event-specific scripts attempt to call `window.ghost-id`. Placing the main script in the `<head>` usually ensures this.
+*   **Script Loading Order**: Ensure the main GHOST ID tracking script (added via the WordPress integration guide) is loaded before these event-specific scripts attempt to call `window["ghost-id"]`. Placing the main script in the `<head>` usually ensures this.
 *   **Data Accuracy**: The product data (SKU, name, price) retrieved in these examples depends on your WooCommerce setup and product configuration. Test thoroughly.
 *   **AJAX Operations**: For themes or plugins that use AJAX heavily (e.g., AJAX add to cart, mini-cart updates), you might need more sophisticated JavaScript event listeners rather than relying solely on PHP action hooks that fire on page load. The AJAX add-to-cart example provides a starting point.
 *   **Performance**: While these snippets are generally lightweight, outputting many inline scripts can have a minor impact. For very high-traffic sites, consider consolidating JavaScript or using more advanced techniques if performance becomes a concern.

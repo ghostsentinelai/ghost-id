@@ -39,7 +39,7 @@ You can also include any custom fields you need for segmentation and analysis.
 
 ## API Reference
 
-### `window.ghost-id.identify(userId, traits?)`
+### `window["ghost-id"].identify(userId, traits?)`
 
 Sets a custom user ID for tracking logged-in users across devices and sessions, with optional user traits (metadata).
 
@@ -48,10 +48,10 @@ Sets a custom user ID for tracking logged-in users across devices and sessions, 
 
 ```javascript
 // Identify a user when they log in (without traits)
-window.ghost-id.identify("user_12345");
+window["ghost-id"].identify("user_12345");
 
 // Identify a user with traits (recommended)
-window.ghost-id.identify("user_12345", {
+window["ghost-id"].identify("user_12345", {
   username: "johndoe",           // Primary display name
   name: "John Doe",              // Fallback display name
   email: "john@example.com",
@@ -62,7 +62,7 @@ window.ghost-id.identify("user_12345", {
 // All subsequent events and pageviews will be associated with this user ID
 ```
 
-### `window.ghost-id.setTraits(traits)`
+### `window["ghost-id"].setTraits(traits)`
 
 Updates the traits for the currently identified user without re-identifying them. Useful for updating user properties after initial identification.
 
@@ -70,35 +70,35 @@ Updates the traits for the currently identified user without re-identifying them
 
 ```javascript
 // Update user traits after they upgrade their plan
-window.ghost-id.setTraits({
+window["ghost-id"].setTraits({
   plan: "enterprise",
   upgraded_at: "2024-01-15"
 });
 
 // Remove a trait by setting it to null
-window.ghost-id.setTraits({
+window["ghost-id"].setTraits({
   temporary_flag: null  // This trait will be removed
 });
 ```
 
 **Note:** You must call `identify()` before using `setTraits()`. If no user is identified, this will log a warning.
 
-### `window.ghost-id.clearUserId()`
+### `window["ghost-id"].clearUserId()`
 
 Clears the stored user ID. Useful when a user logs out.
 
 ```javascript
 // Clear user identification when user logs out
-window.ghost-id.clearUserId();
+window["ghost-id"].clearUserId();
 ```
 
-### `window.ghost-id.getUserId()`
+### `window["ghost-id"].getUserId()`
 
 Returns the currently set user ID, or `null` if none is set.
 
 ```javascript
 // Check if a user is identified
-const currentUserId = window.ghost-id.getUserId();
+const currentUserId = window["ghost-id"].getUserId();
 if (currentUserId) {
   console.log('Current user:', currentUserId);
 } else {
@@ -114,7 +114,7 @@ Here's a typical workflow for user identification:
 // When user logs in
 function handleLogin(userData) {
   // Set user identification with traits
-  window.ghost-id.identify(userData.id, {
+  window["ghost-id"].identify(userData.id, {
     username: userData.username,
     name: userData.fullName,
     email: userData.email,
@@ -122,7 +122,7 @@ function handleLogin(userData) {
   });
 
   // Track login event
-  window.ghost-id.event("User Login", {
+  window["ghost-id"].event("User Login", {
     method: "email"
   });
 }
@@ -130,13 +130,13 @@ function handleLogin(userData) {
 // When user upgrades their plan
 function handlePlanUpgrade(newPlan) {
   // Update traits without re-identifying
-  window.ghost-id.setTraits({
+  window["ghost-id"].setTraits({
     plan: newPlan,
     upgraded_at: new Date().toISOString()
   });
 
   // Track upgrade event
-  window.ghost-id.event("Plan Upgraded", {
+  window["ghost-id"].event("Plan Upgraded", {
     new_plan: newPlan
   });
 }
@@ -144,15 +144,15 @@ function handlePlanUpgrade(newPlan) {
 // When user logs out
 function handleLogout() {
   // Track logout event
-  window.ghost-id.event("User Logout");
+  window["ghost-id"].event("User Logout");
 
   // Clear user identification
-  window.ghost-id.clearUserId();
+  window["ghost-id"].clearUserId();
 }
 
 // Check identification status
 function checkUserStatus() {
-  const userId = window.ghost-id.getUserId();
+  const userId = window["ghost-id"].getUserId();
   if (userId) {
     console.log("User is identified:", userId);
   } else {

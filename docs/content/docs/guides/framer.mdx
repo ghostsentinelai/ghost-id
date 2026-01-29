@@ -37,7 +37,7 @@ Navigate to your GHOST ID dashboard to obtain your code snippet.
 </Steps>
 
 <Callout type="info">
-  **Page View Tracking in Framer**: Framer sites often behave like Single Page Applications (SPAs). GHOST ID's tracking script is designed to automatically detect URL changes and track them as page views. If you use Framer's navigation features (like links between pages or components that change the URL), GHOST ID should capture these. If you notice page views are not tracked correctly after navigation, you might need to manually trigger `window.ghost-id.pageview()` using a Framer code override or code component when a "virtual" page change occurs. Test the default behavior first.
+  **Page View Tracking in Framer**: Framer sites often behave like Single Page Applications (SPAs). GHOST ID's tracking script is designed to automatically detect URL changes and track them as page views. If you use Framer's navigation features (like links between pages or components that change the URL), GHOST ID should capture these. If you notice page views are not tracked correctly after navigation, you might need to manually trigger `window["ghost-id"].pageview()` using a Framer code override or code component when a "virtual" page change occurs. Test the default behavior first.
 </Callout>
 
 ## Custom Event Tracking in Framer
@@ -57,8 +57,8 @@ import type { ComponentType } from "react"
 export function withGHOST IDTracking(Component: ComponentType): ComponentType {
     return (props) => {
         const handleClick = () => {
-            if (typeof window !== "undefined" && window.ghost-id) {
-                window.ghost-id.event('framer_button_click', {
+            if (typeof window !== "undefined" && window["ghost-id"]) {
+                window["ghost-id"].event('framer_button_click', {
                     buttonName: props.text || 'Unnamed Button',
                     page: props.currentPage?.name || 'Unknown Page'
                 });
@@ -85,8 +85,8 @@ import React from "react"
 
 export function MyInteractiveComponent(props) {
     const handleInteraction = () => {
-        if (typeof window !== "undefined" && window.ghost-id) {
-            window.ghost-id.event('framer_component_interaction', {
+        if (typeof window !== "undefined" && window["ghost-id"]) {
+            window["ghost-id"].event('framer_component_interaction', {
                 componentName: 'MyInteractiveComponent',
                 detail: 'User interacted'
             });
@@ -100,4 +100,4 @@ export function MyInteractiveComponent(props) {
     )
 }
 ```
-Remember to always check for `window.ghost-id` before calling its methods. Publish your Framer site to see the tracking in action.
+Remember to always check for `window["ghost-id"]` before calling its methods. Publish your Framer site to see the tracking in action.

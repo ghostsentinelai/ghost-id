@@ -38,7 +38,7 @@ Those missing visitors in GA? They were always there. You just couldn't see them
 
 Track button clicks, form submissions, video plays - anything that matters to your business. It's one line of code:
 
-window.ghost-id.event("signup_clicked")
+window["ghost-id"].event("signup_clicked")
 
 Or use data attributes directly in your HTML:
 

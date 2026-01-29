@@ -79,11 +79,11 @@ Add this script to your ThriveCart **success page** (the page shown after a comp
   } catch (e) {}
 
   function isReady() {
-    return window.ghost-id && typeof window.ghost-id.event === "function";
+    return window["ghost-id"] && typeof window["ghost-id"].event === "function";
   }
 
   function send() {
-    window.ghost-id.event(EVENT_NAME, PAYLOAD);
+    window["ghost-id"].event(EVENT_NAME, PAYLOAD);
   }
 
   function waitThenSend(timeoutMs) {

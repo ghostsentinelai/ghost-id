@@ -75,7 +75,7 @@ Deploy your application and check your GHOST ID dashboard for incoming data. You
 </Steps>
 
 <Callout type="info">
-  **SPA Page View Tracking**: GHOST ID's script is designed to automatically track route changes in SPAs using Vue Router. If page views aren't tracked correctly after navigation, you might need to manually trigger them using `window.ghost-id.pageview()` after each route change. This can be done using Vue Router's navigation guards:
+  **SPA Page View Tracking**: GHOST ID's script is designed to automatically track route changes in SPAs using Vue Router. If page views aren't tracked correctly after navigation, you might need to manually trigger them using `window["ghost-id"].pageview()` after each route change. This can be done using Vue Router's navigation guards:
   ```javascript
   // Example with Vue Router in your router setup file (e.g., src/router/index.js)
   import { createRouter, createWebHistory } from 'vue-router';
@@ -87,8 +87,8 @@ Deploy your application and check your GHOST ID dashboard for incoming data. You
   });
 
   router.afterEach((to, from) => {
-    if (window.ghost-id && typeof window.ghost-id.pageview === 'function') {
-      window.ghost-id.pageview();
+    if (window["ghost-id"] && typeof window["ghost-id"].pageview === 'function') {
+      window["ghost-id"].pageview();
     }
   });
 
@@ -108,10 +108,10 @@ From any Vue component or method, you can track custom events:
 
 <script setup>
 function trackCustomEvent() {
-  if (window.ghost-id && typeof window.ghost-id.event === 'function') {
-    window.ghost-id.event('custom_vue_action', { detail: 'User performed a client-side Vue action' });
+  if (window["ghost-id"] && typeof window["ghost-id"].event === 'function') {
+    window["ghost-id"].event('custom_vue_action', { detail: 'User performed a client-side Vue action' });
   }
 }
 </script>
 ```
-Always check if `window.ghost-id` and its methods are available before calling them.
+Always check if `window["ghost-id"]` and its methods are available before calling them.

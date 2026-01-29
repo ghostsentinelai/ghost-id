@@ -88,8 +88,8 @@ After building and deploying your application, open your GHOST ID dashboard to c
   // this.router.events.pipe(
   //   filter(event => event instanceof NavigationEnd)
   // ).subscribe(() => {
-  //   if (window.ghost-id) {
-  //     window.ghost-id.pageview();
+  //   if (window["ghost-id"]) {
+  //     window["ghost-id"].pageview();
   //   }
   // });
   ```
@@ -121,12 +121,12 @@ declare global {
 })
 export class MyFeatureComponent {
   onFeatureClick(): void {
-    if (window.ghost-id && typeof window.ghost-id.event === 'function') {
-      window.ghost-id.event('feature_used', { featureName: 'Amazing Feature' });
+    if (window["ghost-id"] && typeof window["ghost-id"].event === 'function') {
+      window["ghost-id"].event('feature_used', { featureName: 'Amazing Feature' });
     } else {
       console.warn('GHOST ID tracking not available.');
     }
   }
 }
 ```
-Declaring `window.ghost-id` helps with TypeScript type checking. Always ensure `window.ghost-id` and its methods are available before calling them.
+Declaring `window["ghost-id"]` helps with TypeScript type checking. Always ensure `window["ghost-id"]` and its methods are available before calling them.

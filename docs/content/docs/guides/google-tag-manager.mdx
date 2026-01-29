@@ -83,8 +83,8 @@ You can create additional Custom HTML tags in GTM to track specific events:
 ```html
 <script>
   // Track a custom event when this tag fires
-  if (typeof window.ghost-id !== 'undefined') {
-    window.ghost-id.event('gtm_custom_event', {
+  if (typeof window["ghost-id"] !== 'undefined') {
+    window["ghost-id"].event('gtm_custom_event', {
       event_category: 'engagement',
       event_label: 'button_click',
       value: 1
@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const ctaButton = document.getElementById('cta-button');
   if (ctaButton) {
     ctaButton.addEventListener('click', function() {
-      if (typeof window.ghost-id !== 'undefined') {
-        window.ghost-id.event('cta_clicked', {
+      if (typeof window["ghost-id"] !== 'undefined') {
+        window["ghost-id"].event('cta_clicked', {
           button_text: ctaButton.textContent,
           page_path: window.location.pathname,
           timestamp: new Date().toISOString()
@@ -124,8 +124,8 @@ You can leverage GTM's built-in variables and triggers to send custom events to 
 
 ```html
 <script>
-  if (typeof window.ghost-id !== 'undefined') {
-    window.ghost-id.event('{{Event}}', {
+  if (typeof window["ghost-id"] !== 'undefined') {
+    window["ghost-id"].event('{{Event}}', {
       page: '{{Page URL}}',
       referrer: '{{Referrer}}',
       click_text: '{{Click Text}}',
@@ -141,13 +141,13 @@ You can leverage GTM's built-in variables and triggers to send custom events to 
 
 ```javascript
 // Form submission
-window.ghost-id.event('form_submitted', {
+window["ghost-id"].event('form_submitted', {
   form_id: 'contact-form',
   form_name: 'Contact Us'
 });
 
 // E-commerce tracking
-window.ghost-id.event('add_to_cart', {
+window["ghost-id"].event('add_to_cart', {
   product_id: '12345',
   product_name: 'Example Product',
   price: 29.99,
@@ -155,14 +155,14 @@ window.ghost-id.event('add_to_cart', {
 });
 
 // Video engagement
-window.ghost-id.event('video_played', {
+window["ghost-id"].event('video_played', {
   video_title: 'Product Demo',
   duration: 120,
   percent_watched: 75
 });
 
 // Download tracking
-window.ghost-id.event('file_downloaded', {
+window["ghost-id"].event('file_downloaded', {
   file_name: 'whitepaper.pdf',
   file_type: 'pdf',
   file_size: '2.5MB'

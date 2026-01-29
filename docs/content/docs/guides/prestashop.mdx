@@ -127,7 +127,7 @@ To track completed purchases, add a script to the order confirmation page. Creat
   function waitForGHOST ID(callback, timeout) {
     var start = Date.now();
     (function check() {
-      if (window.ghost-id && typeof window.ghost-id.event === 'function') {
+      if (window["ghost-id"] && typeof window["ghost-id"].event === 'function') {
         callback();
       } else if (Date.now() - start < timeout) {
         setTimeout(check, 100);
@@ -136,7 +136,7 @@ To track completed purchases, add a script to the order confirmation page. Creat
   }
 
   waitForGHOST ID(function() {
-    window.ghost-id.event('purchase', {
+    window["ghost-id"].event('purchase', {
       transaction_id: '{$order.details.reference}',
       value: {$order.totals.total.amount},
       currency: '{$order.totals.total.currency}'

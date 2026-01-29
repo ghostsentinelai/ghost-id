@@ -142,7 +142,7 @@ function SignupPageContent() {
 
       // Track how user found GHOST ID
       if (IS_CLOUD && referralSource && userStore.getState().user?.id) {
-        window.ghost-id?.identify(userStore.getState().user?.id || "", {
+        window["ghost-id"]?.identify(userStore.getState().user?.id || "", {
           source: referralSource,
         });
       }

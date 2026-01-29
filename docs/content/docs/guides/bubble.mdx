@@ -63,7 +63,7 @@ Open your live Bubble application and navigate through a few pages. Then, check 
   **Page View Tracking in Bubble Apps**: Bubble applications often behave like Single Page Applications (SPAs) for navigation between "pages" (which are often groups shown/hidden on a single actual HTML page). GHOST ID's script is designed to detect URL changes in SPAs.
   - If your Bubble app uses actual URL route changes for different views, GHOST ID should track these automatically.
   - If navigation primarily involves showing/hiding groups without URL changes, GHOST ID will only track the initial page load. For more granular tracking of "virtual" page views in such cases, you would need to use custom event tracking.
-  - If URL changes occur but are not automatically tracked, you might need to trigger `window.ghost-id.pageview()` manually using a Bubble workflow action that runs JavaScript when a "page" (group) becomes visible.
+  - If URL changes occur but are not automatically tracked, you might need to trigger `window["ghost-id"].pageview()` manually using a Bubble workflow action that runs JavaScript when a "page" (group) becomes visible.
 </Callout>
 
 ## Custom Event Tracking in Bubble
@@ -91,8 +91,8 @@ You can track custom events in Bubble by using a workflow action that runs JavaS
 -   In the "Run JavaScript" action's code block, add your GHOST ID event tracking code:
 
 ```javascript
-if (typeof window.ghost-id !== 'undefined') {
-  window.ghost-id.event('bubble_event_name', {
+if (typeof window["ghost-id"] !== 'undefined') {
+  window["ghost-id"].event('bubble_event_name', {
     // You can use Bubble's dynamic expressions here to pass data
     // For example: 'User Email': Current User's Email,
     // 'Clicked Element': This Button's Text (if applicable)
@@ -109,8 +109,8 @@ Replace `'bubble_event_name'` with a descriptive name for your event. You can us
 // let itemName = "Dynamic Item Name from Bubble"; // This would be set by Bubble's dynamic data
 // let itemCategory = "Dynamic Category from Bubble";
 
-if (typeof window.ghost-id !== 'undefined') {
-  window.ghost-id.event('item_interaction', {
+if (typeof window["ghost-id"] !== 'undefined') {
+  window["ghost-id"].event('item_interaction', {
     name: itemName,       // Replace with actual dynamic data
     category: itemCategory // Replace with actual dynamic data
   });

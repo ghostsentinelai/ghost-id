@@ -128,7 +128,7 @@ Note that this rewrite will consume the bandwidth of your server, as all trackin
 
 
 <Callout type="info">
-  **Page View Tracking in Next.js**: GHOST ID's tracking script is designed to automatically detect route changes when using Next.js's `&lt;Link&gt;` component or `router.push()` and track them as page views. If you encounter a rare scenario where page views are not being tracked correctly after client-side navigation, you might need to manually trigger page views using `window.ghost-id.pageview()`. However, test the default behavior first, as manual tracking is typically not necessary.
+  **Page View Tracking in Next.js**: GHOST ID's tracking script is designed to automatically detect route changes when using Next.js's `&lt;Link&gt;` component or `router.push()` and track them as page views. If you encounter a rare scenario where page views are not being tracked correctly after client-side navigation, you might need to manually trigger page views using `window["ghost-id"].pageview()`. However, test the default behavior first, as manual tracking is typically not necessary.
 </Callout>
 
 ## Custom Event Tracking
@@ -153,8 +153,8 @@ Once the GHOST ID script is loaded via the Next.js `Script` component, you can t
 
 export default function MyButton({ title }) {
   const handleClick = () => {
-    if (typeof window !== 'undefined' && window.ghost-id && typeof window.ghost-id.event === 'function') {
-      window.ghost-id.event('button_click', { buttonTitle: title });
+    if (typeof window !== 'undefined' && window["ghost-id"] && typeof window["ghost-id"].event === 'function') {
+      window["ghost-id"].event('button_click', { buttonTitle: title });
     } else {
       console.warn('GHOST ID tracking not available.');
     }
@@ -163,4 +163,4 @@ export default function MyButton({ title }) {
   return <button onClick={handleClick}>{title || 'Click Me'}</button>;
 }
 ```
-Always ensure `window.ghost-id` and its methods are available before calling them, especially since the script loading is managed by Next.js's `strategy`. Consider the script's loading strategy (`afterInteractive` in the examples) when deciding where and how early you can reliably call these tracking functions.
+Always ensure `window["ghost-id"]` and its methods are available before calling them, especially since the script loading is managed by Next.js's `strategy`. Consider the script's loading strategy (`afterInteractive` in the examples) when deciding where and how early you can reliably call these tracking functions.

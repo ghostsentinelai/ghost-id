@@ -128,7 +128,7 @@ To track completed purchases, create another script in Script Manager with these
   function waitForGHOST ID(callback, timeout) {
     var start = Date.now();
     (function check() {
-      if (window.ghost-id && typeof window.ghost-id.event === 'function') {
+      if (window["ghost-id"] && typeof window["ghost-id"].event === 'function') {
         callback();
       } else if (Date.now() - start < timeout) {
         setTimeout(check, 100);
@@ -139,7 +139,7 @@ To track completed purchases, create another script in Script Manager with these
   waitForGHOST ID(function() {
     // BigCommerce provides order data via Handlebars
     {{#if checkout.order}}
-    window.ghost-id.event('purchase', {
+    window["ghost-id"].event('purchase', {
       transaction_id: '{{checkout.order.id}}',
       value: {{checkout.subtotal.value}},
       currency: '{{checkout.currency.code}}'
