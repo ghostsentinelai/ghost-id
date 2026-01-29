@@ -9,8 +9,8 @@ import { GhostIdAPI, WebVitalsData, ErrorProperties } from "./types.js";
 
 declare global {
   interface Window {
-    __RYBBIT_OPTOUT__?: boolean;
-    ghost-id: GhostIdAPI;
+    __GHOSTID_OPTOUT__?: boolean;
+    "ghost-id": GhostIdAPI;
     [key: string]: any;
   }
 }
@@ -27,7 +27,7 @@ declare global {
   const optOutKey = `disable-${namespace}`;
 
   // Check if user has opted out
-  if (window.__RYBBIT_OPTOUT__ || localStorage.getItem(optOutKey) !== null) {
+  if (window.__GHOSTID_OPTOUT__ || localStorage.getItem(optOutKey) !== null) {
     // Create no-op implementation
     window[namespace] = {
       pageview: () => {},
